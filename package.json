@@ -1,0 +1,11 @@
+{
+  "name": "mui-treasury",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@material-ui/core": "4.11.3",
+    "lerna": "3.22.1"
+  }
+}

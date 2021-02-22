@@ -1,0 +1,9 @@
+{
+  "registry": "https://registry.npmjs.org/",
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "version": "independent",
+  "publish": {
+    "message": "chore(release): publish 🎉"
+  }
+}
