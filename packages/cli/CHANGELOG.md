@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0-alpha.1](https://github.com/siriwatknp/mui-treasury-next/compare/mui-treasury@0.1.0-alpha.0...mui-treasury@0.1.0-alpha.1) (2021-03-03)
+
+
+### Bug Fixes
+
+* remove dist from mui-treasury cli ([b96f3ce](https://github.com/siriwatknp/mui-treasury-next/commit/b96f3ce8484bdd0994fccd2cc8e108004fe34005))
+
+
+
+
+
 # 0.1.0-alpha.0 (2021-03-03)
 
 
