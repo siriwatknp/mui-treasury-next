@@ -20,7 +20,8 @@
   "scripts": {
     "test": "jest",
     "dev": "ts-node-dev index.ts",
-    "build": "rimraf dist && tsc"
+    "build": "rimraf dist && tsc",
+    "prepublish": "yarn build"
   },
   "bugs": {
     "url": "https://github.com/siriwatknp/mui-treasury-next/issues"
