@@ -86,7 +86,7 @@ const tailwindColors = {
   },
 };
 
-export default {
+export const treasuryPalette = {
   primary: tailwindColors.blue,
   secondary: tailwindColors.pink,
   error: tailwindColors.red,

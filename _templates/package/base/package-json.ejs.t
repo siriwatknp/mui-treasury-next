@@ -19,7 +19,7 @@ unless_exists: true
   },
   "scripts": {
     "test": "jest --verbose",
-    "build": "rimraf build && tsc -p tsconfig.build.json"
+    "build": "rimraf dist && tsc -p tsconfig.build.json"
   },
   "bugs": {
     "url": "https://github.com/siriwatknp/mui-treasury-next/issues"

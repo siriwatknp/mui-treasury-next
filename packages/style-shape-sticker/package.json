@@ -1,11 +1,15 @@
 {
   "name": "@mui-treasury/style-shape-sticker",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "> TODO: description",
   "author": "siriwatknp <siriwatkunaporn@gmail.com>",
   "homepage": "https://github.com/siriwatknp/mui-treasury-next#readme",
   "license": "ISC",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -14,13 +18,16 @@
     "url": "git+https://github.com/siriwatknp/mui-treasury-next.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "test": "jest --verbose",
+    "compile-js": "rimraf javascript && tsc -p tsconfig.js.json",
+    "compile-js:watch": "tsc -p tsconfig.js.json --watch",
+    "build": "rimraf dist && tsc -p tsconfig.build.json"
   },
   "bugs": {
     "url": "https://github.com/siriwatknp/mui-treasury-next/issues"
   },
-  "peerDependencies": {
-    "@material-ui/core": ">=4",
-    "@mui-treasury/theme-treasury": "^1.0.0"
+  "dependencies": {
+    "@mui-treasury/theme-treasury": "0.0.0",
+    "@mui-treasury/component-shape": "0.0.0"
   }
 }

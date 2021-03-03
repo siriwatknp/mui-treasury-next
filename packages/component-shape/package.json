@@ -6,6 +6,10 @@
   "homepage": "https://github.com/siriwatknp/mui-treasury-next#readme",
   "license": "ISC",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -17,13 +21,12 @@
     "test": "jest --verbose",
     "compile-js": "rimraf javascript && tsc -p tsconfig.js.json",
     "compile-js:watch": "tsc -p tsconfig.js.json --watch",
-    "build": "rimraf build && tsc -p tsconfig.build.json"
+    "build": "rimraf dist && tsc -p tsconfig.build.json"
   },
   "bugs": {
     "url": "https://github.com/siriwatknp/mui-treasury-next/issues"
   },
-  "peerDependencies": {
-    "@material-ui/core": ">=4",
-    "@mui-treasury/theme-treasury": "1.0.0"
+  "dependencies": {
+    "@mui-treasury/theme-treasury": "0.0.0"
   }
 }

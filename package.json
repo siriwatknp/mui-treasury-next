@@ -33,10 +33,7 @@
     "build-storybook": "build-storybook",
     "test": "jest",
     "test:watch": "jest --watch",
-    "lint": "gts lint",
-    "clean": "gts clean",
-    "compile": "tsc",
-    "fix": "gts fix",
+    "build": "lerna run build",
     "new:package": "hygen package base"
   }
 }

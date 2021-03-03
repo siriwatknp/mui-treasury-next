@@ -1,5 +1,5 @@
 import { createTreasuryTheme, getColor } from "./treasuryTheme";
-import treasuryColors from "./treasuryColors";
+import { treasuryPalette } from "./treasuryPalette";
 
 describe("theme-treasury", () => {
   describe("createTreasuryTheme", () => {
@@ -7,18 +7,24 @@ describe("theme-treasury", () => {
       const theme = createTreasuryTheme();
       expect(theme).toMatchObject({
         treasury: {
-          colors: treasuryColors,
+          palette: treasuryPalette,
         },
       });
-      expect(theme.palette.primary.main).toEqual(treasuryColors.primary["500"]);
-      expect(theme.palette.secondary.main).toEqual(
-        treasuryColors.secondary["500"]
+      expect(theme.palette.primary.main).toEqual(
+        treasuryPalette.primary["500"]
       );
-      expect(theme.palette.success.main).toEqual(treasuryColors.success["500"]);
-      expect(theme.palette.warning.main).toEqual(treasuryColors.warning["500"]);
-      expect(theme.palette.error.main).toEqual(treasuryColors.error["500"]);
-      expect(theme.palette.info.main).toEqual(treasuryColors.info["500"]);
-      expect(theme.palette.grey).toMatchObject(treasuryColors.grey);
+      expect(theme.palette.secondary.main).toEqual(
+        treasuryPalette.secondary["500"]
+      );
+      expect(theme.palette.success.main).toEqual(
+        treasuryPalette.success["500"]
+      );
+      expect(theme.palette.warning.main).toEqual(
+        treasuryPalette.warning["500"]
+      );
+      expect(theme.palette.error.main).toEqual(treasuryPalette.error["500"]);
+      expect(theme.palette.info.main).toEqual(treasuryPalette.info["500"]);
+      expect(theme.palette.grey).toMatchObject(treasuryPalette.grey);
     });
 
     it("provide custom colors", () => {
@@ -35,14 +41,14 @@ describe("theme-treasury", () => {
         900: "#fff",
       };
       const theme = createTreasuryTheme({
-        colors: {
+        palette: {
           primary,
         },
       });
       expect(theme).toMatchObject({
         treasury: {
-          colors: {
-            ...treasuryColors,
+          palette: {
+            ...treasuryPalette,
             primary,
           },
         },
@@ -53,15 +59,13 @@ describe("theme-treasury", () => {
     it("can getColor from theme", () => {
       const theme = createTreasuryTheme();
       expect(theme.treasury.getColor("primary", "100")).toEqual(
-        treasuryColors.primary["100"]
+        treasuryPalette.primary["100"]
       );
     });
 
     it("can getContrastColor from theme", () => {
       const theme = createTreasuryTheme();
-      expect(theme.treasury.getContrastColor(undefined, "500")).toEqual(
-        "#fff"
-      );
+      expect(theme.treasury.getContrastColor(undefined, "500")).toEqual("#fff");
       expect(theme.treasury.getContrastColor("primary", "100")).toEqual(
         "rgba(0, 0, 0, 0.87)"
       );
@@ -71,13 +75,13 @@ describe("theme-treasury", () => {
   describe("getColor", () => {
     it("return empty string if colors | palette is undefined", () => {
       expect(getColor(undefined, undefined, "500")).toEqual("");
-      expect(getColor(treasuryColors, undefined, "500")).toEqual("");
+      expect(getColor(treasuryPalette, undefined, "500")).toEqual("");
       expect(getColor(undefined, "primary", "500")).toEqual("");
     });
 
     it("return the color", () => {
-      expect(getColor(treasuryColors, "primary", "500")).toEqual(
-        treasuryColors.primary["500"]
+      expect(getColor(treasuryPalette, "primary", "500")).toEqual(
+        treasuryPalette.primary["500"]
       );
     });
   });

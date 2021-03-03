@@ -1,6 +1,6 @@
 import React from 'react';
 import { Story, Meta } from '@storybook/react/types-6-0';
-import { treasuryColors } from '@mui-treasury/theme-treasury';
+import { treasuryPalette } from '@mui-treasury/theme-treasury';
 import { Shape, ShapeProps } from './Shape';
 
 import Add from '@material-ui/icons/Add';
@@ -12,7 +12,7 @@ export default {
     palette: {
       control: {
         type: 'select',
-        options: Object.keys(treasuryColors),
+        options: Object.keys(treasuryPalette),
       },
     },
     size: {

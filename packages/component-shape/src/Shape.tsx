@@ -1,15 +1,11 @@
 import React, { PropsWithChildren } from "react";
 import cx from "clsx";
 import { StyleRules, makeStyles } from "@material-ui/core/styles";
-import {
-  useThemeProps,
-  Palette,
-  TreasuryTheme,
-} from "@mui-treasury/theme-treasury";
+import { useThemeProps, Palette } from "@mui-treasury/theme-treasury";
 
 const MUI_SHAPE = "MuiShape";
 const useStyles = makeStyles(
-  ({ shape, treasury }: TreasuryTheme) => ({
+  ({ shape, treasury }) => ({
     root: {
       display: "inline-flex",
       justifyContent: "center",

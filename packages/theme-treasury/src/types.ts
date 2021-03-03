@@ -1,7 +1,8 @@
 import { Overrides } from "@material-ui/core/styles/overrides";
 import { ComponentsProps } from "@material-ui/core/styles/props";
 import { ThemeOptions, Theme } from "@material-ui/core/styles";
-import treasuryColors from "./treasuryColors";
+
+import { treasuryPalette } from "./treasuryPalette";
 
 export type ExtendThemeOverrides<T> = Overrides & T;
 export type ExtendThemeProps<T> = ComponentsProps & T;
@@ -14,9 +15,9 @@ export type ExtendThemeOptions<
   props?: ExtendThemeProps<ComponentThemeProps>;
 };
 
-export type TreasuryColors = typeof treasuryColors;
+export type TreasuryPalette = typeof treasuryPalette;
 
-export type Palette = keyof TreasuryColors;
+export type Palette = keyof TreasuryPalette;
 
 export type Swatches =
   | "50"
@@ -31,17 +32,17 @@ export type Swatches =
   | "900";
 
 export type ExtendedThemeInput = {
-  colors?: Partial<TreasuryColors>;
+  palette?: Partial<TreasuryPalette>;
 };
 
 export type ExtendedThemeOutput = {
   treasury: ExtendedThemeInput & {
     getColor: (
-      palette: keyof TreasuryColors | undefined,
+      palette: keyof TreasuryPalette | undefined,
       swatch: Swatches
     ) => string;
     getContrastColor: (
-      palette: keyof TreasuryColors | undefined,
+      palette: keyof TreasuryPalette | undefined,
       swatch: Swatches
     ) => string;
   };

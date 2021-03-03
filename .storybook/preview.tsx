@@ -1,30 +1,26 @@
 import React, { Suspense } from "react";
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import {
-  ExtendThemeProps,
-  ExtendThemeOverrides,
-  createTreasuryTheme,
-} from "@mui-treasury/theme-treasury";
-import {
-  ShapeThemeProps,
-  ShapeThemeOverrides,
-} from "@mui-treasury/component-shape";
+import { createTreasuryTheme } from "@mui-treasury/theme-treasury";
 
 const withThemeProvider = (Story: any, context: any) => {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
 
   const theme = React.useMemo(
     () =>
       createTreasuryTheme({
         palette: {
-          type: prefersDarkMode ? 'dark' : 'light',
+          type: prefersDarkMode ? "dark" : "light",
         },
-        props: {} as ExtendThemeProps<ShapeThemeProps>,
-        overrides: {} as ExtendThemeOverrides<ShapeThemeOverrides>,
+        props: {
+          MuiShape: {},
+        },
+        overrides: {
+          MuiShape: {},
+        },
       }),
-    [prefersDarkMode],
+    [prefersDarkMode]
   );
   return (
     <Suspense fallback={<div>loading...</div>}>

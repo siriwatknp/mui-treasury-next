@@ -5,27 +5,27 @@ import {
 } from "@material-ui/core/styles";
 
 import {
-  TreasuryColors,
+  TreasuryPalette,
   TreasuryThemeOptions,
   Swatches,
   TreasuryTheme,
   ExtendedThemeOutput,
 } from "./types";
-import treasuryColors from "./treasuryColors";
+import { treasuryPalette } from "./treasuryPalette";
 
 const getMainColor = (
-  colors: TreasuryThemeOptions["colors"] = treasuryColors,
-  key: keyof typeof treasuryColors
-) => (colors[key] ?? treasuryColors[key])["500"];
+  palette: TreasuryThemeOptions["palette"] = treasuryPalette,
+  key: keyof typeof treasuryPalette
+) => (palette[key] ?? treasuryPalette[key])["500"];
 
 export const getColor = (
-  colors: Partial<TreasuryColors> | undefined,
-  palette: keyof TreasuryColors | undefined,
+  palette: Partial<TreasuryPalette> | undefined,
+  name: keyof TreasuryPalette | undefined,
   swatch: Swatches
-) => (colors && palette ? colors?.[palette]?.[swatch] ?? "" : "");
+) => (palette && name ? palette?.[name]?.[swatch] ?? "" : "");
 
 export const light = {
-  // The colors used to style the text.
+  // The palette used to style the text.
   text: {
     // The most important text.
     primary: "rgba(0, 0, 0, 0.87)",
@@ -52,10 +52,10 @@ export const createTreasuryTheme = (
   options?: TreasuryThemeOptions,
   ...args: object[]
 ) => {
-  const { colors = treasuryColors } = options || {};
+  const { palette = treasuryPalette } = options || {};
   const mergedColors = {
-    ...treasuryColors,
-    ...colors,
+    ...treasuryPalette,
+    ...palette,
   };
   const placeholderColor =
     options?.palette?.type === "dark" ? dark.text.primary : light.text.primary;
@@ -72,7 +72,7 @@ export const createTreasuryTheme = (
   const input: ExtendedThemeOutput & ThemeOptions = {
     ...options,
     treasury: {
-      colors: mergedColors,
+      palette: mergedColors,
       getColor: (palette, swatch) =>
         getColor(mergedColors, palette, swatch) || placeholderColor,
       getContrastColor: (palette, swatch) =>
@@ -83,24 +83,30 @@ export const createTreasuryTheme = (
     palette: {
       ...options?.palette,
       primary: {
-        main: getMainColor(colors, "primary"),
+        ...options?.palette?.primary,
+        main: getMainColor(palette, "primary"),
       },
       secondary: {
-        main: getMainColor(colors, "secondary"),
+        ...options?.palette?.secondary,
+        main: getMainColor(palette, "secondary"),
       },
       success: {
-        main: getMainColor(colors, "success"),
+        ...options?.palette?.success,
+        main: getMainColor(palette, "success"),
       },
       warning: {
-        main: getMainColor(colors, "warning"),
+        ...options?.palette?.warning,
+        main: getMainColor(palette, "warning"),
       },
       error: {
-        main: getMainColor(colors, "error"),
+        ...options?.palette?.error,
+        main: getMainColor(palette, "error"),
       },
       info: {
-        main: getMainColor(colors, "info"),
+        ...options?.palette?.info,
+        main: getMainColor(palette, "info"),
       },
-      grey: colors.grey,
+      grey: palette.grey,
     },
   };
   return createMuiTheme(input, ...args) as TreasuryTheme;

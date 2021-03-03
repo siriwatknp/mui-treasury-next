@@ -1,12 +1,15 @@
 {
-  "extends": "../../tsconfig.json",
   "include": ["src"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "**/*-extended.*"],
   "compileOnSave": true,
   "compilerOptions": {
     "outDir": "javascript",
     "jsx": "preserve",
-    "declaration": false,
-    "sourceMap": false
+    "module": "es2020",
+    "target": "es2020",
+    "lib": ["dom", "esnext"],
+    "allowJs": true,
+    "esModuleInterop": true,
+    "moduleResolution": "Node"
   }
 }

@@ -1,12 +1,11 @@
 {
-  "registry": "https://registry.npmjs.org/",
   "npmClient": "yarn",
   "useWorkspaces": true,
   "version": "independent",
+  "ignoreChanges": ["**/__fixtures__/**", "**/__tests__/**", "**/*.md"],
   "publish": {
-    "message": "chore(release): publish 🎉"
-  },
-  "publishConfig": {
-    "directory": "dist"
+    "conventionalCommits": true,
+    "message": "chore(release): publish 🎉",
+    "registry": "https://registry.npmjs.org"
   }
 }

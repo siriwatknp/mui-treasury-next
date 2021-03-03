@@ -1,14 +1,13 @@
 {
-  "name": "@mui-treasury/cli",
+  "name": "mui-treasury",
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "siriwatknp <siriwatkunaporn@gmail.com>",
   "homepage": "https://github.com/siriwatknp/mui-treasury-next#readme",
   "license": "ISC",
   "main": "dist/index.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
+  "bin": {
+    "mui-treasury": "./dist/index.js"
   },
   "files": [
     "dist"
@@ -23,10 +22,8 @@
   },
   "scripts": {
     "test": "jest",
-    "dev": "ts-node-dev index.ts"
-  },
-  "bin": {
-    "mui-treasury": "./dist/index.js"
+    "dev": "ts-node-dev index.ts",
+    "build": "rimraf dist && tsc"
   },
   "bugs": {
     "url": "https://github.com/siriwatknp/mui-treasury-next/issues"
