@@ -5,15 +5,12 @@
   "author": "siriwatknp <siriwatkunaporn@gmail.com>",
   "homepage": "https://github.com/siriwatknp/mui-treasury-next#readme",
   "license": "ISC",
-  "main": "dist/index.js",
   "bin": {
-    "mui-treasury": "./dist/index.js"
+    "mui-treasury": "./index.js"
   },
-  "files": [
-    "dist"
-  ],
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "directory": "dist"
   },
   "repository": {
     "type": "git",
