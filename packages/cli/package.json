@@ -19,7 +19,7 @@
   },
   "scripts": {
     "test": "jest",
-    "dev": "ts-node-dev index.ts",
+    "dev": "tsc --watch",
     "build": "rimraf dist && tsc",
     "prepublish": "yarn build"
   },
@@ -36,8 +36,5 @@
     "got": "11.8.2",
     "rimraf": "3.0.2",
     "tar": "6.1.0"
-  },
-  "devDependencies": {
-    "ts-node-dev": "1.1.6"
   }
 }

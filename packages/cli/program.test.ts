@@ -2,19 +2,33 @@ import { createProgram } from "./program";
 
 describe("cli - program", function () {
   const mockClone = jest.fn();
+  const mockInit = jest.fn();
   const DEFAULT_DIR = "mui-treasury";
-  const program = createProgram({
-    commands: {
-      clone: mockClone,
-    },
+  let program: ReturnType<typeof createProgram>;
+  beforeEach(() => {
+    jest.clearAllMocks();
+    program = createProgram({
+      commands: {
+        clone: mockClone,
+        init: mockInit,
+      },
+    });
   });
-  beforeEach(jest.clearAllMocks);
   describe("version", () => {
     it("can get version", () => {
       const helpInformation = program.helpInformation();
 
       expect(helpInformation.includes("-v, --version")).toBe(true);
       expect(helpInformation.includes("output the current version")).toBe(true);
+    });
+  });
+
+  describe("init", () => {
+    it("call provided init function", () => {
+      program.parse(["init"], {
+        from: "user",
+      });
+      expect(mockInit).toHaveBeenCalled();
     });
   });
 
@@ -46,33 +60,55 @@ describe("cli - program", function () {
       program.parse(["clone", "component-shape"], {
         from: "user",
       });
-      expect(mockClone).toHaveBeenCalledWith(
-        ["component-shape"],
-        { dir: DEFAULT_DIR },
-        expect.anything()
-      );
+      expect(mockClone.mock.calls[0][1]).toMatchObject({
+        dir: DEFAULT_DIR,
+      });
     });
 
     it("use optional -d as destination directory", () => {
       program.parse(["clone", "component-shape", "-d", "temp"], {
         from: "user",
       });
-      expect(mockClone).toHaveBeenCalledWith(
-        ["component-shape"],
-        { dir: "temp" },
-        expect.anything()
-      );
+      expect(mockClone.mock.calls[0][1]).toMatchObject({
+        dir: "temp",
+      });
     });
 
     it("support only javascript template", () => {
       program.parse(["clone", "component-shape", "-t", "javascript"], {
         from: "user",
       });
-      expect(mockClone).toHaveBeenCalledWith(
-        ["component-shape"],
-        expect.objectContaining({ template: "javascript" }),
-        expect.anything()
-      );
+      expect(mockClone.mock.calls[0][1]).toMatchObject({
+        template: "javascript",
+      });
+    });
+
+    it("has storybook & test by default", () => {
+      program.parse(["clone", "component-shape"], {
+        from: "user",
+      });
+      expect(mockClone.mock.calls[0][1]).toMatchObject({
+        storybook: true,
+        test: true,
+      });
+    });
+
+    it("can provide --no-storybook", () => {
+      program.parse(["clone", "component-shape", "--no-storybook"], {
+        from: "user",
+      });
+      expect(mockClone.mock.calls[0][1]).toMatchObject({
+        storybook: false,
+      });
+    });
+
+    it("can provide --no-test", () => {
+      program.parse(["clone", "component-shape", "--no-test"], {
+        from: "user",
+      });
+      expect(mockClone.mock.calls[0][1]).toMatchObject({
+        test: false,
+      });
     });
   });
 });

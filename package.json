@@ -34,6 +34,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "build": "lerna run build",
-    "new:package": "hygen package base"
+    "new:package": "hygen package base",
+    "dev:cli": "yarn workspace mui-treasury run dev"
   }
 }
