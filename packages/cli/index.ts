@@ -9,6 +9,7 @@ import * as tar from "tar";
 import { Stream } from "stream";
 import { promisify } from "util";
 import { CloneOptions, createProgram } from "./program";
+import packageJson from "./package.json";
 
 const pipeline = promisify(Stream.pipeline);
 
@@ -39,14 +40,39 @@ const cloneParams: {
   options: undefined,
 };
 
+const logger = {
+  log: (...text: string[]) => {
+    console.log(chalk.bgHex("D4D4D8").hex("3F3F46")("mui-treasury"), ...text);
+  },
+  info: function (text: string | ((t: typeof chalk) => string)) {
+    this.log(
+      chalk.bold(chalk.green("info")),
+      typeof text === "function" ? text(chalk) : text
+    );
+  },
+  success: function (text: string | ((t: typeof chalk) => string)) {
+    this.log(
+      chalk.bold(chalk.green("success")),
+      typeof text === "function" ? text(chalk) : text
+    );
+  },
+  version: function () {
+    this.log(
+      chalk.bold(chalk.hex("F59E0B")("version")),
+      chalk.bold(chalk.yellow(`v${packageJson.version}`))
+    );
+  },
+};
+
 function getConfigFile(overrides?: Partial<CloneOptions>) {
   try {
     const config: CloneOptions = require(`${process.cwd()}/${MUI_TREASURY_CONFIG_FILE}`);
-    console.log(chalk.blue("using config from mui-treasury.config.js"));
+    logger.version();
+    logger.info("using config from mui-treasury.config.js");
     return { ...config, ...overrides };
   } catch (error) {
-    console.log(chalk.blue("config file not found, use default config"));
-    console.log(
+    logger.info("config file not found, use default config");
+    logger.info(
       chalk.blue('{ dir: "src/mui-treasury", storybook: true, test: true }')
     );
   }
@@ -101,13 +127,13 @@ async function runCloneCommand() {
   if (!fs.existsSync(tempRoot)) {
     fs.mkdirSync(tempRoot, { recursive: true });
   }
-  console.log(chalk.yellow('start cloning...'))
+  logger.info("start cloning...");
   await downloadAndExtractCode(tempRoot, cloneParams.sources);
   const excludedFiles = [
     ...(!config.storybook ? [`!${tempRoot}/**/*.stories.*`] : []),
     ...(!config.test ? [`!${tempRoot}/**/*.test.*`] : []),
   ];
-  console.log(chalk.yellow('•'))
+  logger.info("finishing things up...");
   await Promise.all(
     cloneParams.sources.map((module) =>
       cpy(
@@ -121,12 +147,11 @@ async function runCloneCommand() {
     )
   );
 
-  console.log(chalk.yellow('•'))
   // clean up temp folder
   rimraf(tempRoot, (error) => {
     if (error) throw error;
   });
-  console.log(chalk.green('✅ cloned successfully!'))
+  logger.log(chalk.bold(chalk.green("✅ cloned successfully!")));
 }
 
 if (cloneParams.sources.length) {
