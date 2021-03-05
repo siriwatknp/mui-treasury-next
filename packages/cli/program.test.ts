@@ -3,7 +3,6 @@ import { createProgram } from "./program";
 describe("cli - program", function () {
   const mockClone = jest.fn();
   const mockInit = jest.fn();
-  const DEFAULT_DIR = "mui-treasury";
   let program: ReturnType<typeof createProgram>;
   beforeEach(() => {
     jest.clearAllMocks();
@@ -56,13 +55,11 @@ describe("cli - program", function () {
       );
     });
 
-    it("has default directory", () => {
+    it("has no default directory", () => {
       program.parse(["clone", "component-shape"], {
         from: "user",
       });
-      expect(mockClone.mock.calls[0][1]).toMatchObject({
-        dir: DEFAULT_DIR,
-      });
+      expect(mockClone.mock.calls[0][1].dir).toBeUndefined();
     });
 
     it("use optional -d as destination directory", () => {

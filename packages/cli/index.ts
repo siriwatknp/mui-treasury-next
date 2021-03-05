@@ -50,6 +50,12 @@ const logger = {
       typeof text === "function" ? text(chalk) : text
     );
   },
+  config: function (text: string | ((t: typeof chalk) => string)) {
+    this.log(
+      chalk.bold(chalk.hex("0284C7")("config")),
+      typeof text === "function" ? text(chalk) : text
+    );
+  },
   success: function (text: string | ((t: typeof chalk) => string)) {
     this.log(
       chalk.bold(chalk.green("success")),
@@ -102,16 +108,13 @@ const program = createProgram({
     clone: (sources, options) => {
       cloneParams.sources = sources;
       cloneParams.options = options;
-      if (cloneParams.options.dir && !cloneParams.options.dir.startsWith("/")) {
-        cloneParams.options.dir = `/${cloneParams.options.dir}`;
-      }
     },
     init: () => {
       fs.writeFile(MUI_TREASURY_CONFIG_FILE, CONFIG_FILE_TEMPLATE, function (
         err
       ) {
         if (err) throw err;
-        console.log(chalk.green(`${MUI_TREASURY_CONFIG_FILE} is created! 🎉`));
+        logger.success(`${MUI_TREASURY_CONFIG_FILE} is created! 🎉`)
       });
     },
   },
@@ -121,6 +124,12 @@ program.parse(process.argv);
 
 async function runCloneCommand() {
   const config = getConfigFile(cloneParams.options);
+  if (config.dir && !config.dir.startsWith("/")) {
+    config.dir = `/${config.dir}`;
+  }
+  for (let field of Object.entries(config)) {
+    logger.config(`${field[0]}: ${field[1]}`);
+  }
   const TEMP = "/mui-treasury-tmp";
   const tempRoot = process.cwd() + TEMP;
   const actualRoot = process.cwd() + config.dir;
@@ -142,7 +151,10 @@ async function runCloneCommand() {
           `${tempRoot}/${module}/${TEMPLATE_FOLDER_MAP[config.template]}/*`,
           ...excludedFiles,
         ],
-        `${actualRoot}/${module}`
+        `${actualRoot}/${module}`,
+        {
+          overwrite: true,
+        }
       )
     )
   );

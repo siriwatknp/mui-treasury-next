@@ -41,7 +41,7 @@ export const createProgram = ({ commands: { clone, init } }: Params) => {
   program
     .command("clone <sources...>")
     .description("clone components/styles to your config directory")
-    .option("-d, --dir [directory]", "destination directory", "mui-treasury")
+    .option("-d, --dir [directory]", "destination directory")
     .option(
       "-t, --template [template]",
       "template of the files, typescript (default) | javascript",
