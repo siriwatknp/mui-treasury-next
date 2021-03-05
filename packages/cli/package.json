@@ -21,7 +21,7 @@
     "test": "jest",
     "dev": "tsc --watch",
     "build": "rimraf dist && tsc",
-    "prepublish": "yarn build"
+    "prepublishOnly": "yarn build"
   },
   "bugs": {
     "url": "https://github.com/siriwatknp/mui-treasury-next/issues"
@@ -35,6 +35,7 @@
     "cpy": "8.1.1",
     "got": "11.8.2",
     "rimraf": "3.0.2",
-    "tar": "6.1.0"
+    "tar": "6.1.0",
+    "update-check": "1.5.4"
   }
 }

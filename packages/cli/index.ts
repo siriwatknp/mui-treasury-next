@@ -8,6 +8,8 @@ import rimraf from "rimraf";
 import * as tar from "tar";
 import { Stream } from "stream";
 import { promisify } from "util";
+import checkForUpdate from "update-check";
+import { execSync } from "child_process";
 import { CloneOptions, createProgram } from "./program";
 import packageJson from "./package.json";
 
@@ -100,8 +102,46 @@ function downloadAndExtractCode(
   );
 }
 
-// import checkForUpdate from "update-check";
-// const update = checkForUpdate(packageJson).catch(() => null)
+const update = checkForUpdate(packageJson).catch(() => null);
+
+function shouldUseYarn(): boolean {
+  try {
+    const userAgent = process.env.npm_config_user_agent;
+    if (userAgent) {
+      return Boolean(userAgent && userAgent.startsWith("yarn"));
+    }
+    execSync("yarnpkg --version", { stdio: "ignore" });
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+async function notifyUpdate(): Promise<void> {
+  try {
+    const res = await update;
+    if (res?.latest) {
+      const isYarn = shouldUseYarn();
+
+      console.log();
+      console.log(
+        chalk.yellow.bold("A new version of `create-next-app` is available!")
+      );
+      console.log(
+        "You can update by running: " +
+          chalk.cyan(
+            isYarn
+              ? "yarn global add create-next-app"
+              : "npm i -g create-next-app"
+          )
+      );
+      console.log();
+    }
+    process.exit();
+  } catch {
+    // ignore error
+  }
+}
 
 const program = createProgram({
   commands: {
@@ -114,7 +154,7 @@ const program = createProgram({
         err
       ) {
         if (err) throw err;
-        logger.success(`${MUI_TREASURY_CONFIG_FILE} is created! 🎉`)
+        logger.success(`${MUI_TREASURY_CONFIG_FILE} is created! 🎉`);
       });
     },
   },
@@ -128,7 +168,7 @@ async function runCloneCommand() {
     config.dir = `/${config.dir}`;
   }
   for (let field of Object.entries(config)) {
-    logger.config(`${field[0]}: ${field[1]}`);
+    logger.config(`"${field[0]}: ${field[1]}"`);
   }
   const TEMP = "/mui-treasury-tmp";
   const tempRoot = process.cwd() + TEMP;
@@ -136,7 +176,7 @@ async function runCloneCommand() {
   if (!fs.existsSync(tempRoot)) {
     fs.mkdirSync(tempRoot, { recursive: true });
   }
-  logger.info("start cloning...");
+  logger.info(`start cloning ${chalk.bold(cloneParams.sources.length)} packages...`);
   await downloadAndExtractCode(tempRoot, cloneParams.sources);
   const excludedFiles = [
     ...(!config.storybook ? [`!${tempRoot}/**/*.stories.*`] : []),
@@ -167,7 +207,9 @@ async function runCloneCommand() {
 }
 
 if (cloneParams.sources.length) {
-  runCloneCommand().catch((error) => {
-    throw error;
-  });
+  runCloneCommand()
+    .then(notifyUpdate)
+    .catch((error) => {
+      throw error;
+    });
 }
