@@ -1,6 +1,6 @@
 {
   "name": "@mui-treasury/style-shape-sticker",
-  "version": "0.1.0-alpha.0",
+  "version": "0.1.1-alpha.0",
   "description": "> TODO: description",
   "author": "siriwatknp <siriwatkunaporn@gmail.com>",
   "homepage": "https://github.com/siriwatknp/mui-treasury-next#readme",
@@ -27,7 +27,7 @@
     "url": "https://github.com/siriwatknp/mui-treasury-next/issues"
   },
   "dependencies": {
-    "@mui-treasury/component-shape": "^0.1.0-alpha.0",
-    "@mui-treasury/theme-treasury": "^0.1.0-alpha.0"
+    "@mui-treasury/component-shape": "^0.1.1-alpha.0",
+    "@mui-treasury/theme-treasury": "^0.2.0-alpha.0"
   }
 }
