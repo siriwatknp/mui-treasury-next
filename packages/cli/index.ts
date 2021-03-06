@@ -176,7 +176,9 @@ async function runCloneCommand() {
   if (!fs.existsSync(tempRoot)) {
     fs.mkdirSync(tempRoot, { recursive: true });
   }
-  logger.info(`start cloning ${chalk.bold(cloneParams.sources.length)} packages...`);
+  logger.info(
+    `start cloning ${chalk.bold(cloneParams.sources.length)} packages...`
+  );
   await downloadAndExtractCode(tempRoot, cloneParams.sources);
   const excludedFiles = [
     ...(!config.storybook ? [`!${tempRoot}/**/*.stories.*`] : []),
@@ -200,11 +202,13 @@ async function runCloneCommand() {
   );
 
   // clean up temp folder
-  rimraf(tempRoot, (error) => {
-    if (error) throw error;
+  await new Promise((resolve) => {
+    rimraf(tempRoot, (error) => {
+      if (error) throw error;
+      else resolve(undefined);
+    });
   });
   logger.log(chalk.bold(chalk.green("✅ cloned successfully!")));
-  return Promise.resolve()
 }
 
 if (cloneParams.sources.length) {
