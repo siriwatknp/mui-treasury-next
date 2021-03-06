@@ -204,6 +204,7 @@ async function runCloneCommand() {
     if (error) throw error;
   });
   logger.log(chalk.bold(chalk.green("✅ cloned successfully!")));
+  return Promise.resolve()
 }
 
 if (cloneParams.sources.length) {
