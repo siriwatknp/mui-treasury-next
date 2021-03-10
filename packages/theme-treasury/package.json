@@ -4,12 +4,9 @@
   "description": "> TODO: description",
   "author": "siriwatknp <siriwatkunaporn@gmail.com>",
   "homepage": "https://github.com/siriwatknp/mui-treasury-next#readme",
-  "license": "ISC",
+  "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
   "publishConfig": {
     "access": "public"
   },
@@ -19,9 +16,15 @@
   },
   "scripts": {
     "test": "jest --verbose --config ../../jest.config.js",
-    "build": "rimraf dist && tsc -p tsconfig.build.json"
+    "clean": "rimraf dist",
+    "build": "yarn clean && tsc -p tsconfig.build.json",
+    "copy-files": "ts-node ../../scripts/prerelease.ts theme",
+    "prepublishOnly": "yarn copy-files"
   },
   "bugs": {
     "url": "https://github.com/siriwatknp/mui-treasury-next/issues"
+  },
+  "peerDependencies": {
+    "@material-ui/core": ">=4"
   }
 }

@@ -4,13 +4,12 @@
   "description": "> TODO: description",
   "author": "siriwatknp <siriwatkunaporn@gmail.com>",
   "homepage": "https://github.com/siriwatknp/mui-treasury-next#readme",
-  "license": "ISC",
+  "license": "MIT",
   "bin": {
-    "mui-treasury": "./index.js"
+    "mui-treasury": "dist/index.js"
   },
   "publishConfig": {
-    "access": "public",
-    "directory": "dist"
+    "access": "public"
   },
   "repository": {
     "type": "git",
@@ -20,8 +19,10 @@
   "scripts": {
     "test": "jest",
     "dev": "tsc --watch",
-    "build": "rimraf dist && tsc",
-    "prepublishOnly": "yarn build"
+    "clean": "rimraf dist",
+    "build": "yarn clean && tsc",
+    "copy-files": "ts-node ../../scripts/prerelease.ts cli",
+    "prepublishOnly": "yarn build && yarn copy-files"
   },
   "bugs": {
     "url": "https://github.com/siriwatknp/mui-treasury-next/issues"
