@@ -1,7 +1,8 @@
 import React, { PropsWithChildren } from "react";
 import cx from "clsx";
-import { StyleRules, makeStyles } from "@material-ui/core/styles";
-import { useThemeProps, Palette } from "@mui-treasury/theme-treasury";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { getThemeProps } from '@material-ui/styles';
+import { Palette } from "@mui-treasury/theme-treasury";
 
 const MUI_SHAPE = "MuiShape";
 const useStyles = makeStyles(
@@ -73,13 +74,6 @@ export type ShapeProps = {
   classes?: ShapeClasses;
 };
 
-export type ShapeThemeOverrides = {
-  [MUI_SHAPE]: Partial<StyleRules<ShapeClassKey>>;
-};
-export type ShapeThemeProps = {
-  [MUI_SHAPE]: Partial<ShapeProps>;
-};
-
 export const Shape = ({
   children,
   useStyles: useCustomStyles = () => ({}),
@@ -87,13 +81,14 @@ export const Shape = ({
 }: PropsWithChildren<ShapeProps> & {
   useStyles?: (props: ShapeProps) => ShapeClasses;
 }) => {
+  const theme = useTheme();
   const {
     fill = "text",
     palette,
     circular,
     outlined,
     ...props
-  } = useThemeProps(MUI_SHAPE, externalProps);
+  } = getThemeProps({ name: MUI_SHAPE, props: externalProps, theme });
   const styles = useStyles({ ...props, palette });
   const customStyles = useCustomStyles?.({ ...props, palette });
   return (
