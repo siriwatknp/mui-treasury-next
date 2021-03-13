@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import cx from "clsx";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { getThemeProps } from '@material-ui/styles';
+import { makeStyles } from "@material-ui/core/styles";
+import { getThemeProps, useTheme } from '@material-ui/styles';
 import { Palette } from "@mui-treasury/theme-treasury";
 
 const MUI_SHAPE = "MuiShape";
