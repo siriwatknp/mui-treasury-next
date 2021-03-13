@@ -27,9 +27,7 @@ jobs:
         run: yarn build
       - uses: actions/setup-node@v1
         with:
-          node-version: '12'
-      - run: lerna publish --yes --contents dist
+          node-version: "12"
+      - run: HUSKY_SKIP_HOOKS=1 lerna publish --yes --contents dist
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-
