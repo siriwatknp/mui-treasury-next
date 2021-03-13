@@ -21,8 +21,8 @@
     "dev": "tsc --watch",
     "clean": "rimraf dist",
     "build": "yarn clean && tsc",
-    "copy-files": "ts-node ../../scripts/prerelease.ts cli",
-    "prepublishOnly": "yarn copy-files"
+    "prepare-dist": "ts-node ../../scripts/prerelease.ts cli",
+    "prepublishOnly": "yarn build && yarn prepare-dist"
   },
   "bugs": {
     "url": "https://github.com/siriwatknp/mui-treasury-next/issues"
