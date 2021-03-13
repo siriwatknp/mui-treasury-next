@@ -22,7 +22,7 @@
     "clean": "rimraf dist",
     "build": "yarn clean && tsc",
     "copy-files": "ts-node ../../scripts/prerelease.ts cli",
-    "prepublishOnly": "yarn build && yarn copy-files"
+    "prepublishOnly": "yarn copy-files"
   },
   "bugs": {
     "url": "https://github.com/siriwatknp/mui-treasury-next/issues"
