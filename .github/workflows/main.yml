@@ -28,7 +28,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12'
-      - run: npm whoami
       - run: lerna publish --yes --contents dist
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
