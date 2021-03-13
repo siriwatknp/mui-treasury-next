@@ -20,19 +20,29 @@ jobs:
     needs: test
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "12"
+          registry-url: "https://registry.npmjs.org"
+      - name: Git Identity
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
+          git remote -v
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Authenticate with Registry
+        run: |
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
+          npm whoami
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - uses: c-hive/gha-yarn-cache@v1
       - name: Install dependencies
         run: yarn
       - name: Build
         run: yarn build
-      - name: Configure Git
-        run: |
-          git config --local user.email "ci@github-actions.com"
-          git config --local user.name "github bot"
-          git remote -v
-      - uses: actions/setup-node@v1
-        with:
-          node-version: "12"
       - run: lerna publish prerelease --no-commit-hooks --yes --contents dist
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
