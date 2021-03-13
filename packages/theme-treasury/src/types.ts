@@ -31,12 +31,14 @@ export type Swatches =
   | "800"
   | "900";
 
+export type PaletteSwatches = Record<Swatches, string>;
+
 export type ExtendedThemeInput = {
   palette?: Partial<TreasuryPalette>;
 };
 
 export type ExtendedThemeOutput = {
-  treasury: ExtendedThemeInput & {
+  treasury: {
     getColor: (
       palette: keyof TreasuryPalette | undefined,
       swatch: Swatches

@@ -5,7 +5,7 @@ import { useThemeProps, Palette } from "@mui-treasury/theme-treasury";
 
 const MUI_SHAPE = "MuiShape";
 const useStyles = makeStyles(
-  ({ shape, treasury }) => ({
+  ({ treasury, ...theme }) => ({
     root: {
       display: "inline-flex",
       justifyContent: "center",
@@ -14,7 +14,7 @@ const useStyles = makeStyles(
       minHeight: 24,
       verticalAlign: "middle",
       flexShrink: 0,
-      borderRadius: shape.borderRadius,
+      borderRadius: theme.shape.borderRadius,
     },
     circular: {
       borderRadius: 100,

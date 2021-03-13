@@ -52,19 +52,49 @@ export const createTreasuryTheme = (
   options?: TreasuryThemeOptions,
   ...args: object[]
 ) => {
-  const { palette = treasuryPalette } = options || {};
-  const mergedColors = {
-    ...treasuryPalette,
-    ...palette,
-  };
+  const themePalette = {
+    primary: {
+      ...treasuryPalette.primary,
+      ...options?.palette?.primary,
+      main: getMainColor(options?.palette ?? treasuryPalette, "primary"),
+    },
+    secondary: {
+      ...treasuryPalette.secondary,
+      ...options?.palette?.secondary,
+      main: getMainColor(options?.palette ?? treasuryPalette, "secondary"),
+    },
+    success: {
+      ...treasuryPalette.success,
+      ...options?.palette?.success,
+      main: getMainColor(options?.palette ?? treasuryPalette, "success"),
+    },
+    warning: {
+      ...treasuryPalette.warning,
+      ...options?.palette?.warning,
+      main: getMainColor(options?.palette ?? treasuryPalette, "warning"),
+    },
+    error: {
+      ...treasuryPalette.error,
+      ...options?.palette?.error,
+      main: getMainColor(options?.palette ?? treasuryPalette, "error"),
+    },
+    info: {
+      ...treasuryPalette.info,
+      ...options?.palette?.info,
+      main: getMainColor(options?.palette ?? treasuryPalette, "info"),
+    },
+    grey: {
+      ...treasuryPalette.grey,
+      ...options?.palette?.grey,
+    },
+  }
   const placeholderColor =
     options?.palette?.type === "dark" ? dark.text.primary : light.text.primary;
   // Use the same logic as
   // Bootstrap: https://github.com/twbs/bootstrap/blob/1d6e3710dd447de1a200f29e8fa521f8a0908f70/scss/_functions.scss#L59
   // and material-components-web https://github.com/material-components/material-components-web/blob/ac46b8863c4dab9fc22c4c662dc6bd1b65dd652f/packages/mdc-theme/_functions.scss#L54
   function getContrastText(background: string) {
-    const contrastThreshold =
-      options && options.palette ? options.palette.contrastThreshold ?? 3 : 3;
+    const contrastThreshold = options?.palette?.contrastThreshold ?? 3;
     return getContrastRatio(background, dark.text.primary) >= contrastThreshold
       ? dark.text.primary
       : light.text.primary;
@@ -72,42 +102,14 @@ export const createTreasuryTheme = (
   const input: ExtendedThemeOutput & ThemeOptions = {
     ...options,
     treasury: {
-      palette: mergedColors,
       getColor: (palette, swatch) =>
-        getColor(mergedColors, palette, swatch) || placeholderColor,
+        getColor(themePalette, palette, swatch) || placeholderColor,
       getContrastColor: (palette, swatch) =>
         getContrastText(
-          getColor(mergedColors, palette, swatch) || placeholderColor
+          getColor(themePalette, palette, swatch) || placeholderColor
         ),
     },
-    palette: {
-      ...options?.palette,
-      primary: {
-        ...options?.palette?.primary,
-        main: getMainColor(palette, "primary"),
-      },
-      secondary: {
-        ...options?.palette?.secondary,
-        main: getMainColor(palette, "secondary"),
-      },
-      success: {
-        ...options?.palette?.success,
-        main: getMainColor(palette, "success"),
-      },
-      warning: {
-        ...options?.palette?.warning,
-        main: getMainColor(palette, "warning"),
-      },
-      error: {
-        ...options?.palette?.error,
-        main: getMainColor(palette, "error"),
-      },
-      info: {
-        ...options?.palette?.info,
-        main: getMainColor(palette, "info"),
-      },
-      grey: palette.grey,
-    },
+    palette: themePalette,
   };
   return createMuiTheme(input, ...args) as TreasuryTheme;
 };

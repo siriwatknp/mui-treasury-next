@@ -5,11 +5,6 @@ describe("theme-treasury", () => {
   describe("createTreasuryTheme", () => {
     it("contains default colors if no args provided", () => {
       const theme = createTreasuryTheme();
-      expect(theme).toMatchObject({
-        treasury: {
-          palette: treasuryPalette,
-        },
-      });
       expect(theme.palette.primary.main).toEqual(
         treasuryPalette.primary["500"]
       );
@@ -26,6 +21,36 @@ describe("theme-treasury", () => {
       expect(theme.palette.info.main).toEqual(treasuryPalette.info["500"]);
       expect(theme.palette.grey).toMatchObject(treasuryPalette.grey);
     });
+
+    it('attach swatches to each palette', () => {
+      const palettes = [
+        "primary",
+        "secondary",
+        "success",
+        "warning",
+        "error",
+        "info",
+      ] as const;
+      const swatches = [
+        "50",
+        "100",
+        "200",
+        "300",
+        "400",
+        "500",
+        "600",
+        "700",
+        "800",
+        "900",
+      ] as const;
+      const theme = createTreasuryTheme();
+      palettes.forEach(p => {
+        swatches.forEach((s) => {
+          expect(typeof theme.palette[p][s]).toBe("string");
+          expect(theme.palette[p][s]).not.toBe("");
+        });
+      })
+    })
 
     it("provide custom colors", () => {
       const primary = {
@@ -46,11 +71,9 @@ describe("theme-treasury", () => {
         },
       });
       expect(theme).toMatchObject({
-        treasury: {
-          palette: {
-            ...treasuryPalette,
-            primary,
-          },
+        palette: {
+          ...treasuryPalette,
+          primary,
         },
       });
       expect(theme.palette.primary.main).toEqual(primary["500"]);

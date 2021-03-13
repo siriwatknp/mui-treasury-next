@@ -1,10 +1,9 @@
 import { fade } from "@material-ui/core/styles";
 import { makeStyles } from "@material-ui/core/styles";
 import { ShapeProps } from "@mui-treasury/component-shape";
-import { TreasuryTheme } from "@mui-treasury/theme-treasury";
 
 export const useShapeStickerStyles = makeStyles(
-  ({ palette: MuiPalette, treasury }: TreasuryTheme) => ({
+  ({ treasury, ...theme }) => ({
     root: (props?: ShapeProps) => ({
       borderRadius: 100,
       boxShadow: `0 2px 8px 0 ${
@@ -13,10 +12,10 @@ export const useShapeStickerStyles = makeStyles(
           : "rgba(0,0,0,0.2)"
       }`,
       border: "4px solid",
-      borderColor: MuiPalette.background.paper,
+      borderColor: theme.palette.background.paper,
     }),
     text: {
-      backgroundColor: MuiPalette.background.paper,
+      backgroundColor: theme.palette.background.paper,
     },
   }),
   {

@@ -1,6 +1,7 @@
 {
   "extends": "./tsconfig.build.json",
   "include": ["packages", "types", "scripts", ".storybook/preview.tsx"],
+  "exclude": ["node_modules", "dist"],
   "compilerOptions": {
     "module": "CommonJS",
     "target": "es2018",
