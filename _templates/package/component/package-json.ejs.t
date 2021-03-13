@@ -4,12 +4,13 @@ unless_exists: true
 ---
 {
   "name": "@mui-treasury/<%=name%>",
-  "version": "0.0.0-development.0",
-  "description": "> TODO: description",
+  "version": "0.0.0",
+  "description": "mui-treasury | <%=name%>",
   "author": "siriwatknp <siriwatkunaporn@gmail.com>",
   "homepage": "https://github.com/siriwatknp/mui-treasury-next#readme",
-  "license": "ISC",
+  "license": "MIT",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "publishConfig": {
     "access": "public"
   },
@@ -19,12 +20,14 @@ unless_exists: true
   },
   "scripts": {
     "test": "jest --verbose",
-    "build": "rimraf dist && tsc -p tsconfig.build.json"
+    "compile-js": "rimraf javascript && tsc -p tsconfig.js.json",
+    "compile-js:watch": "tsc -p tsconfig.js.json --watch",
+    "clean": "rimraf dist",
+    "build": "yarn clean && tsc -p tsconfig.build.json",
+    "prepare-dist": "ts-node ../../scripts/prerelease.ts component",
+    "prepublishOnly": "yarn build && yarn prepare-dist"
   },
   "bugs": {
     "url": "https://github.com/siriwatknp/mui-treasury-next/issues"
-  },
-  "peerDependencies": {
-    "@material-ui/core": ">=4"
   }
 }

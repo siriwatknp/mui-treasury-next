@@ -1,9 +1,9 @@
 import React from "react";
 import cx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import { useThemeProps } from "@mui-treasury/theme-treasury";
+import { getThemeProps, useTheme } from '@material-ui/styles';
 const MUI_SHAPE = "MuiShape";
-const useStyles = makeStyles(({ shape, treasury }) => ({
+const useStyles = makeStyles(({ treasury, ...theme }) => ({
     root: {
         display: "inline-flex",
         justifyContent: "center",
@@ -12,7 +12,7 @@ const useStyles = makeStyles(({ shape, treasury }) => ({
         minHeight: 24,
         verticalAlign: "middle",
         flexShrink: 0,
-        borderRadius: shape.borderRadius,
+        borderRadius: theme.shape.borderRadius,
     },
     circular: {
         borderRadius: 100,
@@ -38,7 +38,8 @@ const useStyles = makeStyles(({ shape, treasury }) => ({
     }),
 }), { name: MUI_SHAPE });
 export const Shape = ({ children, useStyles: useCustomStyles = () => ({}), ...externalProps }) => {
-    const { fill = "text", palette, circular, outlined, ...props } = useThemeProps(MUI_SHAPE, externalProps);
+    const theme = useTheme();
+    const { fill = "text", palette, circular, outlined, ...props } = getThemeProps({ name: MUI_SHAPE, props: externalProps, theme });
     const styles = useStyles({ ...props, palette });
     const customStyles = useCustomStyles?.({ ...props, palette });
     return (<div className={cx(styles.root, circular && styles.circular, outlined && styles.outlined, fill && styles[fill], props.size && styles.size, 

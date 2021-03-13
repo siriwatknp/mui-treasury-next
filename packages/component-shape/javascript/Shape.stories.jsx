@@ -21,18 +21,19 @@ export default {
             },
         },
     },
+    args: {
+        fill: 'text',
+    },
     parameters: {
         layout: 'centered',
     },
 };
 export const Palette = args => {
     const parsedSize = args.size ? Number(args.size) || args.size : undefined;
+    console.log(parsedSize);
     return (<Shape {...args} size={parsedSize}>
       <Add fontSize="large"/>
     </Shape>);
-};
-Palette.args = {
-// palette: 'primary',
 };
 export const Solid = args => {
     const parsedSize = args.size ? Number(args.size) || args.size : undefined;

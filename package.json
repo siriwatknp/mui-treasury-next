@@ -40,8 +40,10 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "build": "lerna run build",
+    "compile-js": "yarn build && lerna run compile-js",
     "clean": "lerna run clean",
-    "new:package": "hygen package base",
+    "init:component": "hygen package component",
+    "init:style": "hygen package style",
     "dev:cli": "yarn workspace mui-treasury run dev"
   }
 }
