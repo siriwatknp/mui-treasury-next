@@ -28,6 +28,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: "12"
-      - run: HUSKY_SKIP_HOOKS=1 lerna publish --yes --contents dist
+      - run: lerna publish alpha --no-commit-hooks --yes --contents dist
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
