@@ -7,7 +7,7 @@ declare module "@material-ui/core/styles/createMuiTheme" {
 
 declare module "@material-ui/core/styles/overrides" {
   interface ComponentNameToClassKey {
-    MuiShape: Extract<ShapeClassKey, 'root' | 'circular'>;
+    MuiShape: Extract<ShapeClassKey, "root" | "circular">;
   }
 }
 
