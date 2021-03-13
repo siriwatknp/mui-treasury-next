@@ -25,6 +25,11 @@ jobs:
         run: yarn
       - name: Build
         run: yarn build
+      - name: Configure Git
+        run: |
+          git config --local user.email "ci@github-actions.com"
+          git config --local user.name "github bot"
+          git remote -v
       - uses: actions/setup-node@v1
         with:
           node-version: "12"
