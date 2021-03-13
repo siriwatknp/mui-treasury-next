@@ -7,5 +7,25 @@
     "conventionalCommits": true,
     "message": "chore(release): publish 🎉",
     "registry": "https://registry.npmjs.org"
+  },
+  "changelog": {
+    "ignoreCommitters": [
+      "allcontributors",
+      "dependabot-bot",
+      "dependabot[bot]",
+      "greenkeeperio-bot",
+      "greenkeeper[bot]",
+      "renovate-bot",
+      "renovate[bot]"
+    ],
+    "labels": {
+      "PR: Breaking Change :boom:": ":boom: Breaking Change",
+      "PR: Bug Fix :bug:": ":bug: Bug Fix",
+      "PR: Docs :memo:": ":memo: Docs",
+      "PR: New Feature :rocket:": ":rocket: New Feature",
+      "PR: Performance :zap:": ":zap: Performance",
+      "PR: Refactor :bulb:": ":bulb: Refactor",
+      "PR: Style :lipstick:": ":lipstick: Style"
+    }
   }
 }
