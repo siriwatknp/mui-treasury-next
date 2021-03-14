@@ -4,7 +4,7 @@ import { ShapeProps } from "@mui-treasury/component-shape";
 
 export const useShapeStickerStyles = makeStyles(
   ({ treasury, ...theme }) => ({
-    root: (props: Pick<ShapeProps, 'palette'>) => ({
+    root: (props: Pick<ShapeProps, "palette">) => ({
       borderRadius: 100,
       boxShadow: `0 2px 8px 0 ${
         props?.palette
@@ -23,5 +23,7 @@ export const useShapeStickerStyles = makeStyles(
   }
 );
 
-export type ShapeStickerClassKey = keyof ReturnType<typeof useShapeStickerStyles>;
+export type ShapeStickerClassKey = keyof ReturnType<
+  typeof useShapeStickerStyles
+>;
 export type ShapeStickerClasses = Partial<Record<ShapeStickerClassKey, string>>;
