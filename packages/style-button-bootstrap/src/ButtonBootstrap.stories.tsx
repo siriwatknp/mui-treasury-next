@@ -7,7 +7,9 @@ export default {
   title: "Component/Button/Bootstrap",
   component: Button,
   argTypes: {},
-  args: {},
+  args: {
+    disableTouchRipple: true,
+  },
   parameters: {
     layout: "centered",
   },

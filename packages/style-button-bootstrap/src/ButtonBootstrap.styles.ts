@@ -30,6 +30,9 @@ export const ButtonBootstrapStyles = ({ palette }: Theme) =>
       },
     },
     containedPrimary: {
+      "&:active": {
+        backgroundColor: palette.primary.dark,
+      },
       "&:focus": {
         boxShadow: `0 0 0 0.25rem ${palette.primary.light}`,
       },
@@ -39,6 +42,9 @@ export const ButtonBootstrapStyles = ({ palette }: Theme) =>
       },
     },
     containedSecondary: {
+      "&:active": {
+        backgroundColor: palette.secondary.dark,
+      },
       "&:focus": {
         boxShadow: `0 0 0 0.25rem ${fade(palette.secondary.light, 0.6)}`,
       },

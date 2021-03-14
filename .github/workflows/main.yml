@@ -45,6 +45,10 @@ jobs:
       - name: Install dependencies
         run: yarn
 
+      # some packages need dependencies to be built first to get the types
+      - name: Prepare dependencies for individual build
+        run: yarn prepare-deps
+
       # lerna will run prepublishOnly that contains build script
       # --no-verify-access is to fix 403 from npm because NPM_TOKEN is for automation
       - run: lerna publish prerelease --no-commit-hooks --yes --no-verify-access --contents dist
