@@ -3,7 +3,7 @@ import { Story, Meta } from "@storybook/react/types-6-0";
 import { treasuryPalette } from "@mui-treasury/theme-treasury";
 import { Shape, ShapeProps } from "@mui-treasury/component-shape";
 
-import { useShapeStickerStyles } from "./ShapeSticker2.styles";
+import { useShapeStickerStyles } from "./ShapeSticker.styles";
 
 import Add from "@material-ui/icons/Add";
 

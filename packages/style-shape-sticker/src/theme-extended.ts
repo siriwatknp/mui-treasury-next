@@ -1,5 +1,5 @@
 import { ExtendedThemeOutput } from "@mui-treasury/theme-treasury";
-import { ShapeStickerClassKey } from "./ShapeSticker2.styles";
+import { ShapeStickerClassKey } from "./ShapeSticker.styles";
 
 declare module "@material-ui/core/styles/createMuiTheme" {
   interface Theme extends ExtendedThemeOutput {}

@@ -1,1 +1,1 @@
-export * from "./ShapeSticker2.styles";
+export * from "./ShapeSticker.styles";
