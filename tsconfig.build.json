@@ -11,5 +11,11 @@
     "resolveJsonModule": true,
     "moduleResolution": "node"
   },
-  "exclude": ["node_modules", "**/*.test.*", "**/*.spec.*", "dist"]
+  "exclude": [
+    "node_modules",
+    "**/*.test.*",
+    "**/*.spec.*",
+    "**/*.stories.*",
+    "dist"
+  ]
 }
