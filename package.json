@@ -40,7 +40,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "build": "lerna run build",
-    "compile-js": "yarn build && lerna run compile-js",
+    "compile-js": "lerna run prepare-deps && lerna run compile-js",
     "clean": "lerna run clean",
     "init:component": "hygen package component",
     "init:style": "hygen package style",
