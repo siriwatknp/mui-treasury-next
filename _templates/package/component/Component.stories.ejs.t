@@ -2,9 +2,9 @@
 to: packages/<%=name%>/src/<%=h.toName(name)%>.stories.tsx
 unless_exists: true
 ---
-<%= Name=h.toName(name) %>import React from 'react';
+import React from 'react';
 import { Story, Meta } from '@storybook/react/types-6-0';
-import { <%=Name%>, <%=Name%>Props } from './<%=Name%>';
+import { <%= Name=h.toName(name) %>, <%=Name%>Props } from './<%=Name%>';
 
 export default {
   title: 'Component/<%=Name%>',

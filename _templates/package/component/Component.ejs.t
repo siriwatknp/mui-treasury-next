@@ -7,11 +7,9 @@ import cx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import { getThemeProps, useTheme } from '@material-ui/styles';
 
-<%= Name=h.toName(name) %>
-
 const NAME = "Mui<%=Name%>";
 const useStyles = makeStyles(
-  (theme) => ({
+  () => ({
     root: {},
   }),
   { name: NAME }
@@ -36,7 +34,7 @@ export const <%=Name%> = ({
   const customStyles = useCustomStyles?.(props);
   return (
     <div
-      className={cx(styles.root)}
+      className={cx(styles.root, customStyles?.root)}
     >
       {children}
     </div>
