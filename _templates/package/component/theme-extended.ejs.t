@@ -4,7 +4,7 @@ unless_exists: true
 ---
 import { <%= Name=h.toName(name) %>ClassKey, <%= Name %>Props } from "./<%= Name %>";
 // uncomment these lines if this style has @mui-treasury/theme-treasury as dependency
-// <%= Name=h.toName(name) %>import { ExtendedThemeOutput } from "@mui-treasury/theme-treasury";
+// import { ExtendedThemeOutput } from "@mui-treasury/theme-treasury";
 
 // declare module "@material-ui/core/styles/createMuiTheme" {
 //   interface Theme extends ExtendedThemeOutput {}
