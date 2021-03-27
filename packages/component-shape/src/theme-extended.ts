@@ -8,7 +8,7 @@ declare module "@material-ui/core/styles/createMuiTheme" {
 
 declare module "@material-ui/core/styles/components" {
   interface Components {
-    MuiShape?: {
+    TyShape?: {
       defaultProps?: Partial<ShapeProps>;
       styleOverrides?: Partial<StyleRules<ShapeClassKey>>;
     };

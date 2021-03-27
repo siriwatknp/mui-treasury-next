@@ -4,10 +4,10 @@ import {
 } from "@material-ui/unstyled";
 
 export function getShapeUtilityClass(slot: string) {
-  return generateUtilityClass("MuiShape", slot);
+  return generateUtilityClass("TyShape", slot);
 }
 
-export const shapeClasses = generateUtilityClasses("MuiShape", [
+export const shapeClasses = generateUtilityClasses("TyShape", [
   "root",
   "circular",
   "text",

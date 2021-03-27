@@ -14,11 +14,10 @@ const withThemeProvider = (Story: any, context: any) => {
           mode: prefersDarkMode ? "dark" : "light",
         },
         components: {
-          MuiShape: {
+          TyShape: {
             defaultProps: {
               // it works!
-              // @ts-ignore
-              test: "test",
+              "aria-label": "Yeah!",
             },
           },
         },

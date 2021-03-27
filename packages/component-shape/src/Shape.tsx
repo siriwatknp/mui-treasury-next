@@ -93,7 +93,7 @@ const ShapeRoot = styled(
   "div",
   {},
   {
-    name: "MuiShape",
+    name: "TyShape",
     slot: "Root",
     overridesResolver,
   }
@@ -151,7 +151,7 @@ export const Shape = React.forwardRef<any, ShapeProps>(function Shape(
     outlined,
     size,
     ...props
-  } = useThemeProps({ props: inProps, name: "MuiShape" }) as ShapeProps;
+  } = useThemeProps({ props: inProps, name: "TyShape" }) as ShapeProps;
 
   const styleProps = {
     fill,
