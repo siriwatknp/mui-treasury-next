@@ -11,7 +11,7 @@ const withThemeProvider = (Story: any, context: any) => {
     () =>
       createTreasuryTheme({
         palette: {
-          type: prefersDarkMode ? "dark" : "light",
+          mode: prefersDarkMode ? "dark" : "light",
         },
         props: {
           MuiShape: {},

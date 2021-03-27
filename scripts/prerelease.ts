@@ -1,10 +1,15 @@
 import { promises as fsp } from "fs";
+import commander from "commander";
 import cpy from "cpy";
 import { set } from "edit-package-json";
 
 const PUBLISH_DIR = "dist";
 
 type PackageType = "cli" | "theme" | "component" | "style";
+
+const program = new commander.Command();
+
+program.command("type <>");
 
 async function run() {
   // ts-node  prerelease.ts  component
