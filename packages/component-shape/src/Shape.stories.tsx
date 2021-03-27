@@ -1,22 +1,22 @@
-import React from 'react';
-import { Story, Meta } from '@storybook/react/types-6-0';
-import { treasuryPalette } from '@mui-treasury/theme-treasury';
-import { Shape, ShapeProps } from './Shape';
+import React from "react";
+import { Story, Meta } from "@storybook/react/types-6-0";
+import { treasuryPalette } from "@mui-treasury/theme-treasury";
+import { Shape, ShapeProps } from "./Shape";
 
-import Add from '@material-ui/icons/Add';
+import Add from "@material-ui/icons/Add";
 
 export default {
-  title: 'Component/Shape',
+  title: "Component/Shape",
   component: Shape,
   argTypes: {
     palette: {
       control: {
-        type: 'select',
+        type: "select",
         options: Object.keys(treasuryPalette),
       },
     },
     size: {
-      control: 'text',
+      control: "text",
     },
     classes: {
       table: {
@@ -25,17 +25,16 @@ export default {
     },
   },
   args: {
-    fill: 'text',
+    fill: "text",
   },
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
 } as Meta;
 
-export const Palette: Story<ShapeProps> = args => {
+export const Palette: Story<ShapeProps> = (args) => {
   const parsedSize = args.size ? Number(args.size) || args.size : undefined;
-  console.log(parsedSize);
-  
+
   return (
     <Shape {...args} size={parsedSize}>
       <Add fontSize="large" />
@@ -43,7 +42,7 @@ export const Palette: Story<ShapeProps> = args => {
   );
 };
 
-export const Solid: Story<ShapeProps> = args => {
+export const Solid: Story<ShapeProps> = (args) => {
   const parsedSize = args.size ? Number(args.size) || args.size : undefined;
   return (
     <Shape {...args} size={parsedSize}>
@@ -52,10 +51,10 @@ export const Solid: Story<ShapeProps> = args => {
   );
 };
 Solid.args = {
-  fill: 'solid',
+  fill: "solid",
 };
 
-export const Soft: Story<ShapeProps> = args => {
+export const Soft: Story<ShapeProps> = (args) => {
   const parsedSize = args.size ? Number(args.size) || args.size : undefined;
   return (
     <Shape {...args} size={parsedSize}>
@@ -64,11 +63,11 @@ export const Soft: Story<ShapeProps> = args => {
   );
 };
 Soft.args = {
-  fill: 'soft',
-  palette: 'error',
+  fill: "soft",
+  palette: "error",
 };
 
-export const Circle: Story<ShapeProps> = args => {
+export const Circle: Story<ShapeProps> = (args) => {
   const parsedSize = args.size ? Number(args.size) || args.size : undefined;
   return (
     <Shape {...args} size={parsedSize}>
@@ -78,10 +77,10 @@ export const Circle: Story<ShapeProps> = args => {
 };
 Circle.args = {
   circular: true,
-  fill: 'solid',
+  fill: "solid",
 };
 
-export const Outlined: Story<ShapeProps> = args => {
+export const Outlined: Story<ShapeProps> = (args) => {
   const parsedSize = args.size ? Number(args.size) || args.size : undefined;
   return (
     <Shape {...args} size={parsedSize}>
@@ -93,23 +92,23 @@ Outlined.args = {
   outlined: true,
 };
 
-export const Sizes: Story<ShapeProps> = args => {
+export const Sizes: Story<ShapeProps> = (args) => {
   return (
-    <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+    <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
       <Shape {...args} size={20}>
         <Add fontSize="small" />
       </Shape>
       <Shape {...args}>
         <Add />
       </Shape>
-      <Shape {...args} size={'3rem'}>
+      <Shape {...args} size={"3rem"}>
         <Add fontSize="large" />
       </Shape>
     </div>
   );
 };
 Sizes.args = {
-  fill: 'solid',
+  fill: "solid",
 };
 Sizes.argTypes = {
   size: {

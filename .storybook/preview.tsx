@@ -13,11 +13,14 @@ const withThemeProvider = (Story: any, context: any) => {
         palette: {
           mode: prefersDarkMode ? "dark" : "light",
         },
-        props: {
-          MuiShape: {},
-        },
-        overrides: {
-          MuiShape: {},
+        components: {
+          MuiShape: {
+            defaultProps: {
+              // it works!
+              // @ts-ignore
+              test: "test",
+            },
+          },
         },
       }),
     [prefersDarkMode]

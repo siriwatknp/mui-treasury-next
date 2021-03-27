@@ -1,114 +1,177 @@
-import React, { PropsWithChildren } from "react";
+import React, { Ref } from "react";
 import cx from "clsx";
-import { makeStyles } from "@material-ui/core/styles";
-import { getThemeProps, useTheme } from '@material-ui/styles';
+import { experimentalStyled as styled, Theme } from "@material-ui/core/styles";
 import { Palette } from "@mui-treasury/theme-treasury";
+import { unstable_composeClasses as composeClasses } from "@material-ui/unstyled";
+import { SxProps } from "@material-ui/system";
+import { deepmerge } from "@material-ui/utils";
+import useThemeProps from "@material-ui/core/styles/useThemeProps";
+import { OverrideProps } from "@material-ui/core/OverridableComponent";
+import { InternalStandardProps } from "@material-ui/core";
+import { getShapeUtilityClass, shapeClasses } from "./shapeClasses";
 
-const MUI_SHAPE = "MuiShape";
-const useStyles = makeStyles(
-  ({ treasury, ...theme }) => ({
-    root: {
-      display: "inline-flex",
-      justifyContent: "center",
-      alignItems: "center",
-      minWidth: 24,
-      minHeight: 24,
-      verticalAlign: "middle",
-      flexShrink: 0,
-      borderRadius: theme.shape.borderRadius,
+export type ShapeClassKey = keyof typeof shapeClasses;
+export type ShapeClasses = Partial<typeof shapeClasses>;
+
+export interface ShapeTypeMap<D extends React.ElementType = "div", P = {}> {
+  props: P &
+    InternalStandardProps<
+      Omit<JSX.IntrinsicElements["div"], "ref"> & { ref?: Ref<HTMLDivElement> }
+    > & {
+      /**
+       * Fill pattern. Use "primary" color, if "palette" prop is not specified
+       */
+      fill?: "text" | "solid" | "soft";
+
+      /**
+       * If `true`, create border around component
+       */
+      outlined?: boolean;
+
+      /**
+       * If `true`, this element has border-radius ⃝
+       */
+      circular?: boolean;
+
+      /**
+       * The color of the element, rely on @mui-treasury/theme-treasury
+       */
+      palette?: Palette;
+
+      /**
+       * Dynamic size of the element (number is px). Ex. 100 | "2rem"
+       */
+      size?: number | string;
+
+      /**
+       * Override or extend the styles applied to the component.
+       */
+      classes?: ShapeClasses;
+
+      /**
+       * The system prop that allows defining system overrides as well as additional CSS styles.
+       */
+      sx?: SxProps<Theme>;
+    };
+  defaultComponent: D;
+}
+export type ShapeProps<
+  D extends React.ElementType = "div",
+  P = {}
+> = OverrideProps<ShapeTypeMap<D, P>, D>;
+
+// todo: What is the type of styleProps?
+// todo: cannot use type Record<string, object> for styles arg
+const overridesResolver = (props: any, styles: string | object) => {
+  const { styleProps } = props;
+
+  return deepmerge(
+    {
+      // @ts-ignore
+      ...styles[styleProps.fill],
+      // @ts-ignore
+      ...(styleProps.circular && styles.circular),
+      // @ts-ignore
+      ...(styleProps.outlined && styles.outlined),
+      // @ts-ignore
     },
-    circular: {
+    // @ts-ignore
+    styles.root || {}
+  );
+};
+
+// todo: What is the type of styleProps?
+const useUtilityClasses = (styleProps: any) => {
+  const { fill, outlined, circular, classes } = styleProps;
+  const slots = {
+    root: ["root", fill, outlined, circular],
+  };
+  return composeClasses(slots, getShapeUtilityClass, classes);
+};
+
+const ShapeRoot = styled(
+  "div",
+  {},
+  {
+    name: "MuiShape",
+    slot: "Root",
+    overridesResolver,
+  }
+)(function ({
+  // todo: throw error if consumer does not use theme-treasury
+  // @ts-ignore
+  theme: { treasury, ...theme },
+  styleProps: { circular, outlined, palette, fill, size },
+}: {
+  theme?: Theme;
+  styleProps: ShapeProps;
+}) {
+  return {
+    display: "inline-flex",
+    justifyContent: "center",
+    alignItems: "center",
+    minWidth: 24,
+    minHeight: 24,
+    verticalAlign: "middle",
+    flexShrink: 0,
+    borderRadius: theme.shape.borderRadius,
+    ...(size && {
+      minWidth: size,
+      minHeight: size,
+    }),
+    ...(circular && {
       borderRadius: 100,
-    },
-    text: ({ palette }: ShapeProps) => ({
-      color: treasury.getColor(palette, "500"),
     }),
-    solid: ({ palette }: ShapeProps) => ({
-      color: "#fff",
-      backgroundColor: treasury.getColor(palette, "500"),
-    }),
-    soft: ({ palette }: ShapeProps) => ({
-      color: treasury.getColor(palette, "500"),
-      backgroundColor: treasury.getColor(palette ?? "grey", "100"),
-    }),
-    outlined: ({ palette }: ShapeProps) => ({
+    ...(outlined && {
       border: "1px solid",
       borderColor: treasury.getColor(palette, "500"),
     }),
-    size: (props: ShapeProps) => ({
-      minWidth: props.size,
-      minHeight: props.size,
+    ...(fill === "text" && {
+      color: treasury.getColor(palette, "500"),
     }),
-  }),
-  { name: MUI_SHAPE }
-);
+    ...(fill === "solid" && {
+      color: "#fff",
+      backgroundColor: treasury.getColor(palette, "500"),
+    }),
+    ...(fill === "soft" && {
+      color: treasury.getColor(palette, "500"),
+      backgroundColor: treasury.getColor(palette ?? "grey", "100"),
+    }),
+  };
+});
 
-export type ShapeClassKey = keyof ReturnType<typeof useStyles>;
-export type ShapeClasses = Partial<Record<ShapeClassKey, string>>;
-export type ShapeProps = {
-  /**
-   * Fill pattern. Use "primary" color, if "palette" prop is not specified
-   */
-  fill?: "text" | "solid" | "soft";
-
-  /**
-   * If `true`, create border around component
-   */
-  outlined?: boolean;
-
-  /**
-   * If `true`, this element has border-radius ⃝
-   */
-  circular?: boolean;
-
-  /**
-   * The color of the element, rely on @mui-treasury/theme-treasury
-   */
-  palette?: Palette;
-
-  /**
-   * Dynamic size of the element (number is px). Ex. 100 | "2rem"
-   */
-  size?: number | string;
-
-  classes?: ShapeClasses;
-};
-
-export const Shape = ({
-  children,
-  useStyles: useCustomStyles = () => ({}),
-  ...externalProps
-}: PropsWithChildren<ShapeProps> & {
-  useStyles?: (props: ShapeProps) => ShapeClasses;
-}) => {
-  const theme = useTheme();
+export const Shape = React.forwardRef<any, ShapeProps>(function Shape(
+  { children, ...inProps },
+  ref
+) {
   const {
     fill = "text",
     palette,
     circular,
     outlined,
+    size,
     ...props
-  } = getThemeProps({ name: MUI_SHAPE, props: externalProps, theme });
-  const styles = useStyles({ ...props, palette });
-  const customStyles = useCustomStyles?.({ ...props, palette });
-  return (
-    <div
-      className={cx(
-        styles.root,
-        circular && styles.circular,
-        outlined && styles.outlined,
-        fill && styles[fill],
-        props.size && styles.size,
+  } = useThemeProps({ props: inProps, name: "MuiShape" }) as ShapeProps;
 
-        // custom styles from outside
-        customStyles?.root,
-        circular && customStyles?.circular,
-        outlined && customStyles?.outlined,
-        fill && customStyles?.[fill],
-        props.size && customStyles?.size
-      )}
+  const styleProps = {
+    fill,
+    palette,
+    circular,
+    outlined,
+    size,
+    ...props,
+  };
+
+  const classes = useUtilityClasses(styleProps);
+
+  return (
+    <ShapeRoot
+      ref={ref}
+      {...props}
+      styleProps={styleProps}
+      className={cx(classes.root, props.className)}
     >
       {children}
-    </div>
+    </ShapeRoot>
   );
-};
+});
