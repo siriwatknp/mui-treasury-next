@@ -2,7 +2,7 @@ import {
   createStyles,
   makeStyles,
   Theme,
-  fade,
+  alpha,
 } from "@material-ui/core/styles";
 
 export const ButtonBootstrapStyles = ({ palette }: Theme) =>
@@ -46,7 +46,7 @@ export const ButtonBootstrapStyles = ({ palette }: Theme) =>
         backgroundColor: palette.secondary.dark,
       },
       "&:focus": {
-        boxShadow: `0 0 0 0.25rem ${fade(palette.secondary.light, 0.6)}`,
+        boxShadow: `0 0 0 0.25rem ${alpha(palette.secondary.light, 0.6)}`,
       },
       "&.Mui-disabled": {
         color: "#fff",
@@ -80,7 +80,7 @@ export const ButtonBootstrapStyles = ({ palette }: Theme) =>
         color: "#fff",
       },
       "&:focus": {
-        boxShadow: `0 0 0 0.25rem ${fade(palette.secondary.light, 0.6)}`,
+        boxShadow: `0 0 0 0.25rem ${alpha(palette.secondary.light, 0.6)}`,
       },
       "&.Mui-disabled": {
         color: palette.secondary.main,
