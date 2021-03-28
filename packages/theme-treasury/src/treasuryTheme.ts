@@ -7,7 +7,7 @@ import {
 import {
   TreasuryPalette,
   TreasuryThemeOptions,
-  Swatches,
+  Swatch,
   TreasuryTheme,
   ExtendedThemeOutput,
 } from "./types";
@@ -21,7 +21,7 @@ const getMainColor = (
 export const getColor = (
   palette: Partial<TreasuryPalette> | undefined,
   name: keyof TreasuryPalette | undefined,
-  swatch: Swatches
+  swatch: Swatch
 ) => (palette && name ? palette?.[name]?.[swatch] ?? "" : "");
 
 export const light = {

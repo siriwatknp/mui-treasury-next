@@ -19,7 +19,7 @@ export type TreasuryPalette = typeof treasuryPalette;
 
 export type Palette = keyof TreasuryPalette;
 
-export type Swatches =
+export type Swatch =
   | "50"
   | "100"
   | "200"
@@ -31,7 +31,7 @@ export type Swatches =
   | "800"
   | "900";
 
-export type PaletteSwatches = Record<Swatches, string>;
+export type PaletteSwatch = Record<Swatch, string>;
 
 export type ExtendedThemeInput = {
   palette?: Partial<TreasuryPalette>;
@@ -41,11 +41,11 @@ export type ExtendedThemeOutput = {
   treasury: {
     getColor: (
       palette: keyof TreasuryPalette | undefined,
-      swatch: Swatches
+      swatch: Swatch
     ) => string;
     getContrastColor: (
       palette: keyof TreasuryPalette | undefined,
-      swatch: Swatches
+      swatch: Swatch
     ) => string;
   };
 };
