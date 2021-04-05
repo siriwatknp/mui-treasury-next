@@ -1,11 +1,9 @@
 import { Breakpoint } from "@material-ui/core/styles/createBreakpoints";
 import {
   DEFAULT_THEME,
-  INITIAL_HEADER_HEIGHT,
   LEFT_EDGE_SIDEBAR_ID,
   RIGHT_EDGE_SIDEBAR_ID,
 } from "../utils/constant";
-import { modifyObjectValues } from "../utils/modifyObjectValues";
 import { pickNearestBreakpoint } from "../utils/pickNearestBreakpoint";
 import { Responsive } from "../utils/types";
 import { EdgeSidebarBuilder } from "../EdgeSidebar/EdgeSidebarBuilder";
@@ -20,7 +18,7 @@ type HeaderBreakpointConfig = {
   clipped?:
     | boolean
     | Partial<Record<LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID, boolean>>;
-  initialHeight?: number | string;
+  height: number | string;
 };
 type HeaderSetupParams = {
   config: Responsive<HeaderBreakpointConfig>;
@@ -37,10 +35,7 @@ export class HeaderBuilder {
 
   constructor(params: HeaderSetupParams) {
     const { config, hidden } = params;
-    this._config = modifyObjectValues(config, (value, key) => ({
-      initialHeight: pickNearestBreakpoint(INITIAL_HEADER_HEIGHT, key),
-      ...value,
-    }));
+    this._config = config;
     this._hidden = hidden;
   }
 
@@ -91,7 +86,7 @@ export class HeaderBuilder {
     );
     for (const key of breakpoints) {
       const bp = key as Breakpoint;
-      result[bp] = this.isHidden(bp) ? 0 : this._config[bp]?.initialHeight;
+      result[bp] = this.isHidden(bp) ? 0 : this._config[bp]?.height;
     }
     return {
       ...(Object.keys(result).length && { height: result }),

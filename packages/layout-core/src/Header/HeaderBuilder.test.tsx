@@ -2,19 +2,12 @@ import { EdgeSidebarBuilder } from "../EdgeSidebar/EdgeSidebarBuilder";
 import { HeaderBuilder } from "./HeaderBuilder";
 
 describe("HeaderBuilder", () => {
-  it("process config to expected format", () => {
-    const header = new HeaderBuilder({
-      config: { xs: { position: "sticky" } },
-    });
-    expect(header._config).toEqual({
-      xs: { position: "sticky", initialHeight: 56 },
-    });
-  });
-
   describe("Clipped on EdgeSidebar", () => {
     it("clipped is true", () => {
       const header = new HeaderBuilder({
-        config: { xs: { position: "sticky", clipped: true } },
+        config: {
+          xs: { position: "sticky", clipped: true, height: 56 },
+        },
       });
       expect(header.isClipped("leftEdgeSidebar", "md")).toBeTruthy();
     });
@@ -22,7 +15,11 @@ describe("HeaderBuilder", () => {
     it("clipped is object of EdgeSidebar", () => {
       const header = new HeaderBuilder({
         config: {
-          md: { position: "sticky", clipped: { leftEdgeSidebar: true } },
+          md: {
+            position: "sticky",
+            clipped: { leftEdgeSidebar: true },
+            height: 56,
+          },
         },
       });
       expect(header.isClipped("leftEdgeSidebar", "lg")).toBeTruthy();
@@ -32,7 +29,7 @@ describe("HeaderBuilder", () => {
   describe("Margin", () => {
     it("return empty if no edgeSidebar provided", () => {
       const header = new HeaderBuilder({
-        config: { xs: { position: "sticky" } },
+        config: { xs: { position: "sticky", height: 56 } },
       });
       header._effectedBy = {
         leftEdgeSidebar: undefined,
@@ -42,7 +39,9 @@ describe("HeaderBuilder", () => {
     });
     it("no margin if clipped", () => {
       const header = new HeaderBuilder({
-        config: { xs: { position: "sticky", clipped: true } },
+        config: {
+          xs: { position: "sticky", clipped: true, height: 56 },
+        },
       });
       const leftEdgeSidebar = new EdgeSidebarBuilder({
         config: {
@@ -61,7 +60,7 @@ describe("HeaderBuilder", () => {
     });
     it("should have margin on the left", () => {
       const header = new HeaderBuilder({
-        config: { xs: { position: "sticky" } },
+        config: { xs: { position: "sticky", height: 56 } },
       });
       const leftEdgeSidebar = new EdgeSidebarBuilder({
         config: {
@@ -84,7 +83,7 @@ describe("HeaderBuilder", () => {
 
     it("should have margin on the right", () => {
       const header = new HeaderBuilder({
-        config: { xs: { position: "sticky" } },
+        config: { xs: { position: "sticky", height: 56 } },
       });
       const rightEdgeSidebar = new EdgeSidebarBuilder({
         config: {
@@ -109,7 +108,7 @@ describe("HeaderBuilder", () => {
   describe("Width", () => {
     it("return empty width if no edgeSidebar", () => {
       const header = new HeaderBuilder({
-        config: { xs: { position: "sticky" } },
+        config: { xs: { position: "sticky", height: 56 } },
       });
 
       expect(header.getWidth()).toEqual({});
@@ -117,7 +116,9 @@ describe("HeaderBuilder", () => {
 
     it("return fullWidth if clipped", () => {
       const header = new HeaderBuilder({
-        config: { xs: { position: "sticky", clipped: true } },
+        config: {
+          xs: { position: "sticky", height: 56, clipped: true },
+        },
       });
       const leftEdgeSidebar = new EdgeSidebarBuilder({
         config: {
@@ -137,7 +138,7 @@ describe("HeaderBuilder", () => {
 
     it("only leftEdgeSidebar with non clipped", () => {
       const header = new HeaderBuilder({
-        config: { xs: { position: "sticky" } },
+        config: { xs: { position: "sticky", height: 56 } },
       });
       const leftEdgeSidebar = new EdgeSidebarBuilder({
         config: {
@@ -158,7 +159,11 @@ describe("HeaderBuilder", () => {
     it("clipped left & non-clipped right edgeSidebars", () => {
       const header = new HeaderBuilder({
         config: {
-          xs: { position: "sticky", clipped: { leftEdgeSidebar: true } },
+          xs: {
+            position: "sticky",
+            height: 56,
+            clipped: { leftEdgeSidebar: true },
+          },
         },
       });
       const leftEdgeSidebar = new EdgeSidebarBuilder({
@@ -193,6 +198,7 @@ describe("HeaderBuilder", () => {
         config: {
           xs: {
             position: "relative",
+            height: 56,
           },
         },
       });
@@ -229,7 +235,7 @@ describe("HeaderBuilder", () => {
     it("left & right edgeSidebars", () => {
       const header = new HeaderBuilder({
         config: {
-          xs: { position: "sticky" },
+          xs: { position: "sticky", height: 56 },
         },
       });
       const leftEdgeSidebar = new EdgeSidebarBuilder({
@@ -278,11 +284,11 @@ describe("HeaderBuilder", () => {
   });
 
   describe("Height", () => {
-    it("get correct height if no initialHeight", () => {
+    it("get correct height if no height", () => {
       const header = new HeaderBuilder({
         config: {
-          xs: { position: "sticky" },
-          md: { position: "relative" },
+          xs: { position: "sticky", height: 56 },
+          md: { position: "relative", height: 64 },
         },
       });
       expect(header.getHeight()).toEqual({ height: { xs: 56, md: 64 } });
@@ -291,8 +297,8 @@ describe("HeaderBuilder", () => {
     it("hidden in some breakpoint", () => {
       const header = new HeaderBuilder({
         config: {
-          xs: { position: "sticky" },
-          md: { position: "relative", initialHeight: 80 },
+          xs: { position: "sticky", height: 56 },
+          md: { position: "relative", height: 80 },
         },
         hidden: ["sm"],
       });
@@ -306,6 +312,7 @@ describe("HeaderBuilder", () => {
         config: {
           xs: {
             position: "sticky",
+            height: 56,
             clipped: {
               rightEdgeSidebar: true,
             },
@@ -313,6 +320,7 @@ describe("HeaderBuilder", () => {
           md: {
             position: "fixed",
             clipped: false,
+            height: 64,
           },
         },
       });
@@ -350,7 +358,7 @@ describe("HeaderBuilder", () => {
     it("Header with LeftEdgeSidebar", () => {
       const header = new HeaderBuilder({
         config: {
-          xs: { position: "sticky", initialHeight: 56 },
+          xs: { position: "sticky", height: 56 },
         },
       });
       const leftEdgeSidebar = new EdgeSidebarBuilder({
@@ -389,7 +397,7 @@ describe("HeaderBuilder", () => {
     it("Header with Left & Right EdgeSidebar", () => {
       const header = new HeaderBuilder({
         config: {
-          xs: { position: "sticky", initialHeight: 56 },
+          xs: { position: "sticky", height: 56 },
         },
       });
       const leftEdgeSidebar = new EdgeSidebarBuilder({

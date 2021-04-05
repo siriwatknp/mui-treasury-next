@@ -285,6 +285,7 @@ describe("EdgeSidebarBuilder", () => {
           xs: {
             position: "sticky",
             clipped: true,
+            height: 56,
           },
         },
       });
@@ -314,12 +315,14 @@ describe("EdgeSidebarBuilder", () => {
       config: {
         xs: {
           position: "sticky",
+          height: 56,
           clipped: {
             rightEdgeSidebar: true,
           },
         },
         md: {
           position: "sticky",
+          height: 64,
           clipped: {
             leftEdgeSidebar: true,
           },
