@@ -1,9 +1,9 @@
 import React, { PropsWithChildren, ReactElement, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { getThemeProps, useTheme } from "@material-ui/styles";
 import useAutocomplete, {
+  AutocompleteGroupedOption,
   UseAutocompleteProps,
-} from "@material-ui/lab/useAutocomplete";
+} from "@material-ui/core/useAutocomplete";
 import { ComboBoxContext, AnchorContext } from "./ComboBoxContext";
 import {
   ComboAnchor,
@@ -60,7 +60,9 @@ export function ComboBox<
       | {
           groupBy?: never;
           renderGroupedOptions?: never;
-          renderOptions: (options: T[]) => ReactElement | null;
+          renderOptions: (
+            options: T[] | AutocompleteGroupedOption<T>[]
+          ) => ReactElement | null;
         }
     )
 >) {

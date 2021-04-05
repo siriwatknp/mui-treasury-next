@@ -7,8 +7,6 @@
     "target": "es2018",
     "lib": ["dom", "esnext"],
     "importHelpers": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "allowJs": true,
