@@ -41,6 +41,9 @@ export const Development = () => {
           config: {
             xs: {
               position: "relative",
+              clipped: {
+                leftEdgeSidebar: true,
+              },
             },
           },
         }),
@@ -54,17 +57,18 @@ export const Development = () => {
               variant: "permanent",
               width: 256,
               collapsible: false,
-              // persistentBehavior: "none",
+              // persistentBehavior: "fit",
             },
             lg: {
               variant: "permanent",
               width: 256,
               collapsible: true,
               collapsedWidth: 80,
+              autoExpanded: true,
             },
           },
           autoCollapse: "lg",
-          hidden: ["md"],
+          // hidden: ["md"],
         }),
         rightEdgeSidebar: new EdgeSidebarBuilder({
           config: {
@@ -74,6 +78,7 @@ export const Development = () => {
               persistentBehavior: "fit",
             },
           },
+          hidden: ["xs", "sm"],
         }),
       }}
       initialState={{ rightEdgeSidebar: { open: true } }}

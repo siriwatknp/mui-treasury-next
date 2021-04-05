@@ -23,6 +23,10 @@ export type EdgeSidebarConfig =
 export interface CollapsibleSidebarConfig {
   collapsible?: boolean;
   collapsedWidth?: number | string;
+  uncollapsedOnHover?: boolean;
+  /**
+   * @deprecated autoExpanded will be remove in the next major version, use 'uncollapsedOnHover' instead
+   */
   autoExpanded?: boolean;
   width: number | string;
   headerMagnetEnabled?: boolean;
@@ -101,14 +105,6 @@ export class EdgeSidebarBuilder {
               result[bp] = 0;
             }
             // do nothing for xs because temporary variant will be modal
-          } else {
-            if (process.env.NODE_ENV === "development") {
-              if (!breakpointConfig?.collapsible && this._state?.collapsed) {
-                console.warn(
-                  `[Dev] at: ${bp}. the state of the sidebar is collapsed but the config is not set to { collapsible: true }. Check your config.`
-                );
-              }
-            }
           }
           if (EdgeSidebarBuilder.isPersistentConfig(breakpointConfig)) {
             if (this._state?.open) {

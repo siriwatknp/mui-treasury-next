@@ -2,9 +2,10 @@ import { Breakpoint } from "@material-ui/core/styles/createBreakpoints";
 import { BREAKPOINT_KEYS } from "./muiBreakpoints";
 
 export const pickNearestBreakpoint = <T>(
-  value: Partial<Record<Breakpoint, T>>,
-  currentBreakpoint: Breakpoint
+  value?: Partial<Record<Breakpoint, T>>,
+  currentBreakpoint?: Breakpoint
 ): T | undefined => {
+  if (!value || !currentBreakpoint) return undefined;
   const breakpointIndex = BREAKPOINT_KEYS.indexOf(currentBreakpoint);
   if (breakpointIndex === -1) {
     throw new Error(
