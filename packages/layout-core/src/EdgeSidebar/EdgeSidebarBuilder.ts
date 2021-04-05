@@ -45,26 +45,28 @@ export interface TemporarySidebarConfig {
 export type EdgeSidebarSetupParams = {
   config: Responsive<EdgeSidebarConfig>;
   hidden?: boolean | Breakpoint[];
+  autoCollapse?: Breakpoint;
 };
 
 export type SidebarState = {
   collapsed?: boolean;
   open?: boolean;
 };
-
 export class EdgeSidebarBuilder {
   _id: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID | "" = "";
   readonly _config: EdgeSidebarSetupParams["config"];
   readonly _hidden: EdgeSidebarSetupParams["hidden"];
+  readonly _autoCollapse: EdgeSidebarSetupParams["autoCollapse"];
   _state?: SidebarState;
   _effectedBy: {
     header?: HeaderBuilder;
   } = {};
 
   constructor(params: EdgeSidebarSetupParams) {
-    const { config, hidden = false } = params;
+    const { config, hidden = false, autoCollapse } = params;
     this._config = config;
     this._hidden = hidden;
+    this._autoCollapse = autoCollapse;
   }
 
   setState(state: SidebarState) {

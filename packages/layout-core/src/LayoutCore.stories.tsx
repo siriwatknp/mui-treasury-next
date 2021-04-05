@@ -63,6 +63,7 @@ export const Development = () => {
               collapsedWidth: 80,
             },
           },
+          autoCollapse: "lg",
           hidden: ["md"],
         }),
         rightEdgeSidebar: new EdgeSidebarBuilder({

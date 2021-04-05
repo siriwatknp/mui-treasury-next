@@ -7,7 +7,6 @@
     "target": "es2018",
     "lib": ["dom", "esnext"],
     "importHelpers": true,
-    "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "allowJs": true,
     "typeRoots": ["./node_modules/@types", "./types"],
