@@ -63,7 +63,7 @@ export const Development = () => {
               variant: "permanent",
               width: 256,
               collapsible: false,
-              // persistentBehavior: "fit",
+              headerMagnetEnabled: true,
             },
             lg: {
               variant: "permanent",

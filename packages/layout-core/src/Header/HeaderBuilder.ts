@@ -74,20 +74,30 @@ export class HeaderBuilder {
     return !!clipped?.leftEdgeSidebar || !!clipped?.rightEdgeSidebar;
   }
 
-  isHidden(breakpoint: Breakpoint) {
-    if (!this._hidden) return false;
-    if (typeof this._hidden === "boolean" && this._hidden) return true;
-    return this._hidden.includes(breakpoint);
-  }
-
-  getClippedHeight() {
+  getClippedRelativeHeight(
+    sidebarId: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID
+  ) {
     return generateSxWithHidden(
       {
         config: this._config,
         hidden: this._hidden,
       },
-      (breakpointConfig) =>
-        breakpointConfig?.clipped ? breakpointConfig?.height : 0
+      (breakpointConfig, bp) =>
+        this.isClipped(sidebarId, bp) &&
+        breakpointConfig.position === "relative"
+          ? toValidCssValue(breakpointConfig.height)
+          : "0px"
+    );
+  }
+
+  getClippedHeight(sidebarId: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID) {
+    return generateSxWithHidden(
+      {
+        config: this._config,
+        hidden: this._hidden,
+      },
+      (breakpointConfig, bp) =>
+        this.isClipped(sidebarId, bp) ? breakpointConfig?.height : 0
     );
   }
 

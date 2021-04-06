@@ -144,7 +144,7 @@ export class EdgeSidebarBuilder {
   }
 
   getDrawerVariant() {
-    return generateSx(this._config, "variant");
+    return generateSx(this._config, "variant") as Responsive<DrawerVariant>;
   }
 
   getSxProps(theme = DEFAULT_THEME) {

@@ -36,7 +36,7 @@ describe("HeaderBuilder", () => {
         },
         hidden: ["sm"],
       });
-      expect(header.getClippedHeight()).toEqual({
+      expect(header.getClippedHeight("leftEdgeSidebar")).toEqual({
         xs: 56,
         sm: 0,
         md: 0,

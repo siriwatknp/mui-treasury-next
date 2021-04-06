@@ -10,8 +10,13 @@ import {
   CollapsibleSidebarConfig,
   EdgeSidebarConfig,
 } from "./EdgeSidebarBuilder";
-import { EDGE_SIDEBAR_EXPAND_DELAY } from "../utils/constant";
+import {
+  EDGE_SIDEBAR_EXPAND_DELAY,
+  LEFT_EDGE_SIDEBAR_ID,
+  RIGHT_EDGE_SIDEBAR_ID,
+} from "../utils/constant";
 import { EdgeSidebarOffsetCompiler } from "./EdgeSidebarOffsetCompiler";
+import useEdgeHeaderMagnet from "../hooks/useEdgeHeaderMagnet";
 
 export type EdgeSidebarProps = { anchor: "left" | "right" } & Omit<
   DrawerProps,
@@ -30,11 +35,29 @@ const hasAutoExpanded = (
   );
 };
 
-const Offset = experimentalStyled(
+const OffsetRoot = experimentalStyled(
   "div",
   {},
   { name: "EdgeSidebarOffset", slot: "Root" }
 )();
+
+const Offset = ({
+  sidebarId,
+}: {
+  sidebarId: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID;
+}) => {
+  const { scheme } = useLayoutCtx();
+  // header magnet feature
+  const offsetStyle = useEdgeHeaderMagnet(sidebarId);
+
+  // header offset
+  const offsetSx = EdgeSidebarOffsetCompiler({
+    edgeSidebar: scheme[sidebarId],
+    header: scheme.header,
+  }).getSxHeight();
+
+  return <OffsetRoot sx={offsetSx} style={offsetStyle} />;
+};
 
 export const EdgeSidebar = ({
   anchor,
@@ -103,12 +126,6 @@ export const EdgeSidebar = ({
   const variant = pickNearestBreakpoint(responsiveVariant, screen);
   if (!variant || edgeSidebar.isHidden(screen)) return null;
 
-  const offsetSx = EdgeSidebarOffsetCompiler({
-    edgeSidebar: scheme[sidebarId],
-    header: scheme.header,
-  }).getSxHeight();
-  console.log("offsetSx", offsetSx);
-
   return (
     <Drawer
       {...props}
@@ -145,7 +162,7 @@ export const EdgeSidebar = ({
         },
       }}
     >
-      <Offset sx={offsetSx} />
+      <Offset sidebarId={sidebarId} />
       {children}
     </Drawer>
   );
