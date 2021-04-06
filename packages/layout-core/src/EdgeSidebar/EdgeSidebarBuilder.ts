@@ -6,8 +6,7 @@ import {
   RIGHT_EDGE_SIDEBAR_ID,
   DEFAULT_THEME,
 } from "../utils/constant";
-import { BREAKPOINT_KEYS } from "../utils/muiBreakpoints";
-import { pickNearestBreakpoint } from "../utils/pickNearestBreakpoint";
+import { generateSxWithHidden } from "../utils/generateSxWithHidden";
 import { Responsive } from "../utils/types";
 
 export type PersistentBehavior = "fit" | "flexible" | "none";
@@ -84,48 +83,30 @@ export class EdgeSidebarBuilder {
   }
 
   getOccupiedSpace() {
-    const result: Responsive<number | string> = {};
-
-    let prevHidden = false; // keep track of hidden in previous breakpoint
-    for (const bp of BREAKPOINT_KEYS) {
-      let breakpointConfig = this._config[bp];
-      if (this.isHidden(bp)) {
-        result[bp] = 0;
-        prevHidden = true;
-      } else {
-        // if current breakpoint is not hidden but previous is hidden,
-        // need to use config from nearest breakpoint
-        if (prevHidden || breakpointConfig) {
-          if (prevHidden) {
-            prevHidden = false;
-            breakpointConfig = pickNearestBreakpoint(this._config, bp);
+    return generateSxWithHidden(
+      {
+        config: this._config,
+        hidden: this._hidden,
+      },
+      (breakpointConfig, bp) => {
+        if (EdgeSidebarBuilder.isTemporaryConfig(breakpointConfig)) {
+          if (bp !== "xs") {
+            return 0;
           }
-          if (EdgeSidebarBuilder.isTemporaryConfig(breakpointConfig)) {
-            if (bp !== "xs") {
-              result[bp] = 0;
+          // do nothing for xs because temporary variant will be modal
+        }
+        if (EdgeSidebarBuilder.isPersistentConfig(breakpointConfig)) {
+          if (this._state?.open) {
+            if (breakpointConfig.persistentBehavior !== "none") {
+              return this.getFinalWidth(breakpointConfig);
             }
-            // do nothing for xs because temporary variant will be modal
-          }
-          if (EdgeSidebarBuilder.isPersistentConfig(breakpointConfig)) {
-            if (this._state?.open) {
-              if (breakpointConfig.persistentBehavior !== "none") {
-                result[bp] =
-                  breakpointConfig.collapsible && this._state.collapsed
-                    ? breakpointConfig.collapsedWidth
-                    : breakpointConfig.width;
-              }
-            }
-          }
-          if (EdgeSidebarBuilder.isPermanentConfig(breakpointConfig)) {
-            result[bp] =
-              breakpointConfig.collapsible && this._state?.collapsed
-                ? breakpointConfig.collapsedWidth
-                : breakpointConfig.width;
           }
         }
+        if (EdgeSidebarBuilder.isPermanentConfig(breakpointConfig)) {
+          return this.getFinalWidth(breakpointConfig);
+        }
       }
-    }
-    return result;
+    );
   }
 
   getZIndex(theme = DEFAULT_THEME) {
@@ -186,6 +167,12 @@ export class EdgeSidebarBuilder {
       zIndex: this.getZIndex(theme),
     };
   }
+
+  getFinalWidth = (config: CollapsibleSidebarConfig) => {
+    return config.collapsible && this._state?.collapsed
+      ? config.collapsedWidth ?? config.width
+      : config.width;
+  };
 
   static isPersistentConfig = (
     config?: EdgeSidebarConfig

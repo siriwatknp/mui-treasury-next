@@ -10,15 +10,16 @@ import { EdgeSidebarBuilder } from "../EdgeSidebar/EdgeSidebarBuilder";
 import { combineBreakpoints } from "../utils/combineBreakpoints";
 import { createWidthInterface } from "../Width/WidthModel";
 import { toValidCssValue } from "../utils/toValidCssValue";
+import { generateSxWithHidden } from "../utils/generateSxWithHidden";
 
 type HeaderBreakpointConfig = {
   position: "relative" | "sticky" | "fixed";
+  height: number | string;
   top?: number | string;
   layer?: number;
   clipped?:
     | boolean
     | Partial<Record<LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID, boolean>>;
-  height: number | string;
 };
 type HeaderSetupParams = {
   config: Responsive<HeaderBreakpointConfig>;
@@ -78,22 +79,31 @@ export class HeaderBuilder {
     return this._hidden.includes(breakpoint);
   }
 
-  getHeight() {
-    const result: Responsive<number | string> = {};
-    const breakpoints = combineBreakpoints(
-      this._config,
-      Array.isArray(this._hidden) ? this._hidden : []
+  getClippedHeight() {
+    return generateSxWithHidden(
+      {
+        config: this._config,
+        hidden: this._hidden,
+      },
+      (breakpointConfig) =>
+        breakpointConfig?.clipped ? breakpointConfig?.height : 0
     );
-    for (const key of breakpoints) {
-      const bp = key as Breakpoint;
-      result[bp] = this.isHidden(bp) ? 0 : this._config[bp]?.height;
-    }
+  }
+
+  getSxHeight() {
+    const result = generateSxWithHidden(
+      {
+        config: this._config,
+        hidden: this._hidden,
+      },
+      (breakpointConfig) => breakpointConfig.height
+    );
     return {
       ...(Object.keys(result).length && { height: result }),
     };
   }
 
-  getMarginEffect() {
+  getSxMarginHorizontal() {
     const marginLeft: Responsive<number | string> = {};
     const { leftEdgeSidebar, rightEdgeSidebar } = this._effectedBy;
     if (leftEdgeSidebar) {
@@ -121,7 +131,7 @@ export class HeaderBuilder {
     };
   }
 
-  getWidth() {
+  getSxWidth() {
     const result: Responsive<number | string> = {};
     const { leftEdgeSidebar, rightEdgeSidebar } = this._effectedBy;
     const leftOccupiedSpace = leftEdgeSidebar?.getOccupiedSpace() ?? {};
@@ -157,7 +167,7 @@ export class HeaderBuilder {
     };
   }
 
-  getZIndex(theme = DEFAULT_THEME) {
+  getSxZIndex(theme = DEFAULT_THEME) {
     const result: Responsive<number> = {};
     for (const key in this._config) {
       const bp = key as Breakpoint;
@@ -172,10 +182,10 @@ export class HeaderBuilder {
 
   getSxProps(theme = DEFAULT_THEME): object {
     return {
-      ...this.getHeight(),
-      ...this.getWidth(),
-      ...this.getMarginEffect(),
-      ...this.getZIndex(theme),
+      ...this.getSxHeight(),
+      ...this.getSxWidth(),
+      ...this.getSxMarginHorizontal(),
+      ...this.getSxZIndex(theme),
     };
   }
 }

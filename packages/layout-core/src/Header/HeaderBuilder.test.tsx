@@ -26,6 +26,38 @@ describe("HeaderBuilder", () => {
     });
   });
 
+  describe("ClippedHeight", () => {
+    it("has correct clipped height", () => {
+      const header = new HeaderBuilder({
+        config: {
+          xs: { position: "sticky", height: 56, clipped: true },
+          md: { position: "sticky", height: 64 },
+          lg: { position: "sticky", height: 64, clipped: true },
+        },
+        hidden: ["sm"],
+      });
+      expect(header.getClippedHeight()).toEqual({
+        xs: 56,
+        sm: 0,
+        md: 0,
+        lg: 64,
+      });
+    });
+
+    it("clipped or hidden in some breakpoint", () => {
+      const header = new HeaderBuilder({
+        config: {
+          xs: { position: "sticky", height: 56, clipped: true },
+          xl: { position: "relative", height: 80, clipped: true },
+        },
+        hidden: ["sm"],
+      });
+      expect(header.getSxHeight()).toEqual({
+        height: { xs: 56, sm: 0, md: 56, xl: 80 },
+      });
+    });
+  });
+
   describe("Margin", () => {
     it("return empty if no edgeSidebar provided", () => {
       const header = new HeaderBuilder({
@@ -35,7 +67,7 @@ describe("HeaderBuilder", () => {
         leftEdgeSidebar: undefined,
         rightEdgeSidebar: undefined,
       };
-      expect(header.getMarginEffect()).toEqual({});
+      expect(header.getSxMarginHorizontal()).toEqual({});
     });
     it("no margin if clipped", () => {
       const header = new HeaderBuilder({
@@ -54,7 +86,7 @@ describe("HeaderBuilder", () => {
         },
       });
       header._effectedBy = { leftEdgeSidebar };
-      expect(header.getMarginEffect()).toEqual({
+      expect(header.getSxMarginHorizontal()).toEqual({
         marginLeft: { sm: 0 },
       });
     });
@@ -76,7 +108,7 @@ describe("HeaderBuilder", () => {
       header._effectedBy = {
         leftEdgeSidebar,
       };
-      expect(header.getMarginEffect()).toEqual({
+      expect(header.getSxMarginHorizontal()).toEqual({
         marginLeft: { sm: "256px" },
       });
     });
@@ -99,7 +131,7 @@ describe("HeaderBuilder", () => {
       header._effectedBy = {
         rightEdgeSidebar,
       };
-      expect(header.getMarginEffect()).toEqual({
+      expect(header.getSxMarginHorizontal()).toEqual({
         marginRight: { lg: "296px" },
       });
     });
@@ -111,7 +143,7 @@ describe("HeaderBuilder", () => {
         config: { xs: { position: "sticky", height: 56 } },
       });
 
-      expect(header.getWidth()).toEqual({});
+      expect(header.getSxWidth()).toEqual({});
     });
 
     it("return fullWidth if clipped", () => {
@@ -131,7 +163,7 @@ describe("HeaderBuilder", () => {
         },
       });
       header._effectedBy = { leftEdgeSidebar };
-      expect(header.getWidth()).toEqual({
+      expect(header.getSxWidth()).toEqual({
         width: { sm: "100%" },
       });
     });
@@ -151,7 +183,7 @@ describe("HeaderBuilder", () => {
         },
       });
       header._effectedBy = { leftEdgeSidebar };
-      expect(header.getWidth()).toEqual({
+      expect(header.getSxWidth()).toEqual({
         width: { sm: "calc(100% - 256px)" },
       });
     });
@@ -188,7 +220,7 @@ describe("HeaderBuilder", () => {
       });
 
       header._effectedBy = { leftEdgeSidebar, rightEdgeSidebar };
-      expect(header.getWidth()).toEqual({
+      expect(header.getSxWidth()).toEqual({
         width: { sm: "calc(100% - 80px)" },
       });
     });
@@ -223,7 +255,7 @@ describe("HeaderBuilder", () => {
         hidden: ["md"],
       });
       header._effectedBy = { leftEdgeSidebar };
-      expect(header.getWidth()).toEqual({
+      expect(header.getSxWidth()).toEqual({
         width: {
           sm: "calc(100% - 256px)",
           md: "100%",
@@ -265,7 +297,7 @@ describe("HeaderBuilder", () => {
         },
       });
       header._effectedBy = { leftEdgeSidebar, rightEdgeSidebar };
-      expect(header.getWidth()).toEqual({
+      expect(header.getSxWidth()).toEqual({
         width: {
           sm: "calc(100% - (256px + 80px))",
           lg: "calc(100% - (296px + 80px))",
@@ -274,7 +306,7 @@ describe("HeaderBuilder", () => {
 
       leftEdgeSidebar.setState({ open: true, collapsed: true });
       header._effectedBy = { leftEdgeSidebar, rightEdgeSidebar };
-      expect(header.getWidth()).toEqual({
+      expect(header.getSxWidth()).toEqual({
         width: {
           sm: "calc(100% - (80px + 80px))",
           lg: "calc(100% - (100px + 80px))",
@@ -291,18 +323,20 @@ describe("HeaderBuilder", () => {
           md: { position: "relative", height: 64 },
         },
       });
-      expect(header.getHeight()).toEqual({ height: { xs: 56, md: 64 } });
+      expect(header.getSxHeight()).toEqual({ height: { xs: 56, md: 64 } });
     });
 
     it("hidden in some breakpoint", () => {
       const header = new HeaderBuilder({
         config: {
           xs: { position: "sticky", height: 56 },
-          md: { position: "relative", height: 80 },
+          xl: { position: "relative", height: 80 },
         },
         hidden: ["sm"],
       });
-      expect(header.getHeight()).toEqual({ height: { xs: 56, sm: 0, md: 80 } });
+      expect(header.getSxHeight()).toEqual({
+        height: { xs: 56, sm: 0, md: 56, xl: 80 },
+      });
     });
   });
 
@@ -345,7 +379,7 @@ describe("HeaderBuilder", () => {
         leftEdgeSidebar,
         rightEdgeSidebar,
       };
-      expect(header.getZIndex()).toEqual({
+      expect(header.getSxZIndex()).toEqual({
         zIndex: {
           xs: 1210,
           md: 1100,
