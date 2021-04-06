@@ -74,6 +74,17 @@ export class HeaderBuilder {
     return !!clipped?.leftEdgeSidebar || !!clipped?.rightEdgeSidebar;
   }
 
+  getOffsetHeight() {
+    return generateSxWithHidden(
+      {
+        config: this._config,
+        hidden: this._hidden,
+      },
+      (breakpointConfig) =>
+        breakpointConfig.position === "fixed" ? breakpointConfig.height : 0
+    );
+  }
+
   getClippedRelativeHeight(
     sidebarId: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID
   ) {

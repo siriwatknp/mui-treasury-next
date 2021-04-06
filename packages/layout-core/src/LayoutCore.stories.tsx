@@ -47,7 +47,7 @@ export const Development = () => {
               },
             },
             md: {
-              position: "relative",
+              position: "fixed",
               height: 64,
               clipped: true,
             },
@@ -96,7 +96,10 @@ export const Development = () => {
       </Header>
       <EdgeSidebar anchor="left">Hello</EdgeSidebar>
       <EdgeSidebar anchor="right">Hello</EdgeSidebar>
-      <div style={{ height: 2000 }} />
+      <div style={{ height: 2000 }}>
+        Hello world Hello world Hello worldHello worldHello worldHello
+        worldHello world
+      </div>
     </Root>
   );
 };
