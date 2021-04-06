@@ -6,6 +6,7 @@ import {
   RIGHT_EDGE_SIDEBAR_ID,
   DEFAULT_THEME,
 } from "../utils/constant";
+import { generateSx } from "../utils/generateSx";
 import { generateSxWithHidden } from "../utils/generateSxWithHidden";
 import { Responsive } from "../utils/types";
 
@@ -135,30 +136,15 @@ export class EdgeSidebarBuilder {
   }
 
   getWidth() {
-    const result: Responsive<number | string> = {};
-    for (const key in this._config) {
-      const bp = key as Breakpoint;
-      const breakpointConfig = this._config[bp];
-      if (EdgeSidebarBuilder.isTemporaryConfig(breakpointConfig)) {
-        result[bp] = this._config[bp]?.width;
-      } else {
-        result[bp] =
-          breakpointConfig?.collapsible && this._state?.collapsed
-            ? breakpointConfig?.collapsedWidth
-            : breakpointConfig?.width;
-      }
-    }
-    return result;
+    return generateSx(this._config, (breakpointConfig, bp) =>
+      EdgeSidebarBuilder.isTemporaryConfig(breakpointConfig)
+        ? this._config[bp]?.width
+        : this.getFinalWidth(breakpointConfig)
+    );
   }
 
   getDrawerVariant() {
-    const result: Responsive<DrawerVariant> = {};
-    for (const key in this._config) {
-      const bp = key as Breakpoint;
-      const breakpointConfig = this._config[bp];
-      result[bp] = breakpointConfig?.variant;
-    }
-    return result;
+    return generateSx(this._config, "variant");
   }
 
   getSxProps(theme = DEFAULT_THEME) {
@@ -168,10 +154,10 @@ export class EdgeSidebarBuilder {
     };
   }
 
-  getFinalWidth = (config: CollapsibleSidebarConfig) => {
-    return config.collapsible && this._state?.collapsed
+  getFinalWidth = (config: CollapsibleSidebarConfig | undefined) => {
+    return config?.collapsible && this._state?.collapsed
       ? config.collapsedWidth ?? config.width
-      : config.width;
+      : config?.width;
   };
 
   static isPersistentConfig = (

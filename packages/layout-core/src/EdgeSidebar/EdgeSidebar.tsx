@@ -1,5 +1,5 @@
 import React from "react";
-import { useTheme } from "@material-ui/core/styles";
+import { useTheme, experimentalStyled } from "@material-ui/core/styles";
 import Drawer, { DrawerProps } from "@material-ui/core/Drawer";
 import { ModalProps } from "@material-ui/core/Modal";
 import { useLayoutCtx } from "../Root/Root";
@@ -11,13 +11,14 @@ import {
   EdgeSidebarConfig,
 } from "./EdgeSidebarBuilder";
 import { EDGE_SIDEBAR_EXPAND_DELAY } from "../utils/constant";
+import { EdgeSidebarOffsetCompiler } from "./EdgeSidebarOffsetCompiler";
 
 export type EdgeSidebarProps = { anchor: "left" | "right" } & Omit<
   DrawerProps,
   "anchor" | "variant"
 >;
 
-export const hasAutoExpanded = (
+const hasAutoExpanded = (
   config?: EdgeSidebarConfig
   // @ts-ignore
 ): config is CollapsibleSidebarConfig => {
@@ -28,6 +29,12 @@ export const hasAutoExpanded = (
         "boolean")
   );
 };
+
+const Offset = experimentalStyled(
+  "div",
+  {},
+  { name: "EdgeSidebarOffset", slot: "Root" }
+)();
 
 export const EdgeSidebar = ({
   anchor,
@@ -95,6 +102,13 @@ export const EdgeSidebar = ({
   const responsiveVariant = edgeSidebar.getDrawerVariant();
   const variant = pickNearestBreakpoint(responsiveVariant, screen);
   if (!variant || edgeSidebar.isHidden(screen)) return null;
+
+  const offsetSx = EdgeSidebarOffsetCompiler({
+    edgeSidebar: scheme[sidebarId],
+    header: scheme.header,
+  }).getSxHeight();
+  console.log("offsetSx", offsetSx);
+
   return (
     <Drawer
       {...props}
@@ -131,6 +145,7 @@ export const EdgeSidebar = ({
         },
       }}
     >
+      <Offset sx={offsetSx} />
       {children}
     </Drawer>
   );

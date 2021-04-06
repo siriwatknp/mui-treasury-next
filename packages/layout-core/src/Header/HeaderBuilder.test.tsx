@@ -414,6 +414,9 @@ describe("HeaderBuilder", () => {
       });
       header._effectedBy = { leftEdgeSidebar };
       expect(header.getSxProps()).toEqual({
+        position: {
+          xs: "sticky",
+        },
         height: {
           xs: 56,
         },
@@ -464,6 +467,9 @@ describe("HeaderBuilder", () => {
       header._effectedBy = { leftEdgeSidebar, rightEdgeSidebar };
 
       expect(header.getSxProps()).toEqual({
+        position: {
+          xs: "sticky",
+        },
         height: {
           xs: 56,
         },
@@ -485,6 +491,9 @@ describe("HeaderBuilder", () => {
       header._effectedBy = { leftEdgeSidebar, rightEdgeSidebar };
 
       expect(header.getSxProps()).toEqual({
+        position: {
+          xs: "sticky",
+        },
         height: {
           xs: 56,
         },

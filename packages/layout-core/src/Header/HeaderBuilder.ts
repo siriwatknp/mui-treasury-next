@@ -11,6 +11,7 @@ import { combineBreakpoints } from "../utils/combineBreakpoints";
 import { createWidthInterface } from "../Width/WidthModel";
 import { toValidCssValue } from "../utils/toValidCssValue";
 import { generateSxWithHidden } from "../utils/generateSxWithHidden";
+import { generateSx } from "../utils/generateSx";
 
 type HeaderBreakpointConfig = {
   position: "relative" | "sticky" | "fixed";
@@ -168,20 +169,21 @@ export class HeaderBuilder {
   }
 
   getSxZIndex(theme = DEFAULT_THEME) {
-    const result: Responsive<number> = {};
-    for (const key in this._config) {
-      const bp = key as Breakpoint;
-      result[bp] = this.isAboveSomeEdgeSidebar(bp)
-        ? theme.zIndex.drawer + 10 + (this._config[bp]?.layer ?? 0)
-        : theme.zIndex.appBar;
-    }
+    const result = generateSx(this._config, (breakpointConfig, bp) =>
+      this.isAboveSomeEdgeSidebar(bp)
+        ? theme.zIndex.drawer + 10 + (breakpointConfig.layer ?? 0)
+        : theme.zIndex.appBar
+    );
     return {
       ...(Object.keys(result).length && { zIndex: result }),
     };
   }
 
   getSxProps(theme = DEFAULT_THEME): object {
+    const sxTop = generateSx(this._config, "top");
     return {
+      position: generateSx(this._config, "position"),
+      ...(Object.keys(sxTop).length && { top: sxTop }),
       ...this.getSxHeight(),
       ...this.getSxWidth(),
       ...this.getSxMarginHorizontal(),

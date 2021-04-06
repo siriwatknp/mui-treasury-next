@@ -15,7 +15,7 @@ export default {
   argTypes: {},
   args: {},
   parameters: {
-    layout: "centered",
+    layout: "fullscreen",
   },
 } as Meta;
 
@@ -41,9 +41,15 @@ export const Development = () => {
           config: {
             xs: {
               position: "relative",
+              height: 56,
               clipped: {
                 leftEdgeSidebar: true,
               },
+            },
+            md: {
+              position: "relative",
+              height: 64,
+              clipped: true,
             },
           },
         }),
@@ -90,6 +96,7 @@ export const Development = () => {
       </Header>
       <EdgeSidebar anchor="left">Hello</EdgeSidebar>
       <EdgeSidebar anchor="right">Hello</EdgeSidebar>
+      <div style={{ height: 2000 }} />
     </Root>
   );
 };

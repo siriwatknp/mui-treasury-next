@@ -6,14 +6,14 @@ import { combineBreakpoints } from "../utils/combineBreakpoints";
 import { pickNearestBreakpoint } from "../utils/pickNearestBreakpoint";
 
 export const EdgeSidebarOffsetCompiler = (modules: {
-  edgeSidebar: EdgeSidebarBuilder;
+  edgeSidebar?: EdgeSidebarBuilder;
   header?: HeaderBuilder;
 }) => {
   const { header, edgeSidebar } = modules;
   return {
     getSxHeight() {
       const result: Responsive<number | string> = {};
-      if (header) {
+      if (header && edgeSidebar) {
         const clippedHeight = header?.getClippedHeight();
         const breakpoints = combineBreakpoints(
           edgeSidebar._config,
