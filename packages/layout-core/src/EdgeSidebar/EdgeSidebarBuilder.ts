@@ -5,9 +5,13 @@ import {
   LEFT_EDGE_SIDEBAR_ID,
   RIGHT_EDGE_SIDEBAR_ID,
   DEFAULT_THEME,
+  HEADER_ID,
+  CONTENT_ID,
+  FOOTER_ID,
 } from "../utils/constant";
 import { generateSx } from "../utils/generateSx";
 import { generateSxWithHidden } from "../utils/generateSxWithHidden";
+import { pickNearestBreakpoint } from "../utils/pickNearestBreakpoint";
 import { Responsive } from "../utils/types";
 
 export type PersistentBehavior = "fit" | "flexible" | "none";
@@ -37,7 +41,9 @@ export interface PermanentSidebarConfig extends CollapsibleSidebarConfig {
 }
 
 export interface PersistentSidebarConfig extends CollapsibleSidebarConfig {
-  persistentBehavior: PersistentBehavior | Record<string, PersistentBehavior>;
+  persistentBehavior:
+    | PersistentBehavior
+    | Partial<Record<HEADER_ID | CONTENT_ID | FOOTER_ID, PersistentBehavior>>;
   variant: "persistent";
 }
 
@@ -83,7 +89,15 @@ export class EdgeSidebarBuilder {
     return this._hidden.includes(breakpoint);
   }
 
-  getOccupiedSpace() {
+  isFlexiblePersistent(
+    breakpoint: Breakpoint,
+    id?: HEADER_ID | CONTENT_ID | FOOTER_ID
+  ) {
+    const config = pickNearestBreakpoint(this._config, breakpoint);
+    return EdgeSidebarBuilder.isFlexiblePersistentConfig(config, id);
+  }
+
+  getOccupiedSpace(id?: HEADER_ID | CONTENT_ID | FOOTER_ID) {
     return generateSxWithHidden(
       {
         config: this._config,
@@ -97,10 +111,17 @@ export class EdgeSidebarBuilder {
           // do nothing for xs because temporary variant will be modal
         }
         if (EdgeSidebarBuilder.isPersistentConfig(breakpointConfig)) {
-          if (this._state?.open) {
-            if (breakpointConfig.persistentBehavior !== "none") {
-              return this.getFinalWidth(breakpointConfig);
-            }
+          if (
+            this._state?.open &&
+            ((typeof breakpointConfig.persistentBehavior === "object" &&
+              id &&
+              breakpointConfig.persistentBehavior[id] !== "none") ||
+              (typeof breakpointConfig.persistentBehavior === "string" &&
+                breakpointConfig.persistentBehavior !== "none"))
+          ) {
+            return this.getFinalWidth(breakpointConfig);
+          } else {
+            return 0;
           }
         }
         if (EdgeSidebarBuilder.isPermanentConfig(breakpointConfig)) {
@@ -164,6 +185,21 @@ export class EdgeSidebarBuilder {
     config?: EdgeSidebarConfig
   ): config is PersistentSidebarConfig => {
     return config?.variant === "persistent";
+  };
+
+  static isFlexiblePersistentConfig = (
+    config?: EdgeSidebarConfig,
+    id?: HEADER_ID | CONTENT_ID | FOOTER_ID
+  ) => {
+    return (
+      !!config &&
+      !!EdgeSidebarBuilder.isPersistentConfig(config) &&
+      ((typeof config.persistentBehavior === "string" &&
+        config.persistentBehavior === "flexible") ||
+        (typeof config.persistentBehavior === "object" &&
+          !!id &&
+          config.persistentBehavior[id] === "flexible"))
+    );
   };
 
   static isPermanentConfig = (

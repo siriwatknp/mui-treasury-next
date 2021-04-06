@@ -1,7 +1,65 @@
+import { fabClasses } from "@material-ui/core";
 import { HeaderBuilder } from "../Header/HeaderBuilder";
 import { EdgeSidebarBuilder } from "./EdgeSidebarBuilder";
 
 describe("EdgeSidebarBuilder", () => {
+  describe("Static", () => {
+    it("check flexible persistent (string)", () => {
+      expect(EdgeSidebarBuilder.isFlexiblePersistentConfig()).toBe(false);
+      expect(
+        EdgeSidebarBuilder.isFlexiblePersistentConfig({
+          variant: "temporary",
+          width: 256,
+        })
+      ).toBe(false);
+      expect(
+        EdgeSidebarBuilder.isFlexiblePersistentConfig({
+          variant: "permanent",
+          width: 256,
+        })
+      ).toBe(false);
+      expect(
+        EdgeSidebarBuilder.isFlexiblePersistentConfig({
+          variant: "persistent",
+          persistentBehavior: "fit",
+          width: 256,
+        })
+      ).toBe(false);
+      expect(
+        EdgeSidebarBuilder.isFlexiblePersistentConfig({
+          variant: "persistent",
+          persistentBehavior: "none",
+          width: 256,
+        })
+      ).toBe(false);
+      expect(
+        EdgeSidebarBuilder.isFlexiblePersistentConfig({
+          variant: "persistent",
+          persistentBehavior: "flexible",
+          width: 256,
+        })
+      ).toBe(true);
+    });
+    it("check flexible persistent (object)", () => {
+      const config = {
+        variant: "persistent",
+        persistentBehavior: {
+          header: "fit",
+          content: "flexible",
+        },
+        width: 256,
+      } as const;
+      expect(
+        EdgeSidebarBuilder.isFlexiblePersistentConfig(config, "header")
+      ).toBe(false);
+      expect(
+        EdgeSidebarBuilder.isFlexiblePersistentConfig(config, "content")
+      ).toBe(true);
+      expect(
+        EdgeSidebarBuilder.isFlexiblePersistentConfig(config, "footer")
+      ).toBe(false);
+    });
+  });
   describe("OccupiedSpace", () => {
     it("temporary variant on xs", () => {
       const edgeSidebar = new EdgeSidebarBuilder({
@@ -51,26 +109,6 @@ describe("EdgeSidebarBuilder", () => {
       });
     });
 
-    it("persistent: sidebar is closed", () => {
-      const edgeSidebar = new EdgeSidebarBuilder({
-        config: {
-          sm: {
-            variant: "persistent",
-            width: 256,
-            collapsible: true,
-            persistentBehavior: "fit",
-          },
-        },
-      });
-
-      edgeSidebar.setState({
-        open: false,
-        collapsed: false,
-      });
-
-      expect(edgeSidebar.getOccupiedSpace()).toEqual({});
-    });
-
     it("persistent: sidebar is open with behavior 'none'", () => {
       const edgeSidebar = new EdgeSidebarBuilder({
         config: {
@@ -88,7 +126,7 @@ describe("EdgeSidebarBuilder", () => {
         collapsed: false,
       });
 
-      expect(edgeSidebar.getOccupiedSpace()).toEqual({});
+      expect(edgeSidebar.getOccupiedSpace()).toEqual({ sm: 0 });
     });
 
     it("persistent: sidebar is open with behavior 'fit'", () => {
@@ -133,18 +171,45 @@ describe("EdgeSidebarBuilder", () => {
       });
 
       edgeSidebar.setState({
+        open: false,
+        collapsed: false,
+      });
+
+      expect(edgeSidebar.getOccupiedSpace()).toEqual({ sm: 0 });
+
+      edgeSidebar.setState({
         open: true,
         collapsed: false,
       });
 
       expect(edgeSidebar.getOccupiedSpace()).toEqual({ sm: 256 });
+    });
+
+    it("persistent: sidebar is open with behavior as object", () => {
+      const edgeSidebar = new EdgeSidebarBuilder({
+        config: {
+          sm: {
+            variant: "persistent",
+            width: 256,
+            collapsible: true,
+            collapsedWidth: 80,
+            persistentBehavior: {
+              header: "flexible",
+              content: "fit",
+              footer: "none",
+            },
+          },
+        },
+      });
 
       edgeSidebar.setState({
         open: true,
-        collapsed: true,
+        collapsed: false,
       });
 
-      expect(edgeSidebar.getOccupiedSpace()).toEqual({ sm: 80 });
+      expect(edgeSidebar.getOccupiedSpace("header")).toEqual({ sm: 256 });
+      expect(edgeSidebar.getOccupiedSpace("content")).toEqual({ sm: 256 });
+      expect(edgeSidebar.getOccupiedSpace("footer")).toEqual({ sm: 0 });
     });
 
     it("permanent: uncollasible should remain the same width", () => {

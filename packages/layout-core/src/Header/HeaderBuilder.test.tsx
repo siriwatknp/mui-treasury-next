@@ -225,6 +225,43 @@ describe("HeaderBuilder", () => {
       });
     });
 
+    it("unclipped edgeSidebar is flexible persistent has no effect on width", () => {
+      const header = new HeaderBuilder({
+        config: {
+          xs: {
+            position: "sticky",
+            height: 56,
+          },
+        },
+      });
+      const leftEdgeSidebar = new EdgeSidebarBuilder({
+        config: {
+          sm: {
+            variant: "persistent",
+            persistentBehavior: "flexible",
+            width: 256,
+          },
+        },
+      });
+      const rightEdgeSidebar = new EdgeSidebarBuilder({
+        config: {
+          sm: {
+            variant: "persistent",
+            persistentBehavior: {
+              header: "flexible",
+            },
+            width: 256,
+          },
+        },
+      });
+      leftEdgeSidebar.setState({ open: true });
+      rightEdgeSidebar.setState({ open: true });
+      header._effectedBy = { leftEdgeSidebar, rightEdgeSidebar };
+      expect(header.getSxWidth()).toEqual({
+        width: { sm: "100%" },
+      });
+    });
+
     it("EdgeSidebar hidden in some breakpoint", () => {
       const header = new HeaderBuilder({
         config: {
@@ -421,9 +458,11 @@ describe("HeaderBuilder", () => {
           xs: 56,
         },
         width: {
+          sm: "100%",
           lg: "calc(100% - 296px)",
         },
         marginLeft: {
+          sm: "0px",
           lg: "296px",
         },
         zIndex: {
@@ -474,10 +513,12 @@ describe("HeaderBuilder", () => {
           xs: 56,
         },
         width: {
+          sm: "100%",
           md: "calc(100% - 80px)",
           lg: "calc(100% - (296px + 80px))",
         },
         marginLeft: {
+          sm: "0px",
           lg: "296px",
         },
         marginRight: {
@@ -498,10 +539,12 @@ describe("HeaderBuilder", () => {
           xs: 56,
         },
         width: {
+          sm: "100%",
           md: "calc(100% - 80px)",
           lg: "calc(100% - (80px + 80px))",
         },
         marginLeft: {
+          sm: "0px",
           lg: "80px",
         },
         marginRight: {

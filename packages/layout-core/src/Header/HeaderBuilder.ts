@@ -168,7 +168,9 @@ export class HeaderBuilder {
       if (leftEdgeSidebar) {
         if (!this.isClipped(LEFT_EDGE_SIDEBAR_ID, bp)) {
           effectLeft = createWidthInterface(
-            pickNearestBreakpoint(leftOccupiedSpace, bp)
+            leftEdgeSidebar.isFlexiblePersistent(bp, "header")
+              ? 0
+              : pickNearestBreakpoint(leftOccupiedSpace, bp)
           );
         }
       }
@@ -177,7 +179,9 @@ export class HeaderBuilder {
       if (rightEdgeSidebar) {
         if (!this.isClipped(RIGHT_EDGE_SIDEBAR_ID, bp)) {
           effectRight = createWidthInterface(
-            pickNearestBreakpoint(rightOccupiedSpace, bp)
+            rightEdgeSidebar.isFlexiblePersistent(bp, "header")
+              ? 0
+              : pickNearestBreakpoint(rightOccupiedSpace, bp)
           );
         }
       }

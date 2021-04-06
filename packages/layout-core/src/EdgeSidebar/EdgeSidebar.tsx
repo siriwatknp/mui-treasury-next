@@ -1,4 +1,5 @@
 import React from "react";
+import cx from "clsx";
 import { useTheme, experimentalStyled } from "@material-ui/core/styles";
 import Drawer, { DrawerProps } from "@material-ui/core/Drawer";
 import { ModalProps } from "@material-ui/core/Modal";
@@ -47,6 +48,7 @@ const Offset = ({
   sidebarId: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID;
 }) => {
   const { scheme } = useLayoutCtx();
+  const theme = useTheme();
   // header magnet feature
   const offsetStyle = useEdgeHeaderMagnet(sidebarId);
 
@@ -56,7 +58,19 @@ const Offset = ({
     header: scheme.header,
   }).getSxHeight();
 
-  return <OffsetRoot sx={offsetSx} style={offsetStyle} />;
+  return (
+    <OffsetRoot
+      className="EdgeHeaderOffset"
+      sx={{
+        ...offsetSx,
+        transition: theme.transitions.create(["all"], {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.short,
+        }),
+      }}
+      style={offsetStyle}
+    />
+  );
 };
 
 export const EdgeSidebar = ({
@@ -143,6 +157,7 @@ export const EdgeSidebar = ({
       }}
       PaperProps={{
         ...props.PaperProps,
+        className: cx("EdgeSidebar-paper", props.PaperProps?.className),
         style: {
           ...props.PaperProps?.style,
           ...(expanded && { width: config?.width }),
