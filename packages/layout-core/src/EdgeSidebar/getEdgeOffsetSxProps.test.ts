@@ -1,10 +1,10 @@
 import { HeaderBuilder } from "../Header/HeaderBuilder";
 import { EdgeSidebarBuilder } from "./EdgeSidebarBuilder";
-import { EdgeSidebarOffsetCompiler } from "./EdgeSidebarOffsetCompiler";
+import { getEdgeOffsetSxProps } from "./getEdgeOffsetSxProps";
 
-describe("EdgeSidebarOffsetCompiler", () => {
+describe("getEdgeOffsetSxProps", () => {
   it("return empty if no header", () => {
-    const compiler = EdgeSidebarOffsetCompiler({
+    const result = getEdgeOffsetSxProps({
       edgeSidebar: new EdgeSidebarBuilder({
         config: {
           md: {
@@ -14,7 +14,7 @@ describe("EdgeSidebarOffsetCompiler", () => {
         },
       }),
     });
-    expect(compiler.getSxHeight()).toEqual({});
+    expect(result).toEqual({});
   });
 
   it("return correct offset height", () => {
@@ -37,11 +37,11 @@ describe("EdgeSidebarOffsetCompiler", () => {
     });
     edgeSidebar.id = "leftEdgeSidebar";
     header.effectedBy = { leftEdgeSidebar: edgeSidebar };
-    const compiler = EdgeSidebarOffsetCompiler({
+    const result = getEdgeOffsetSxProps({
       header,
       edgeSidebar,
     });
-    expect(compiler.getSxHeight()).toEqual({
+    expect(result).toEqual({
       height: {
         xs: "56px",
         sm: "56px",
@@ -84,11 +84,11 @@ describe("EdgeSidebarOffsetCompiler", () => {
     edgeSidebar.id = "leftEdgeSidebar";
     header.effectedBy = { leftEdgeSidebar: edgeSidebar };
 
-    const compiler = EdgeSidebarOffsetCompiler({
+    const result = getEdgeOffsetSxProps({
       header,
       edgeSidebar,
     });
-    expect(compiler.getSxHeight()).toEqual({
+    expect(result).toEqual({
       height: {
         xs: "56px",
         sm: "56px",
@@ -120,11 +120,11 @@ describe("EdgeSidebarOffsetCompiler", () => {
     });
     edgeSidebar.id = "leftEdgeSidebar";
     header.effectedBy = { leftEdgeSidebar: edgeSidebar };
-    const compiler = EdgeSidebarOffsetCompiler({
+    const result = getEdgeOffsetSxProps({
       header,
       edgeSidebar,
     });
-    expect(compiler.getSxHeight()).toEqual({
+    expect(result).toEqual({
       height: { xs: 0, sm: 0 },
     });
   });

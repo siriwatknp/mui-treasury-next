@@ -16,8 +16,8 @@ import {
   LEFT_EDGE_SIDEBAR_ID,
   RIGHT_EDGE_SIDEBAR_ID,
 } from "../utils/constant";
-import { EdgeSidebarOffsetCompiler } from "./EdgeSidebarOffsetCompiler";
 import { useEdgeHeaderMagnet } from "../hooks/useEdgeHeaderMagnet";
+import { getEdgeOffsetSxProps } from "./getEdgeOffsetSxProps";
 
 export type EdgeSidebarProps = { anchor: "left" | "right" } & Omit<
   DrawerProps,
@@ -51,13 +51,12 @@ const Offset = ({
   const theme = useTheme();
   // header magnet feature
   const offsetStyle = useEdgeHeaderMagnet(sidebarId);
-  console.log("offsetStyle", offsetStyle);
 
   // header offset
-  const offsetSx = EdgeSidebarOffsetCompiler({
+  const offsetSx = getEdgeOffsetSxProps({
     edgeSidebar: scheme[sidebarId],
     header: scheme.header,
-  }).getSxHeight();
+  });
 
   return (
     <OffsetRoot
