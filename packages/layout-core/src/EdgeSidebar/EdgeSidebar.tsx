@@ -87,7 +87,7 @@ export const EdgeSidebar = ({
   const sidebarId = `${anchor}EdgeSidebar` as const;
   const edgeSidebar = scheme[sidebarId];
   const sidebarState = layoutState[sidebarId];
-  const config = pickNearestBreakpoint(edgeSidebar?._config, screen);
+  const config = pickNearestBreakpoint(edgeSidebar?.config, screen);
 
   useSidebarAutoCollapse(sidebarId);
 
@@ -134,7 +134,7 @@ export const EdgeSidebar = ({
   // auto-expanded feature
 
   if (!screen) return null;
-  if (!edgeSidebar || !edgeSidebar._id) return null;
+  if (!edgeSidebar || !edgeSidebar.id) return null;
 
   const responsiveVariant = edgeSidebar.getDrawerVariant();
   const variant = pickNearestBreakpoint(responsiveVariant, screen);

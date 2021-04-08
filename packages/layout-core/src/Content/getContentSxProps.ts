@@ -1,11 +1,11 @@
 import { Breakpoint } from "@material-ui/core/styles/createBreakpoints";
 import { EdgeSidebarBuilder } from "../EdgeSidebar/EdgeSidebarBuilder";
 import { createWidthInterface } from "../Width/WidthModel";
-import { combineBreakpoints } from "./combineBreakpoints";
-import { CONTENT_ID, FOOTER_ID } from "./constant";
-import { pickNearestBreakpoint } from "./pickNearestBreakpoint";
-import { toValidCssValue } from "./toValidCssValue";
-import { Responsive } from "./types";
+import { combineBreakpoints } from "../utils/combineBreakpoints";
+import { CONTENT_ID, FOOTER_ID } from "../utils/constant";
+import { pickNearestBreakpoint } from "../utils/pickNearestBreakpoint";
+import { toValidCssValue } from "../utils/toValidCssValue";
+import { Responsive } from "../utils/types";
 
 export const getContentSxProps = (
   modules: {

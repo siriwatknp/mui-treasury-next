@@ -2,7 +2,7 @@ import React from "react";
 import cx from "clsx";
 import { experimentalStyled } from "@material-ui/core/styles";
 import { useLayoutCtx } from "../Root/Root";
-import { getContentSxProps } from "../utils/getContentSxProps";
+import { getContentSxProps } from "../Content/getContentSxProps";
 import { FOOTER_ID } from "../utils/constant";
 
 const FooterRoot = experimentalStyled(

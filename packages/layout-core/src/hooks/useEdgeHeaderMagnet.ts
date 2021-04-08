@@ -12,7 +12,7 @@ export const useEdgeHeaderMagnet = (
   const screen = useScreen();
 
   const sidebarConfig = pickNearestBreakpoint(
-    scheme[sidebarId]?._config,
+    scheme[sidebarId]?.config,
     screen
   );
   const isMagnet =

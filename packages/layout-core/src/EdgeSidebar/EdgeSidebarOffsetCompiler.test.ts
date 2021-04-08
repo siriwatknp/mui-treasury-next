@@ -35,16 +35,16 @@ describe("EdgeSidebarOffsetCompiler", () => {
         },
       },
     });
-    edgeSidebar._id = "leftEdgeSidebar";
-    header._effectedBy = { leftEdgeSidebar: edgeSidebar };
+    edgeSidebar.id = "leftEdgeSidebar";
+    header.effectedBy = { leftEdgeSidebar: edgeSidebar };
     const compiler = EdgeSidebarOffsetCompiler({
       header,
       edgeSidebar,
     });
     expect(compiler.getSxHeight()).toEqual({
       height: {
-        xs: 56,
-        sm: 56,
+        xs: "56px",
+        sm: "56px",
       },
     });
   });
@@ -81,8 +81,8 @@ describe("EdgeSidebarOffsetCompiler", () => {
         },
       },
     });
-    edgeSidebar._id = "leftEdgeSidebar";
-    header._effectedBy = { leftEdgeSidebar: edgeSidebar };
+    edgeSidebar.id = "leftEdgeSidebar";
+    header.effectedBy = { leftEdgeSidebar: edgeSidebar };
 
     const compiler = EdgeSidebarOffsetCompiler({
       header,
@@ -90,10 +90,10 @@ describe("EdgeSidebarOffsetCompiler", () => {
     });
     expect(compiler.getSxHeight()).toEqual({
       height: {
-        xs: 56,
-        sm: 56,
+        xs: "56px",
+        sm: "56px",
         md: 0,
-        lg: 64,
+        lg: "64px",
       },
     });
   });
@@ -118,8 +118,8 @@ describe("EdgeSidebarOffsetCompiler", () => {
         },
       },
     });
-    edgeSidebar._id = "leftEdgeSidebar";
-    header._effectedBy = { leftEdgeSidebar: edgeSidebar };
+    edgeSidebar.id = "leftEdgeSidebar";
+    header.effectedBy = { leftEdgeSidebar: edgeSidebar };
     const compiler = EdgeSidebarOffsetCompiler({
       header,
       edgeSidebar,

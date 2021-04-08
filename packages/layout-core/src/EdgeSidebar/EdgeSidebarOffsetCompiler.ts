@@ -13,10 +13,10 @@ export const EdgeSidebarOffsetCompiler = (modules: {
   return {
     getSxHeight() {
       const result: Responsive<number | string> = {};
-      if (header && edgeSidebar && edgeSidebar._id) {
-        const clippedHeight = header?.getClippedHeight(edgeSidebar._id);
+      if (header && edgeSidebar && edgeSidebar.id) {
+        const clippedHeight = header?.getClippedHeight(edgeSidebar.id);
         const breakpoints = combineBreakpoints(
-          edgeSidebar._config,
+          edgeSidebar.config,
           clippedHeight
         );
         for (const key of breakpoints) {

@@ -35,19 +35,19 @@ type InsetSetupParams = {
 };
 
 export class InsetSidebarBuilder {
-  readonly _config: InsetSetupParams["config"];
-  readonly _hidden: InsetSetupParams["hidden"];
-  _anchor?: DrawerAnchor;
-  _effectedBy: { header?: HeaderBuilder } = {};
+  readonly config: InsetSetupParams["config"];
+  readonly hidden: InsetSetupParams["hidden"];
+  anchor?: DrawerAnchor;
+  effectedBy: { header?: HeaderBuilder } = {};
 
   constructor(params: InsetSetupParams) {
-    this._config = params.config;
-    this._hidden = params.hidden;
+    this.config = params.config;
+    this.hidden = params.hidden;
   }
 
   getSxBody() {
-    const { position, top = 0 } = this._config;
-    const anchor = this._anchor;
+    const { position, top = 0 } = this.config;
+    const anchor = this.anchor;
     let bodySx = {};
     if (position === "absolute") {
       bodySx = {
@@ -57,11 +57,11 @@ export class InsetSidebarBuilder {
         padding: "unset",
         margin: "unset",
         overflow: "auto",
-        height: this._effectedBy.header
+        height: this.effectedBy.header
           ? generateSxWithHidden(
               {
-                config: this._effectedBy.header._config,
-                hidden: this._effectedBy.header._hidden,
+                config: this.effectedBy.header.config,
+                hidden: this.effectedBy.header.hidden,
               },
               (config) => subtractCalc("100vh", config.height ?? 0),
               () => "100vh"
@@ -96,20 +96,20 @@ export class InsetSidebarBuilder {
 
   getSxRoot() {
     let hiddenConfig = {};
-    if (this._hidden) {
-      if (typeof this._hidden === "boolean") {
+    if (this.hidden) {
+      if (typeof this.hidden === "boolean") {
         hiddenConfig = { display: { xs: "none" } };
       }
-      if (Array.isArray(this._hidden)) {
+      if (Array.isArray(this.hidden)) {
         hiddenConfig = {
           display: generateSxWithHidden(
-            { config: {}, hidden: this._hidden },
+            { config: {}, hidden: this.hidden },
             () => "block",
             () => "none"
           ),
         };
       }
     }
-    return { ...hiddenConfig, width: this._config.width };
+    return { ...hiddenConfig, width: this.config.width };
   }
 }

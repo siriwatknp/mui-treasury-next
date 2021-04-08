@@ -10,7 +10,7 @@ export const useSidebarAutoCollapse = (
   const { scheme, setCollapsed } = useLayoutCtx();
   const screen = useScreen();
   const prevScreen = useRef(screen);
-  const collapsedBp = sidebarId ? scheme[sidebarId]?._autoCollapse : undefined;
+  const collapsedBp = sidebarId ? scheme[sidebarId]?.autoCollapse : undefined;
   useEffect(() => {
     if (sidebarId && collapsedBp && screen && prevScreen.current) {
       if (

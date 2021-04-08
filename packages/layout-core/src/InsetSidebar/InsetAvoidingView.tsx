@@ -23,16 +23,16 @@ export const InsetAvoidingView = (props: InsetAvoidingViewProps) => {
   };
   if (
     scheme.leftInsetSidebar &&
-    ["fixed", "absolute"].includes(scheme.leftInsetSidebar._config.position)
+    ["fixed", "absolute"].includes(scheme.leftInsetSidebar.config.position)
   ) {
-    sxProps.marginLeft = toValidCssValue(scheme.leftInsetSidebar._config.width);
+    sxProps.marginLeft = toValidCssValue(scheme.leftInsetSidebar.config.width);
   }
   if (
     scheme.rightInsetSidebar &&
-    ["fixed", "absolute"].includes(scheme.rightInsetSidebar._config.position)
+    ["fixed", "absolute"].includes(scheme.rightInsetSidebar.config.position)
   ) {
     sxProps.marginRight = toValidCssValue(
-      scheme.rightInsetSidebar._config.width
+      scheme.rightInsetSidebar.config.width
     );
   }
   return <InsetAvoidingViewRoot {...props} sx={{ ...props.sx, ...sxProps }} />;

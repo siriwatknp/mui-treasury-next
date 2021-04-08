@@ -63,82 +63,76 @@ export type SidebarState = {
   open?: boolean;
 };
 export class EdgeSidebarBuilder {
-  _id: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID | "" = "";
-  readonly _config: EdgeSidebarSetupParams["config"];
-  readonly _hidden: EdgeSidebarSetupParams["hidden"];
-  readonly _autoCollapse: EdgeSidebarSetupParams["autoCollapse"];
-  _state?: SidebarState;
-  _effectedBy: {
+  id?: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID;
+  readonly config: EdgeSidebarSetupParams["config"];
+  readonly hidden: EdgeSidebarSetupParams["hidden"];
+  readonly autoCollapse: EdgeSidebarSetupParams["autoCollapse"];
+  state?: SidebarState;
+  effectedBy: {
     header?: HeaderBuilder;
   } = {};
 
   constructor(params: EdgeSidebarSetupParams) {
     const { config, hidden = false, autoCollapse } = params;
-    this._config = config;
-    this._hidden = hidden;
-    this._autoCollapse = autoCollapse;
+    this.config = config;
+    this.hidden = hidden;
+    this.autoCollapse = autoCollapse;
   }
 
   setState(state: SidebarState) {
-    this._state = state;
+    this.state = state;
   }
 
   isHidden(breakpoint: Breakpoint) {
-    if (!this._hidden) return false;
-    if (typeof this._hidden === "boolean" && this._hidden) return true;
-    return this._hidden.includes(breakpoint);
+    if (!this.hidden) return false;
+    if (typeof this.hidden === "boolean" && this.hidden) return true;
+    return this.hidden.includes(breakpoint);
   }
 
   isFlexiblePersistent(
     breakpoint: Breakpoint,
     id?: HEADER_ID | CONTENT_ID | FOOTER_ID
   ) {
-    const config = pickNearestBreakpoint(this._config, breakpoint);
+    const config = pickNearestBreakpoint(this.config, breakpoint);
     return EdgeSidebarBuilder.isFlexiblePersistentConfig(config, id);
   }
 
   getOccupiedSpace(id?: HEADER_ID | CONTENT_ID | FOOTER_ID) {
-    return generateSxWithHidden(
-      {
-        config: this._config,
-        hidden: this._hidden,
-      },
-      (breakpointConfig, bp) => {
-        if (EdgeSidebarBuilder.isTemporaryConfig(breakpointConfig)) {
-          if (bp !== "xs") {
-            return 0;
-          }
-          // do nothing for xs because temporary variant will be modal
+    return generateSxWithHidden(this, (breakpointConfig, bp) => {
+      if (EdgeSidebarBuilder.isTemporaryConfig(breakpointConfig)) {
+        if (bp !== "xs") {
+          return 0;
         }
-        if (EdgeSidebarBuilder.isPersistentConfig(breakpointConfig)) {
-          if (
-            this._state?.open &&
-            !EdgeSidebarBuilder.isNonePersistentConfig(breakpointConfig, id)
-          ) {
-            return this.getFinalWidth(breakpointConfig);
-          } else {
-            return 0;
-          }
-        }
-        if (EdgeSidebarBuilder.isPermanentConfig(breakpointConfig)) {
+        // do nothing for xs because temporary variant will be modal
+      }
+      if (EdgeSidebarBuilder.isPersistentConfig(breakpointConfig)) {
+        if (
+          this.state?.open &&
+          !EdgeSidebarBuilder.isNonePersistentConfig(breakpointConfig, id)
+        ) {
           return this.getFinalWidth(breakpointConfig);
+        } else {
+          return 0;
         }
       }
-    );
+      if (EdgeSidebarBuilder.isPermanentConfig(breakpointConfig)) {
+        return this.getFinalWidth(breakpointConfig);
+      }
+    });
   }
 
   getZIndex(theme = DEFAULT_THEME) {
     const result: Responsive<number> = {};
-    if (!this._effectedBy.header) return {};
+    if (!this.effectedBy.header) return {};
     const breakpoints = combineBreakpoints(
-      this._effectedBy.header._config,
-      this._config
+      this.effectedBy.header.config,
+      this.config
     );
     for (const key of breakpoints) {
       const bp = key as Breakpoint;
-      if (this._id) {
-        const isClipped = this._effectedBy.header.isClipped(this._id, bp);
-        const isAboveSomeEdgeSidebar = this._effectedBy.header.isAboveSomeEdgeSidebar(
+      if (this.id) {
+        const isClipped = this.effectedBy.header.isClipped(this.id, bp);
+        const isAboveSomeEdgeSidebar = this.effectedBy.header.isAboveSomeEdgeSidebar(
           bp
         );
         result[bp] =
@@ -153,15 +147,15 @@ export class EdgeSidebarBuilder {
   }
 
   getWidth() {
-    return generateSx(this._config, (breakpointConfig, bp) =>
+    return generateSx(this.config, (breakpointConfig, bp) =>
       EdgeSidebarBuilder.isTemporaryConfig(breakpointConfig)
-        ? this._config[bp]?.width
+        ? this.config[bp]?.width
         : this.getFinalWidth(breakpointConfig)
     );
   }
 
   getDrawerVariant() {
-    return generateSx(this._config, "variant") as Responsive<DrawerVariant>;
+    return generateSx(this.config, "variant") as Responsive<DrawerVariant>;
   }
 
   getSxProps(theme = DEFAULT_THEME) {
@@ -172,7 +166,7 @@ export class EdgeSidebarBuilder {
   }
 
   getFinalWidth = (config: CollapsibleSidebarConfig | undefined) => {
-    return config?.collapsible && this._state?.collapsed
+    return config?.collapsible && this.state?.collapsed
       ? config.collapsedWidth ?? config.width
       : config?.width;
   };

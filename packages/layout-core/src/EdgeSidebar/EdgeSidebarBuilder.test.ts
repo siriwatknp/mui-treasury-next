@@ -362,11 +362,11 @@ describe("EdgeSidebarBuilder", () => {
           },
         },
       });
-      edgeSidebar._id = "leftEdgeSidebar";
-      edgeSidebar._effectedBy = {
+      edgeSidebar.id = "leftEdgeSidebar";
+      edgeSidebar.effectedBy = {
         header,
       };
-      header._effectedBy = {
+      header.effectedBy = {
         leftEdgeSidebar: edgeSidebar,
       };
       expect(edgeSidebar.getZIndex()).toEqual({
@@ -412,18 +412,18 @@ describe("EdgeSidebarBuilder", () => {
     });
 
     // Order of mutating data does not matter
-    leftEdgeSidebar._id = "leftEdgeSidebar";
-    rightEdgeSidebar._id = "rightEdgeSidebar";
+    leftEdgeSidebar.id = "leftEdgeSidebar";
+    rightEdgeSidebar.id = "rightEdgeSidebar";
 
-    header._effectedBy = {
+    header.effectedBy = {
       leftEdgeSidebar,
       rightEdgeSidebar,
     };
 
-    leftEdgeSidebar._effectedBy = {
+    leftEdgeSidebar.effectedBy = {
       header,
     };
-    rightEdgeSidebar._effectedBy = { header };
+    rightEdgeSidebar.effectedBy = { header };
 
     expect(leftEdgeSidebar.getZIndex()).toEqual({
       xs: 1220,

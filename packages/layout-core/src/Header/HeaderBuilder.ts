@@ -28,17 +28,17 @@ type HeaderSetupParams = {
 };
 
 export class HeaderBuilder {
-  readonly _config: HeaderSetupParams["config"];
-  readonly _hidden: HeaderSetupParams["hidden"];
-  _effectedBy: {
+  readonly config: HeaderSetupParams["config"];
+  readonly hidden: HeaderSetupParams["hidden"];
+  effectedBy: {
     leftEdgeSidebar?: EdgeSidebarBuilder;
     rightEdgeSidebar?: EdgeSidebarBuilder;
   } = {};
 
   constructor(params: HeaderSetupParams) {
     const { config, hidden } = params;
-    this._config = config;
-    this._hidden = hidden;
+    this.config = config;
+    this.hidden = hidden;
   }
 
   isClipped(
@@ -46,7 +46,7 @@ export class HeaderBuilder {
     breakpoint: Breakpoint
   ) {
     const headerBreakpointConfig = pickNearestBreakpoint(
-      this._config,
+      this.config,
       breakpoint
     );
     if (
@@ -63,7 +63,7 @@ export class HeaderBuilder {
 
   isAboveSomeEdgeSidebar(breakpoint: Breakpoint) {
     const headerBreakpointConfig = pickNearestBreakpoint(
-      this._config,
+      this.config,
       breakpoint
     );
     if (!headerBreakpointConfig) return false;
@@ -75,67 +75,48 @@ export class HeaderBuilder {
   }
 
   getOffsetHeight() {
-    return generateSxWithHidden(
-      {
-        config: this._config,
-        hidden: this._hidden,
-      },
-      (breakpointConfig) =>
-        breakpointConfig.position === "fixed" ? breakpointConfig.height : 0
+    return generateSxWithHidden(this, (breakpointConfig) =>
+      breakpointConfig.position === "fixed" ? breakpointConfig.height : 0
     );
   }
 
-  // todo write tests
   getClippedRelativeHeight(
     sidebarId: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID
   ) {
-    return generateSxWithHidden(
-      {
-        config: this._config,
-        hidden: this._hidden,
-      },
-      (breakpointConfig, bp) =>
-        this.isClipped(sidebarId, bp) &&
-        breakpointConfig.position === "relative"
-          ? toValidCssValue(breakpointConfig.height)
-          : "0px"
+    return generateSxWithHidden(this, (breakpointConfig, bp) =>
+      this.isClipped(sidebarId, bp) && breakpointConfig.position === "relative"
+        ? toValidCssValue(breakpointConfig.height)
+        : "0px"
     );
   }
 
-  // todo write tests
   getClippedHeight(sidebarId: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID) {
-    return generateSxWithHidden(
-      {
-        config: this._config,
-        hidden: this._hidden,
-      },
-      (breakpointConfig, bp) =>
-        this.isClipped(sidebarId, bp)
-          ? toValidCssValue(breakpointConfig?.height)
-          : 0
+    return generateSxWithHidden(this, (breakpointConfig, bp) =>
+      this.isClipped(sidebarId, bp)
+        ? toValidCssValue(breakpointConfig?.height)
+        : 0
     );
   }
 
-  // todo write tests
   getRelativeHeight() {
-    return generateSxWithHidden(
-      {
-        config: this._config,
-        hidden: this._hidden,
-      },
-      (breakpointConfig) =>
-        breakpointConfig.position === "relative"
-          ? toValidCssValue(breakpointConfig?.height)
-          : 0
+    return generateSxWithHidden(this, (breakpointConfig) =>
+      breakpointConfig.position === "relative"
+        ? toValidCssValue(breakpointConfig?.height)
+        : 0
+    );
+  }
+
+  getNonRelativeHeight() {
+    return generateSxWithHidden(this, (breakpointConfig) =>
+      breakpointConfig.position !== "relative"
+        ? toValidCssValue(breakpointConfig?.height)
+        : 0
     );
   }
 
   getSxHeight() {
     const result = generateSxWithHidden(
-      {
-        config: this._config,
-        hidden: this._hidden,
-      },
+      this,
       (breakpointConfig) => breakpointConfig.height
     );
     return {
@@ -145,7 +126,7 @@ export class HeaderBuilder {
 
   getSxMarginHorizontal() {
     const marginLeft: Responsive<number | string> = {};
-    const { leftEdgeSidebar, rightEdgeSidebar } = this._effectedBy;
+    const { leftEdgeSidebar, rightEdgeSidebar } = this.effectedBy;
     if (leftEdgeSidebar) {
       const occupiedSpace = leftEdgeSidebar?.getOccupiedSpace();
       for (const key in occupiedSpace) {
@@ -173,7 +154,7 @@ export class HeaderBuilder {
 
   getSxWidth() {
     const result: Responsive<number | string> = {};
-    const { leftEdgeSidebar, rightEdgeSidebar } = this._effectedBy;
+    const { leftEdgeSidebar, rightEdgeSidebar } = this.effectedBy;
     const leftOccupiedSpace = leftEdgeSidebar?.getOccupiedSpace() ?? {};
     const rightOccupiedSpace = rightEdgeSidebar?.getOccupiedSpace() ?? {};
     const breakpoints = combineBreakpoints(
@@ -212,7 +193,7 @@ export class HeaderBuilder {
   }
 
   getSxZIndex(theme = DEFAULT_THEME) {
-    const result = generateSx(this._config, (breakpointConfig, bp) =>
+    const result = generateSx(this.config, (breakpointConfig, bp) =>
       this.isAboveSomeEdgeSidebar(bp)
         ? theme.zIndex.drawer + 10 + (breakpointConfig.layer ?? 0)
         : theme.zIndex.appBar
@@ -223,9 +204,9 @@ export class HeaderBuilder {
   }
 
   getSxProps(theme = DEFAULT_THEME): object {
-    const sxTop = generateSx(this._config, "top");
+    const sxTop = generateSx(this.config, "top");
     return {
-      position: generateSx(this._config, "position"),
+      position: generateSx(this.config, "position"),
       ...(Object.keys(sxTop).length && { top: sxTop }),
       ...this.getSxHeight(),
       ...this.getSxWidth(),

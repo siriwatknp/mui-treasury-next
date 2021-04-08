@@ -65,11 +65,11 @@ const setUpEdgeSidebar = (scheme: Scheme) => {
     rightEdgeSidebar: {},
   };
   if (scheme.leftEdgeSidebar) {
-    scheme.leftEdgeSidebar._id = LEFT_EDGE_SIDEBAR_ID;
+    scheme.leftEdgeSidebar.id = LEFT_EDGE_SIDEBAR_ID;
     autoGenInitialState.leftEdgeSidebar = INITIAL_EDGE_SIDEBAR_STATE;
   }
   if (scheme.rightEdgeSidebar) {
-    scheme.rightEdgeSidebar._id = RIGHT_EDGE_SIDEBAR_ID;
+    scheme.rightEdgeSidebar.id = RIGHT_EDGE_SIDEBAR_ID;
     autoGenInitialState.rightEdgeSidebar = INITIAL_EDGE_SIDEBAR_STATE;
   }
   return autoGenInitialState;
@@ -147,20 +147,20 @@ export const Root = ({
 
   // assign Effect
   if (scheme.header) {
-    scheme.header._effectedBy = {
+    scheme.header.effectedBy = {
       leftEdgeSidebar: scheme.leftEdgeSidebar,
       rightEdgeSidebar: scheme.rightEdgeSidebar,
     };
   }
   if (scheme.leftInsetSidebar) {
-    scheme.leftInsetSidebar._anchor = "left";
-    scheme.leftInsetSidebar._effectedBy = {
+    scheme.leftInsetSidebar.anchor = "left";
+    scheme.leftInsetSidebar.effectedBy = {
       header: scheme.header,
     };
   }
   if (scheme.rightInsetSidebar) {
-    scheme.rightInsetSidebar._anchor = "right";
-    scheme.rightInsetSidebar._effectedBy = {
+    scheme.rightInsetSidebar.anchor = "right";
+    scheme.rightInsetSidebar.effectedBy = {
       header: scheme.header,
     };
   }

@@ -2,9 +2,9 @@ import React, { PropsWithChildren } from "react";
 import cx from "clsx";
 import { experimentalStyled, useTheme } from "@material-ui/core/styles";
 import { useLayoutCtx } from "../Root/Root";
-import { InsetSidebarOffsetCompiler } from "./InsetSidebarOffsetCompiler";
 import { useInsetHeaderMagnet } from "../hooks/useInsetHeaderMagnet";
 import { DrawerAnchor, FixedInsetSidebarConfig } from "./InsetSidebarBuilder";
+import { getInsetOffsetSxProps } from "./getInsetOffsetSxProps";
 
 const InsetSidebarRoot = experimentalStyled("div")();
 const InsetSidebarBody = experimentalStyled("div")();
@@ -30,9 +30,9 @@ const Offset = ({
   const offsetStyle = useInsetHeaderMagnet(!headerMagnetEnabled);
 
   // header offset
-  const offsetSx = InsetSidebarOffsetCompiler({
+  const offsetSx = getInsetOffsetSxProps({
     header: scheme.header,
-  }).getSxHeight();
+  });
 
   return (
     <OffsetRoot
@@ -79,8 +79,8 @@ export const InsetSidebar = ({
           ...sidebar?.getSxBody(),
         }}
       >
-        {sidebar?._config.position === "fixed" && (
-          <Offset headerMagnetEnabled={sidebar._config.headerMagnetEnabled} />
+        {sidebar?.config.position === "fixed" && (
+          <Offset headerMagnetEnabled={sidebar.config.headerMagnetEnabled} />
         )}
         {children}
       </InsetSidebarBody>
