@@ -89,6 +89,7 @@ export const Development = () => {
               collapsible: true,
               collapsedWidth: 80,
               autoExpanded: true,
+              headerMagnetEnabled: true,
             },
           },
           autoCollapse: "sm",

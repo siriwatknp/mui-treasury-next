@@ -27,7 +27,8 @@ export const useEdgeHeaderMagnet = (
 
   const height = scheme.header?.getClippedRelativeHeight(sidebarId);
 
-  const maxOffset = height && screen ? height[screen] : 0;
+  const maxOffset =
+    height && screen ? pickNearestBreakpoint(height, screen) : 0;
 
   return {
     marginTop: `max(-${scrollY ?? 0}px, calc(-1 * ${maxOffset}))`,

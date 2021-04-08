@@ -51,6 +51,7 @@ const Offset = ({
   const theme = useTheme();
   // header magnet feature
   const offsetStyle = useEdgeHeaderMagnet(sidebarId);
+  console.log("offsetStyle", offsetStyle);
 
   // header offset
   const offsetSx = EdgeSidebarOffsetCompiler({
