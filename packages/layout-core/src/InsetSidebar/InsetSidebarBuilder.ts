@@ -2,26 +2,27 @@ import { Breakpoint } from "@material-ui/core/styles/createBreakpoints";
 import { HeaderBuilder } from "../Header/HeaderBuilder";
 import { subtractCalc } from "../utils/calc";
 import { generateSxWithHidden } from "../utils/generateSxWithHidden";
+import { Responsive } from "../utils/types";
 
 export type DrawerAnchor = "left" | "right";
 
 export type FixedInsetSidebarConfig = {
   position: "fixed";
-  width: number | string;
-  top?: number | string;
+  width: number | string | Responsive<string | number>;
+  top?: number | string | Responsive<string | number>;
   headerMagnetEnabled?: boolean;
 };
 
 export type AbsoluteInsetSidebarConfig = {
   position: "absolute";
-  width: number | string;
-  top?: number | string;
+  width: number | string | Responsive<string | number>;
+  top?: number | string | Responsive<string | number>;
 };
 
 export type StickyInsetSidebarConfig = {
   position: "sticky";
-  width: number | string;
-  top?: number | string;
+  width: number | string | Responsive<string | number>;
+  top?: number | string | Responsive<string | number>;
 };
 
 export type InsetSidebarConfig =
@@ -30,19 +31,18 @@ export type InsetSidebarConfig =
   | StickyInsetSidebarConfig;
 
 type InsetSetupParams = {
-  config: InsetSidebarConfig;
   hidden?: Breakpoint[] | boolean;
-};
+} & InsetSidebarConfig;
 
 export class InsetSidebarBuilder {
-  readonly config: InsetSetupParams["config"];
+  readonly config: InsetSidebarConfig;
   readonly hidden: InsetSetupParams["hidden"];
   anchor?: DrawerAnchor;
   effectedBy: { header?: HeaderBuilder } = {};
 
-  constructor(params: InsetSetupParams) {
-    this.config = params.config;
-    this.hidden = params.hidden;
+  constructor({ hidden, ...props }: InsetSetupParams) {
+    this.config = props;
+    this.hidden = hidden;
   }
 
   getSxBody() {
@@ -76,14 +76,14 @@ export class InsetSidebarBuilder {
         width: "auto",
         height: "100%",
         ...(anchor === "left" && {
-          marginLeft: -999,
-          paddingLeft: 999,
+          marginLeft: "-9999px",
+          paddingLeft: "9999px",
           borderRight: "1px solid",
           borderColor: "divider",
         }),
         ...(anchor === "right" && {
-          marginRight: -999,
-          paddingRight: 999,
+          marginRight: "-9999px",
+          paddingRight: "9999px",
           borderLeft: "1px solid",
           borderColor: "divider",
         }),

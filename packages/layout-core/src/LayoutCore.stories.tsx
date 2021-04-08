@@ -105,11 +105,9 @@ export const Development = () => {
           hidden: ["xs", "sm"],
         }),
         rightInsetSidebar: new InsetSidebarBuilder({
-          config: {
-            position: "fixed",
-            headerMagnetEnabled: true,
-            width: 256,
-          },
+          position: "fixed",
+          headerMagnetEnabled: true,
+          width: 256,
         }),
       }}
       initialState={{ rightEdgeSidebar: { open: true } }}
