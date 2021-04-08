@@ -7,7 +7,7 @@ import { useScrollY } from "./useScrollY";
 
 export const useEdgeHeaderMagnet = (
   sidebarId: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID
-): { marginTop: string } => {
+) => {
   const { scheme } = useLayoutCtx();
   const screen = useScreen();
 
@@ -33,5 +33,3 @@ export const useEdgeHeaderMagnet = (
     marginTop: `max(-${scrollY ?? 0}px, calc(-1 * ${maxOffset}))`,
   }; // inline style
 };
-
-export default useEdgeHeaderMagnet;

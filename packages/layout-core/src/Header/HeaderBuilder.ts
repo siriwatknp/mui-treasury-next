@@ -13,7 +13,7 @@ import { toValidCssValue } from "../utils/toValidCssValue";
 import { generateSxWithHidden } from "../utils/generateSxWithHidden";
 import { generateSx } from "../utils/generateSx";
 
-type HeaderBreakpointConfig = {
+export type HeaderConfig = {
   position: "relative" | "sticky" | "fixed";
   height: number | string;
   top?: number | string;
@@ -23,7 +23,7 @@ type HeaderBreakpointConfig = {
     | Partial<Record<LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID, boolean>>;
 };
 type HeaderSetupParams = {
-  config: Responsive<HeaderBreakpointConfig>;
+  config: Responsive<HeaderConfig>;
   hidden?: boolean | Breakpoint[];
 };
 
@@ -85,6 +85,7 @@ export class HeaderBuilder {
     );
   }
 
+  // todo write tests
   getClippedRelativeHeight(
     sidebarId: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID
   ) {
@@ -101,6 +102,7 @@ export class HeaderBuilder {
     );
   }
 
+  // todo write tests
   getClippedHeight(sidebarId: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID) {
     return generateSxWithHidden(
       {
@@ -108,7 +110,23 @@ export class HeaderBuilder {
         hidden: this._hidden,
       },
       (breakpointConfig, bp) =>
-        this.isClipped(sidebarId, bp) ? breakpointConfig?.height : 0
+        this.isClipped(sidebarId, bp)
+          ? toValidCssValue(breakpointConfig?.height)
+          : 0
+    );
+  }
+
+  // todo write tests
+  getRelativeHeight() {
+    return generateSxWithHidden(
+      {
+        config: this._config,
+        hidden: this._hidden,
+      },
+      (breakpointConfig) =>
+        breakpointConfig.position === "relative"
+          ? toValidCssValue(breakpointConfig?.height)
+          : 0
     );
   }
 

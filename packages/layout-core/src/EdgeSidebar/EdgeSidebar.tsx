@@ -17,7 +17,7 @@ import {
   RIGHT_EDGE_SIDEBAR_ID,
 } from "../utils/constant";
 import { EdgeSidebarOffsetCompiler } from "./EdgeSidebarOffsetCompiler";
-import useEdgeHeaderMagnet from "../hooks/useEdgeHeaderMagnet";
+import { useEdgeHeaderMagnet } from "../hooks/useEdgeHeaderMagnet";
 
 export type EdgeSidebarProps = { anchor: "left" | "right" } & Omit<
   DrawerProps,

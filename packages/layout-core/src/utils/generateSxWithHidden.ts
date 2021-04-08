@@ -14,7 +14,7 @@ export const generateSxWithHidden = <
     breakpointConfig: Config,
     bp: Breakpoint
   ) => number | string | undefined,
-  getHiddenValue = () => 0
+  getHiddenValue: () => string | number = () => 0
 ) => {
   const { config, hidden } = builder;
 

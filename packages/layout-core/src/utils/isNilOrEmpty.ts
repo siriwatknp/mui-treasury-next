@@ -7,3 +7,5 @@ export const isNilOrEmpty = <T>(
 ): value is Empty | null | undefined => {
   return isNil(value) || value === "";
 };
+
+export const isNotNilOrEmpty = (value: any) => !isNilOrEmpty(value);

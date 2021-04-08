@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import { EdgeSidebarBuilder } from "../EdgeSidebar/EdgeSidebarBuilder";
 import { HeaderBuilder } from "../Header/HeaderBuilder";
+import { InsetSidebarBuilder } from "../InsetSidebar/InsetSidebarBuilder";
 import { LEFT_EDGE_SIDEBAR_ID, RIGHT_EDGE_SIDEBAR_ID } from "../utils/constant";
 
 type SidebarState = {
@@ -17,6 +18,8 @@ type Scheme = {
   header?: HeaderBuilder;
   leftEdgeSidebar?: EdgeSidebarBuilder;
   rightEdgeSidebar?: EdgeSidebarBuilder;
+  leftInsetSidebar?: InsetSidebarBuilder;
+  rightInsetSidebar?: InsetSidebarBuilder;
 };
 
 export type ContextValue = {
@@ -141,10 +144,24 @@ export const Root = ({
     leftEdgeSidebar: leftState,
     rightEdgeSidebar: rightState,
   });
+
+  // assign Effect
   if (scheme.header) {
     scheme.header._effectedBy = {
       leftEdgeSidebar: scheme.leftEdgeSidebar,
       rightEdgeSidebar: scheme.rightEdgeSidebar,
+    };
+  }
+  if (scheme.leftInsetSidebar) {
+    scheme.leftInsetSidebar._anchor = "left";
+    scheme.leftInsetSidebar._effectedBy = {
+      header: scheme.header,
+    };
+  }
+  if (scheme.rightInsetSidebar) {
+    scheme.rightInsetSidebar._anchor = "right";
+    scheme.rightInsetSidebar._effectedBy = {
+      header: scheme.header,
     };
   }
   return (
