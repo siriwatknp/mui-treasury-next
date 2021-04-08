@@ -1,10 +1,10 @@
 import { HeaderBuilder } from "../Header/HeaderBuilder";
-import { getInsetOffsetSxProps } from "./getInsetOffsetSxProps";
+import { getFixedInsetOffsetSxProps } from "./getInsetOffsetSxProps";
 
 describe("InsetOffsetCompiler", () => {
   it("return height of non relative header config", () => {
     expect(
-      getInsetOffsetSxProps({
+      getFixedInsetOffsetSxProps({
         header: new HeaderBuilder({
           config: {
             xs: {
@@ -20,13 +20,15 @@ describe("InsetOffsetCompiler", () => {
               position: "sticky",
             },
           },
+          hidden: ["sm"],
         }),
       })
     ).toEqual({
       height: {
-        xs: "56px",
+        xs: 56,
         sm: 0,
-        lg: "64px",
+        md: 64,
+        lg: 64,
       },
     });
   });

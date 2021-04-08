@@ -4,7 +4,7 @@ import { experimentalStyled, useTheme } from "@material-ui/core/styles";
 import { useLayoutCtx } from "../Root/Root";
 import { useInsetHeaderMagnet } from "../hooks/useInsetHeaderMagnet";
 import { DrawerAnchor, FixedInsetSidebarConfig } from "./InsetSidebarBuilder";
-import { getInsetOffsetSxProps } from "./getInsetOffsetSxProps";
+import { getFixedInsetOffsetSxProps } from "./getInsetOffsetSxProps";
 
 const InsetSidebarRoot = experimentalStyled("div")();
 const InsetSidebarBody = experimentalStyled("div")();
@@ -30,7 +30,7 @@ const Offset = ({
   const offsetStyle = useInsetHeaderMagnet(!headerMagnetEnabled);
 
   // header offset
-  const offsetSx = getInsetOffsetSxProps({
+  const offsetSx = getFixedInsetOffsetSxProps({
     header: scheme.header,
   });
 

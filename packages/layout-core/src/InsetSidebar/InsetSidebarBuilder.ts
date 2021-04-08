@@ -75,10 +75,17 @@ export class InsetSidebarBuilder {
         top: top,
         width: "auto",
         height: "100%",
-        ...(anchor === "left" && { marginLeft: -999, paddingLeft: 999 }),
+        ...(anchor === "left" && {
+          marginLeft: -999,
+          paddingLeft: 999,
+          borderRight: "1px solid",
+          borderColor: "divider",
+        }),
         ...(anchor === "right" && {
           marginRight: -999,
           paddingRight: 999,
+          borderLeft: "1px solid",
+          borderColor: "divider",
         }),
       };
     }
