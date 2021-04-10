@@ -1,10 +1,9 @@
 import React, { PropsWithChildren } from "react";
 import cx from "clsx";
-import { experimentalStyled, useTheme } from "@material-ui/core/styles";
+import { experimentalStyled } from "@material-ui/core/styles";
 import { useLayoutCtx } from "../Root/Root";
-import { useInsetHeaderMagnet } from "../hooks/useInsetHeaderMagnet";
-import { DrawerAnchor, FixedInsetSidebarConfig } from "./InsetSidebarBuilder";
-import { getFixedInsetOffsetSxProps } from "./getInsetOffsetSxProps";
+import { DrawerAnchor } from "./InsetSidebarBuilder";
+import { InsetOffset } from "./InsetOffset";
 
 const InsetSidebarRoot = experimentalStyled("div")();
 const InsetSidebarBody = experimentalStyled("div")();
@@ -13,38 +12,6 @@ export type InsetSidebarProps = {
   anchor?: DrawerAnchor;
   RootProps?: Parameters<typeof InsetSidebarRoot>[0];
   BodyProps?: Parameters<typeof InsetSidebarBody>[0];
-};
-
-const OffsetRoot = experimentalStyled(
-  "div",
-  {},
-  { name: "InsetSidebarOffset", slot: "Root" }
-)();
-
-const Offset = ({
-  headerMagnetEnabled,
-}: Pick<FixedInsetSidebarConfig, "headerMagnetEnabled">) => {
-  const { scheme } = useLayoutCtx();
-  const theme = useTheme();
-  // header magnet feature
-  const offsetStyle = useInsetHeaderMagnet(!headerMagnetEnabled);
-
-  // header offset
-  const offsetSx = getFixedInsetOffsetSxProps(scheme);
-
-  return (
-    <OffsetRoot
-      className="EdgeHeaderOffset"
-      sx={{
-        ...offsetSx,
-        transition: theme.transitions.create(["all"], {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.short,
-        }),
-      }}
-      style={offsetStyle}
-    />
-  );
 };
 
 export const InsetSidebar = ({
@@ -78,7 +45,9 @@ export const InsetSidebar = ({
         }}
       >
         {sidebar?.config.position === "fixed" && (
-          <Offset headerMagnetEnabled={sidebar.config.headerMagnetEnabled} />
+          <InsetOffset
+            headerMagnetEnabled={sidebar.config.headerMagnetEnabled}
+          />
         )}
         {children}
       </InsetSidebarBody>

@@ -1,30 +1,24 @@
 import React, { CSSProperties } from "react";
-import { experimentalStyled, useTheme } from "@material-ui/core/styles";
-import { ClippableElement } from "../Header/HeaderBuilder";
+import { useTheme, experimentalStyled } from "@material-ui/core/styles";
 import { useLayoutCtx } from "../Root/Root";
-import { useScreen } from "../hooks/useScreen";
-import { EdgeSidebarBuilder } from "./EdgeSidebarBuilder";
-import { pickNearestBreakpoint } from "../utils/pickNearestBreakpoint";
+import { FixedInsetSidebarConfig } from "./InsetSidebarBuilder";
 import { useScrollY } from "../hooks/useScrollY";
+import { useScreen } from "../hooks/useScreen";
 import { HeadersCompiler } from "../MultiHeaders/HeadersCompiler";
-import { getEdgeOffsetSxProps } from "./getEdgeOffsetSxProps";
+import { pickNearestBreakpoint } from "../utils/pickNearestBreakpoint";
 
 const OffsetRoot = experimentalStyled(
   "div",
   {},
-  { name: "EdgeSidebarOffset", slot: "Root" }
+  { name: "InsetSidebarOffset", slot: "Root" }
 )();
 
-export const EdgeOffset = ({ sidebarId }: { sidebarId: ClippableElement }) => {
+export const InsetOffset = ({
+  headerMagnetEnabled,
+}: Pick<FixedInsetSidebarConfig, "headerMagnetEnabled">) => {
   const { scheme } = useLayoutCtx();
   const theme = useTheme();
   const screen = useScreen();
-  const edgeSidebar = scheme[sidebarId];
-  const sidebarConfig = pickNearestBreakpoint(edgeSidebar?.config, screen);
-  const headerMagnetEnabled =
-    (EdgeSidebarBuilder.isPermanentConfig(sidebarConfig) ||
-      EdgeSidebarBuilder.isPersistentConfig(sidebarConfig)) &&
-    sidebarConfig?.headerMagnetEnabled;
 
   // dont't calculate scrollY if not magnet for performance
   const scrollY = useScrollY(!headerMagnetEnabled);
@@ -33,9 +27,9 @@ export const EdgeOffset = ({ sidebarId }: { sidebarId: ClippableElement }) => {
     scheme.header,
     scheme.topHeader,
     scheme.subheader,
-  ]).getClippedHeight(sidebarId);
+  ]).getAllHeight();
 
-  // header magnet geature
+  // header magnet feature
   const style: CSSProperties = {};
   if (headerMagnetEnabled) {
     const maxOffset =
@@ -43,14 +37,11 @@ export const EdgeOffset = ({ sidebarId }: { sidebarId: ClippableElement }) => {
     style.marginTop = `max(-${scrollY ?? 0}px, calc(-1 * ${maxOffset}))`;
   }
 
-  // header offset
-  const sxProps = getEdgeOffsetSxProps(edgeSidebar, totalHeight);
-
   return (
     <OffsetRoot
       className="EdgeHeaderOffset"
       sx={{
-        ...sxProps,
+        height: totalHeight,
         transition: theme.transitions.create(["all"], {
           easing: theme.transitions.easing.sharp,
           duration: theme.transitions.duration.short,
