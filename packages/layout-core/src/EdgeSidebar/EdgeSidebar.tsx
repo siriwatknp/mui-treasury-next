@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import cx from "clsx";
-import { useTheme, experimentalStyled } from "@material-ui/core/styles";
+import { useTheme } from "@material-ui/core/styles";
 import Drawer, { DrawerProps } from "@material-ui/core/Drawer";
 import { ModalProps } from "@material-ui/core/Modal";
 import { useLayoutCtx } from "../Root/Root";
@@ -11,14 +11,8 @@ import {
   CollapsibleSidebarConfig,
   EdgeSidebarConfig,
 } from "./EdgeSidebarBuilder";
-import {
-  EDGE_SIDEBAR_EXPAND_DELAY,
-  LEFT_EDGE_SIDEBAR_ID,
-  RIGHT_EDGE_SIDEBAR_ID,
-} from "../utils/constant";
-import { useEdgeHeaderMagnet } from "../hooks/useEdgeHeaderMagnet";
-import { getEdgeOffsetSxProps } from "./getEdgeOffsetSxProps";
-import { ClippableElement } from "../Header/HeaderBuilder";
+import { EDGE_SIDEBAR_EXPAND_DELAY } from "../utils/constant";
+import { EdgeOffset } from "./EdgeOffset";
 
 export type EdgeSidebarProps = { anchor: "left" | "right" } & Omit<
   DrawerProps,
@@ -50,39 +44,6 @@ const hasAutoExpanded = (
     (typeof (config as CollapsibleSidebarConfig).autoExpanded === "boolean" ||
       typeof (config as CollapsibleSidebarConfig).uncollapsedOnHover ===
         "boolean")
-  );
-};
-
-const OffsetRoot = experimentalStyled(
-  "div",
-  {},
-  { name: "EdgeSidebarOffset", slot: "Root" }
-)();
-
-const Offset = ({ sidebarId }: { sidebarId: ClippableElement }) => {
-  const { scheme } = useLayoutCtx();
-  const theme = useTheme();
-  // header magnet feature
-  const offsetStyle = useEdgeHeaderMagnet(sidebarId);
-
-  // header offset
-  const offsetSx = getEdgeOffsetSxProps({
-    ...scheme,
-    edgeSidebar: scheme[sidebarId],
-  });
-
-  return (
-    <OffsetRoot
-      className="EdgeHeaderOffset"
-      sx={{
-        ...offsetSx,
-        transition: theme.transitions.create(["all"], {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.short,
-        }),
-      }}
-      style={offsetStyle}
-    />
   );
 };
 
@@ -191,7 +152,9 @@ export const EdgeSidebar = ({
           },
         }}
       >
-        {variant && variant !== "temporary" && <Offset sidebarId={sidebarId} />}
+        {variant && variant !== "temporary" && (
+          <EdgeOffset sidebarId={sidebarId} />
+        )}
         {children}
       </Drawer>
     </SidebarContext.Provider>
