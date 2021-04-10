@@ -5,11 +5,11 @@ import IconButton from "@material-ui/core/IconButton";
 
 import Menu from "@material-ui/icons/Menu";
 
-import AppHeader from "./mockup/gmail/AppHeader";
-import AppSidebar from "./mockup/gmail/AppSidebar";
-import AppContent from "./mockup/gmail/AppContent";
-import AppSubSidebar from "./mockup/gmail/AppSubSidebar";
-import CustomTrigger from "./mockup/gmail/CustomTrigger";
+import AppHeader from "../mockup/gmail/AppHeader";
+import AppSidebar from "../mockup/gmail/AppSidebar";
+import AppContent from "../mockup/gmail/AppContent";
+import AppSubSidebar from "../mockup/gmail/AppSubSidebar";
+import CustomTrigger from "../mockup/gmail/CustomTrigger";
 
 import {
   Root,

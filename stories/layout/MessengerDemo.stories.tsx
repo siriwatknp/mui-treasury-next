@@ -144,7 +144,7 @@ export const Messenger = () => {
               <InsetContainer
                 disableGutters
                 rightSidebar={
-                  <InsetSidebar BodyProps={{ className: styles.insetBody }}>
+                  <InsetSidebar classes={{ paper: styles.insetBody }}>
                     <ChatSettings />
                   </InsetSidebar>
                 }
