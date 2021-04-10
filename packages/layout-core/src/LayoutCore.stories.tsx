@@ -5,14 +5,19 @@ import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 
-import { Root, useLayoutCtx } from "./Root/Root";
-import { Header, TopHeader, Subheader } from "./Header/Header";
-import { EdgeSidebar } from "./EdgeSidebar/EdgeSidebar";
-import { Content } from "./Content/Content";
-import { Footer } from "./Footer/Footer";
-import { InsetContainer } from "./InsetSidebar/InsetContainer";
-import { InsetSidebar } from "./InsetSidebar/InsetSidebar";
-import { InsetAvoidingView } from "./InsetSidebar/InsetAvoidingView";
+import {
+  Root,
+  useLayoutCtx,
+  Header,
+  TopHeader,
+  Subheader,
+  EdgeSidebar,
+  Content,
+  Footer,
+  InsetContainer,
+  InsetSidebar,
+  InsetAvoidingView,
+} from "@mui-treasury/layout";
 
 export default {
   title: "Layout",

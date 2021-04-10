@@ -7,7 +7,7 @@
     ".storybook/preview.tsx",
     "stories"
   ],
-  "exclude": ["node_modules", "dist"],
+  "exclude": ["node_modules", "**/*.test.*", "**/*.spec.*", "dist"],
   "compilerOptions": {
     "module": "CommonJS",
     "target": "es2018",
@@ -26,7 +26,8 @@
       ],
       "@mui-treasury/style-button-bootstrap": [
         "packages/style-shape-sticker/src/"
-      ]
+      ],
+      "@mui-treasury/layout": ["packages/layout-core/src/"]
     }
   }
 }

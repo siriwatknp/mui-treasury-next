@@ -25,7 +25,7 @@ describe("useSidebarAutoCollapse", () => {
           leftEdgeSidebar: {
             config: {
               md: {
-                variant: "permanent",
+                variant: "permanent" as const,
                 width: 256,
                 collapsible: true,
                 collapsedWidth: 80,
@@ -49,13 +49,13 @@ describe("useSidebarAutoCollapse", () => {
           leftEdgeSidebar: {
             config: {
               md: {
-                variant: "permanent",
+                variant: "permanent" as const,
                 width: 256,
                 collapsible: true,
                 collapsedWidth: 80,
               },
             },
-            autoCollapse: "md",
+            autoCollapse: "md" as const,
           },
         },
       },
@@ -77,13 +77,13 @@ describe("useSidebarAutoCollapse", () => {
           leftEdgeSidebar: {
             config: {
               md: {
-                variant: "permanent",
+                variant: "permanent" as const,
                 width: 256,
                 collapsible: true,
                 collapsedWidth: 80,
               },
             },
-            autoCollapse: "md",
+            autoCollapse: "md" as const,
           },
         },
         initialState: { leftEdgeSidebar: { collapsed: true } },

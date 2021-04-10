@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { createMuiTheme, makeStyles } from "@material-ui/core/styles";
 
 import IconButton from "@material-ui/core/IconButton";
 
@@ -11,15 +11,25 @@ import AppContent from "./mockup/gmail/AppContent";
 import AppSubSidebar from "./mockup/gmail/AppSubSidebar";
 import CustomTrigger from "./mockup/gmail/CustomTrigger";
 
-import { Root, useLayoutCtx } from "../packages/layout-core/src/Root/Root";
-import { Header } from "../packages/layout-core/src/Header/Header";
-import { EdgeSidebar } from "../packages/layout-core/src/EdgeSidebar/EdgeSidebar";
-import { Content } from "../packages/layout-core/src/Content/Content";
+import {
+  Root,
+  Header,
+  EdgeSidebar,
+  Content,
+  useLayoutCtx,
+} from "@mui-treasury/layout";
 
 export default {
   title: "Layout/Demo App",
   parameters: {
     layout: "fullscreen",
+    muiTheme: createMuiTheme({
+      palette: {
+        background: {
+          default: "#fff",
+        },
+      },
+    }),
   },
 };
 

@@ -1,6 +1,5 @@
 import each from "jest-each";
 import { act, renderHook } from "@testing-library/react-hooks";
-import { EdgeSidebarBuilder } from "../EdgeSidebar/EdgeSidebarBuilder";
 import { Root, useLayoutCtx } from "./Root";
 
 describe("Root", () => {
@@ -83,12 +82,12 @@ describe("Root", () => {
           scheme: {
             leftEdgeSidebar: {
               config: {
-                xs: { variant: "temporary", width: 256 },
+                xs: { variant: "temporary" as const, width: 256 },
               },
             },
             rightEdgeSidebar: {
               config: {
-                xs: { variant: "temporary", width: 256 },
+                xs: { variant: "temporary" as const, width: 256 },
               },
             },
           },

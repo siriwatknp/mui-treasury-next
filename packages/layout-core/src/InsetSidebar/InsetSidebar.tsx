@@ -10,15 +10,14 @@ const InsetSidebarBody = experimentalStyled("div")();
 
 export type InsetSidebarProps = {
   anchor?: DrawerAnchor;
-  RootProps?: Parameters<typeof InsetSidebarRoot>[0];
   BodyProps?: Parameters<typeof InsetSidebarBody>[0];
-};
+} & Parameters<typeof InsetSidebarRoot>[0];
 
 export const InsetSidebar = ({
   anchor,
   children,
-  RootProps,
   BodyProps,
+  ...props
 }: PropsWithChildren<InsetSidebarProps>) => {
   const { builder } = useLayoutCtx();
 
@@ -26,12 +25,12 @@ export const InsetSidebar = ({
   const sidebar = builder[`${anchor!}InsetSidebar` as const];
   return (
     <InsetSidebarRoot
-      {...RootProps}
-      className={cx("InsetSidebar-root", RootProps?.className)}
+      {...props}
+      className={cx("InsetSidebar-root", props?.className)}
       sx={{
         position: "relative",
         flexShrink: 0,
-        ...RootProps?.sx,
+        ...props?.sx,
         ...sidebar?.getSxRoot(),
       }}
     >

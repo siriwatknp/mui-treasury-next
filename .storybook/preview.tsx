@@ -7,31 +7,32 @@ import { createTreasuryTheme } from "@mui-treasury/theme-treasury";
 
 const withThemeProvider = (Story: any, context: any) => {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-
-  const theme = React.useMemo(
-    () =>
-      createTreasuryTheme({
-        palette: {
-          mode: prefersDarkMode ? "dark" : "light",
-        },
-        components: {
-          TyShape: {
-            defaultProps: {
-              // it works!
-              "aria-label": "Yeah!",
-            },
+  const theme =
+    context.parameters.muiTheme ||
+    createTreasuryTheme({
+      palette: {
+        mode: prefersDarkMode ? "dark" : "light",
+      },
+      components: {
+        TyShape: {
+          defaultProps: {
+            // it works!
+            "aria-label": "Yeah!",
           },
         },
-      }),
-    [prefersDarkMode]
-  );
+      },
+    });
   return (
     <Suspense fallback={<div>loading...</div>}>
       <StyledEngineProvider injectFirst>
-        <MuiThemeProvider theme={theme}>
-          <CssBaseline />
+        {context.parameters.globalThemeDisabled ? (
           <Story {...context} />
-        </MuiThemeProvider>
+        ) : (
+          <MuiThemeProvider theme={theme}>
+            <CssBaseline />
+            <Story {...context} />
+          </MuiThemeProvider>
+        )}
       </StyledEngineProvider>
     </Suspense>
   );

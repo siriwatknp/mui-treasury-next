@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import React, { ReactNode } from "react";
 import {
   EdgeSidebarBuilder,
   EdgeSidebarSetupParams,
@@ -55,6 +55,10 @@ export type ContextValue = {
   toggleRightSidebarCollapsed: () => void;
 };
 
+type FunctionChildren =
+  | React.ReactNode
+  | ((ctx: ContextValue) => React.ReactNode);
+
 const LayoutContext = React.createContext<ContextValue | undefined>(undefined);
 LayoutContext.displayName = "LayoutContext";
 
@@ -104,7 +108,7 @@ export const Root = ({
   initialState: controlledInitialState,
   scheme,
   children,
-}: React.PropsWithChildren<RootProps>) => {
+}: RootProps & { children?: ReactNode | FunctionChildren }) => {
   if (!scheme) {
     throw new Error(
       "Missing scheme! fixed by passing `scheme` to <Root scheme={scheme} />"
@@ -201,20 +205,20 @@ export const Root = ({
       header: builder.header,
     };
   }
+
+  const ctx = {
+    state: { leftEdgeSidebar: leftState, rightEdgeSidebar: rightState },
+    builder,
+    setOpen,
+    setCollapsed,
+    toggleLeftSidebarOpen,
+    toggleLeftSidebarCollapsed,
+    toggleRightSidebarOpen,
+    toggleRightSidebarCollapsed,
+  };
   return (
-    <LayoutContext.Provider
-      value={{
-        state: { leftEdgeSidebar: leftState, rightEdgeSidebar: rightState },
-        builder,
-        setOpen,
-        setCollapsed,
-        toggleLeftSidebarOpen,
-        toggleLeftSidebarCollapsed,
-        toggleRightSidebarOpen,
-        toggleRightSidebarCollapsed,
-      }}
-    >
-      {children}
+    <LayoutContext.Provider value={ctx}>
+      {typeof children === "function" ? children(ctx) : children}
     </LayoutContext.Provider>
   );
 };
