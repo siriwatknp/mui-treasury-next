@@ -1,12 +1,10 @@
 import { useEffect, useRef } from "react";
 import { useScreen } from "./useScreen";
 import { useLayoutCtx } from "../Root/Root";
-import { LEFT_EDGE_SIDEBAR_ID, RIGHT_EDGE_SIDEBAR_ID } from "../utils/constant";
+import { EDGE_SIDEBAR_ID } from "../utils/constant";
 import { BREAKPOINT_KEYS } from "../utils/muiBreakpoints";
 
-export const useSidebarAutoCollapse = (
-  sidebarId?: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID
-) => {
+export const useSidebarAutoCollapse = (sidebarId?: EDGE_SIDEBAR_ID) => {
   const { scheme, setCollapsed } = useLayoutCtx();
   const screen = useScreen();
   const prevScreen = useRef(screen);

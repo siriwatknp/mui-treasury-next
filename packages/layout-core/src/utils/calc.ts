@@ -1,8 +1,23 @@
-import { isNotNilOrEmpty } from "./isNilOrEmpty";
 import { toValidCssValue } from "./toValidCssValue";
 
-export const subtractCalc = (...args: (string | number)[]): string =>
-  `calc(${args.filter(isNotNilOrEmpty).map(toValidCssValue).join(" - ")})`;
+type ValidItems = (string | number)[];
 
-export const plusCalc = (...args: (string | number)[]): string =>
-  `calc(${args.filter(isNotNilOrEmpty).map(toValidCssValue).join(" + ")})`;
+export const subtractCalc = (...args: (string | number | undefined)[]) => {
+  const valid = args.filter((v) => !!v);
+  if (!valid.length) return "0px";
+  return valid.length === 1
+    ? toValidCssValue(valid[0]!)
+    : `calc(${(args.filter((item) => !!item) as ValidItems)
+        .map(toValidCssValue)
+        .join(" - ")})`;
+};
+
+export const plusCalc = (...args: (string | number | undefined)[]) => {
+  const valid = args.filter((v) => !!v);
+  if (!valid.length) return "0px";
+  return valid.length === 1
+    ? toValidCssValue(valid[0]!)
+    : `calc(${(args.filter((item) => !!item) as ValidItems)
+        .map(toValidCssValue)
+        .join(" + ")})`;
+};

@@ -1,13 +1,12 @@
 import { useScreen } from "./useScreen";
-import { LEFT_EDGE_SIDEBAR_ID, RIGHT_EDGE_SIDEBAR_ID } from "../utils/constant";
+import { EDGE_SIDEBAR_ID } from "../utils/constant";
 import { useLayoutCtx } from "../Root/Root";
 import { pickNearestBreakpoint } from "../utils/pickNearestBreakpoint";
 import { EdgeSidebarBuilder } from "../EdgeSidebar/EdgeSidebarBuilder";
 import { useScrollY } from "./useScrollY";
+import { HeadersCompiler } from "../MultiHeaders/HeadersCompiler";
 
-export const useEdgeHeaderMagnet = (
-  sidebarId: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID
-) => {
+export const useEdgeHeaderMagnet = (sidebarId: EDGE_SIDEBAR_ID) => {
   const { scheme } = useLayoutCtx();
   const screen = useScreen();
 
@@ -25,7 +24,12 @@ export const useEdgeHeaderMagnet = (
 
   if (!isMagnet) return { marginTop: "" };
 
-  const height = scheme.header?.getClippedRelativeHeight(sidebarId);
+  // const height = scheme.header?.getClippedRelativeHeight(sidebarId);
+  const height = HeadersCompiler([
+    scheme.header,
+    scheme.topHeader,
+    scheme.subheader,
+  ]).getClippedHeight(sidebarId).diffHeight;
 
   const maxOffset =
     height && screen ? pickNearestBreakpoint(height, screen) : 0;

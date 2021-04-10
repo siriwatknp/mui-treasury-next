@@ -12,15 +12,15 @@ import { createWidthInterface } from "../Width/WidthModel";
 import { toValidCssValue } from "../utils/toValidCssValue";
 import { generateSxWithHidden } from "../utils/generateSxWithHidden";
 import { generateSx } from "../utils/generateSx";
+import { plusCalc } from "../utils/calc";
 
+export type ClippableElement = LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID;
 export type HeaderConfig = {
   position: "relative" | "sticky" | "fixed";
   height: number | string;
   top?: number | string;
   layer?: number;
-  clipped?:
-    | boolean
-    | Partial<Record<LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID, boolean>>;
+  clipped?: boolean | Partial<Record<ClippableElement, boolean>>;
 };
 type HeaderSetupParams = {
   config: Responsive<HeaderConfig>;
@@ -35,16 +35,25 @@ export class HeaderBuilder {
     rightEdgeSidebar?: EdgeSidebarBuilder;
   } = {};
 
+  static getMaxHeight(config: HeaderConfig) {
+    if (["fixed", "sticky"].includes(config.position)) {
+      return plusCalc(config.height, config.top ?? 0);
+    }
+  }
+
   constructor(params: HeaderSetupParams) {
     const { config, hidden } = params;
     this.config = config;
     this.hidden = hidden;
   }
 
-  isClipped(
-    edgeSidebarId: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID,
-    breakpoint: Breakpoint
-  ) {
+  isHidden(breakpoint: Breakpoint) {
+    if (!this.hidden) return false;
+    if (typeof this.hidden === "boolean" && this.hidden) return true;
+    return this.hidden.includes(breakpoint);
+  }
+
+  isClipped(clippableId: ClippableElement, breakpoint: Breakpoint) {
     const headerBreakpointConfig = pickNearestBreakpoint(
       this.config,
       breakpoint
@@ -57,7 +66,7 @@ export class HeaderBuilder {
     }
     return (
       typeof headerBreakpointConfig?.clipped === "object" &&
-      headerBreakpointConfig?.clipped[edgeSidebarId]
+      headerBreakpointConfig?.clipped[clippableId]
     );
   }
 
@@ -80,9 +89,7 @@ export class HeaderBuilder {
     );
   }
 
-  getClippedRelativeHeight(
-    sidebarId: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID
-  ) {
+  getClippedRelativeHeight(sidebarId: ClippableElement) {
     return generateSxWithHidden(this, (breakpointConfig, bp) =>
       this.isClipped(sidebarId, bp) && breakpointConfig.position === "relative"
         ? toValidCssValue(breakpointConfig.height)
@@ -90,7 +97,7 @@ export class HeaderBuilder {
     );
   }
 
-  getClippedHeight(sidebarId: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID) {
+  getClippedHeight(sidebarId: ClippableElement) {
     return generateSxWithHidden(this, (breakpointConfig, bp) =>
       this.isClipped(sidebarId, bp)
         ? toValidCssValue(breakpointConfig?.height)

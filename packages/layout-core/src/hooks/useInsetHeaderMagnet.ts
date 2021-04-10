@@ -2,6 +2,7 @@ import { useScreen } from "./useScreen";
 import { useLayoutCtx } from "../Root/Root";
 import { useScrollY } from "./useScrollY";
 import { pickNearestBreakpoint } from "../utils/pickNearestBreakpoint";
+import { HeadersCompiler } from "../MultiHeaders/HeadersCompiler";
 
 // todo write test
 export const useInsetHeaderMagnet = (disabled?: boolean) => {
@@ -14,10 +15,14 @@ export const useInsetHeaderMagnet = (disabled?: boolean) => {
 
   if (disabled) return { marginTop: "" };
 
-  const height = scheme.header?.getRelativeHeight();
+  const offset = HeadersCompiler([
+    scheme.header,
+    scheme.topHeader,
+    scheme.subheader,
+  ]).getAllHeight().diffHeight;
 
   const maxOffset =
-    height && screen ? pickNearestBreakpoint(height, screen) : 0;
+    offset && screen ? pickNearestBreakpoint(offset, screen) : 0;
 
   return {
     marginTop: `max(-${scrollY ?? 0}px, calc(-1 * ${maxOffset}))`,

@@ -30,9 +30,7 @@ const Offset = ({
   const offsetStyle = useInsetHeaderMagnet(!headerMagnetEnabled);
 
   // header offset
-  const offsetSx = getFixedInsetOffsetSxProps({
-    header: scheme.header,
-  });
+  const offsetSx = getFixedInsetOffsetSxProps(scheme);
 
   return (
     <OffsetRoot

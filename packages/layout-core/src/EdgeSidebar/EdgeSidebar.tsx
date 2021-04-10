@@ -18,6 +18,7 @@ import {
 } from "../utils/constant";
 import { useEdgeHeaderMagnet } from "../hooks/useEdgeHeaderMagnet";
 import { getEdgeOffsetSxProps } from "./getEdgeOffsetSxProps";
+import { ClippableElement } from "../Header/HeaderBuilder";
 
 export type EdgeSidebarProps = { anchor: "left" | "right" } & Omit<
   DrawerProps,
@@ -58,11 +59,7 @@ const OffsetRoot = experimentalStyled(
   { name: "EdgeSidebarOffset", slot: "Root" }
 )();
 
-const Offset = ({
-  sidebarId,
-}: {
-  sidebarId: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID;
-}) => {
+const Offset = ({ sidebarId }: { sidebarId: ClippableElement }) => {
   const { scheme } = useLayoutCtx();
   const theme = useTheme();
   // header magnet feature
@@ -70,8 +67,8 @@ const Offset = ({
 
   // header offset
   const offsetSx = getEdgeOffsetSxProps({
+    ...scheme,
     edgeSidebar: scheme[sidebarId],
-    header: scheme.header,
   });
 
   return (
@@ -194,7 +191,7 @@ export const EdgeSidebar = ({
           },
         }}
       >
-        <Offset sidebarId={sidebarId} />
+        {variant && variant !== "temporary" && <Offset sidebarId={sidebarId} />}
         {children}
       </Drawer>
     </SidebarContext.Provider>

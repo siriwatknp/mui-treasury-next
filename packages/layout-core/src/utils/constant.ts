@@ -10,6 +10,7 @@ export const LEFT_EDGE_SIDEBAR_ID = "leftEdgeSidebar";
 export type LEFT_EDGE_SIDEBAR_ID = typeof LEFT_EDGE_SIDEBAR_ID;
 export const RIGHT_EDGE_SIDEBAR_ID = "rightEdgeSidebar";
 export type RIGHT_EDGE_SIDEBAR_ID = typeof RIGHT_EDGE_SIDEBAR_ID;
+export type EDGE_SIDEBAR_ID = LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID;
 export const EDGE_SIDEBAR_EXPAND_DELAY = 350;
 export const CSS_TRANSITION =
   "all 300ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, color 0s";

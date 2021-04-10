@@ -2,13 +2,13 @@ import { renderHook } from "@testing-library/react-hooks";
 import { mocked } from "ts-jest/utils";
 import { EdgeSidebarBuilder } from "../EdgeSidebar/EdgeSidebarBuilder";
 import { Root, useLayoutCtx } from "../Root/Root";
-import { LEFT_EDGE_SIDEBAR_ID, RIGHT_EDGE_SIDEBAR_ID } from "../utils/constant";
+import { EDGE_SIDEBAR_ID } from "../utils/constant";
 import { useScreen } from "./useScreen";
 import { useSidebarAutoCollapse } from "./useSidebarAutoCollapse";
 
 jest.mock("./useScreen");
 
-const hook = (id: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID) => {
+const hook = (id: EDGE_SIDEBAR_ID) => {
   useSidebarAutoCollapse(id);
   return useLayoutCtx();
 };

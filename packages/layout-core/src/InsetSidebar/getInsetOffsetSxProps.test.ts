@@ -25,10 +25,9 @@ describe("InsetOffsetCompiler", () => {
       })
     ).toEqual({
       height: {
-        xs: 56,
-        sm: 0,
-        md: 64,
-        lg: 64,
+        xs: "56px",
+        sm: "0px",
+        md: "64px",
       },
     });
   });

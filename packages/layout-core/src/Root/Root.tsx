@@ -2,7 +2,11 @@ import React, { PropsWithChildren } from "react";
 import { EdgeSidebarBuilder } from "../EdgeSidebar/EdgeSidebarBuilder";
 import { HeaderBuilder } from "../Header/HeaderBuilder";
 import { InsetSidebarBuilder } from "../InsetSidebar/InsetSidebarBuilder";
-import { LEFT_EDGE_SIDEBAR_ID, RIGHT_EDGE_SIDEBAR_ID } from "../utils/constant";
+import {
+  EDGE_SIDEBAR_ID,
+  LEFT_EDGE_SIDEBAR_ID,
+  RIGHT_EDGE_SIDEBAR_ID,
+} from "../utils/constant";
 
 type SidebarState = {
   collapsed?: boolean;
@@ -16,6 +20,8 @@ type State = {
 
 type Scheme = {
   header?: HeaderBuilder;
+  topHeader?: HeaderBuilder;
+  subheader?: HeaderBuilder;
   leftEdgeSidebar?: EdgeSidebarBuilder;
   rightEdgeSidebar?: EdgeSidebarBuilder;
   leftInsetSidebar?: InsetSidebarBuilder;
@@ -25,16 +31,10 @@ type Scheme = {
 export type ContextValue = {
   state: State;
   scheme: Scheme;
-  setOpen: (
-    id: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID,
-    value: boolean
-  ) => void;
+  setOpen: (id: EDGE_SIDEBAR_ID, value: boolean) => void;
   toggleLeftSidebarOpen: () => void;
   toggleLeftSidebarCollapsed: () => void;
-  setCollapsed: (
-    id: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID,
-    value: boolean
-  ) => void;
+  setCollapsed: (id: EDGE_SIDEBAR_ID, value: boolean) => void;
   toggleRightSidebarOpen: () => void;
   toggleRightSidebarCollapsed: () => void;
 };
@@ -103,10 +103,7 @@ export const Root = ({
     ...autoGenInitialState.rightEdgeSidebar,
     ...controlledInitialState?.rightEdgeSidebar,
   });
-  const setOpen = (
-    id: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID,
-    value: boolean
-  ) => {
+  const setOpen = (id: EDGE_SIDEBAR_ID, value: boolean) => {
     function setter(state: SidebarState) {
       return state.open === value ? state : { ...state, open: value };
     }
@@ -117,10 +114,7 @@ export const Root = ({
       setRightState(setter);
     }
   };
-  const setCollapsed = (
-    id: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID,
-    value: boolean
-  ) => {
+  const setCollapsed = (id: EDGE_SIDEBAR_ID, value: boolean) => {
     function setter(state: SidebarState) {
       return state.collapsed === value ? state : { ...state, collapsed: value };
     }
@@ -148,6 +142,18 @@ export const Root = ({
   // assign Effect
   if (scheme.header) {
     scheme.header.effectedBy = {
+      leftEdgeSidebar: scheme.leftEdgeSidebar,
+      rightEdgeSidebar: scheme.rightEdgeSidebar,
+    };
+  }
+  if (scheme.topHeader) {
+    scheme.topHeader.effectedBy = {
+      leftEdgeSidebar: scheme.leftEdgeSidebar,
+      rightEdgeSidebar: scheme.rightEdgeSidebar,
+    };
+  }
+  if (scheme.subheader) {
+    scheme.subheader.effectedBy = {
       leftEdgeSidebar: scheme.leftEdgeSidebar,
       rightEdgeSidebar: scheme.rightEdgeSidebar,
     };

@@ -6,19 +6,60 @@ import { experimentalStyled } from "@material-ui/core/styles";
 import { useLayoutCtx } from "../Root/Root";
 import { CSS_TRANSITION } from "../utils/constant";
 
+const Div = experimentalStyled("div")();
 const OffsetRoot = experimentalStyled(
   "div",
   {},
   { name: "HeaderOffset", slot: "Root" }
 )();
 
-const Offset = () => {
+const Offset = ({
+  element,
+}: {
+  element: "header" | "topHeader" | "subheader";
+}) => {
   const { scheme } = useLayoutCtx();
   return (
     <OffsetRoot
       className="HeaderOffset"
-      sx={{ height: scheme.header?.getOffsetHeight(), flexShrink: 0 }}
+      sx={{ height: scheme[element]?.getOffsetHeight(), flexShrink: 0 }}
     />
+  );
+};
+
+export const TopHeader = (props: Parameters<typeof Div>[0]) => {
+  const { scheme } = useLayoutCtx();
+  return (
+    <>
+      <Div
+        {...props}
+        className={cx("TopHeader", props.className)}
+        sx={{
+          transition: CSS_TRANSITION,
+          ...props.sx,
+          ...scheme.topHeader?.getSxProps(),
+        }}
+      />
+      <Offset element="topHeader" />
+    </>
+  );
+};
+
+export const Subheader = (props: Parameters<typeof Div>[0]) => {
+  const { scheme } = useLayoutCtx();
+  return (
+    <>
+      <Div
+        {...props}
+        className={cx("Subheader", props.className)}
+        sx={{
+          transition: CSS_TRANSITION,
+          ...props.sx,
+          ...scheme.subheader?.getSxProps(),
+        }}
+      />
+      <Offset element="subheader" />
+    </>
   );
 };
 
@@ -37,7 +78,7 @@ export const Header = (props: AppBarProps) => {
           ...scheme.header?.getSxProps(),
         }}
       />
-      <Offset />
+      <Offset element="header" />
     </>
   );
 };
