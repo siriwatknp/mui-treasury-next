@@ -16,7 +16,7 @@ const OffsetRoot = experimentalStyled(
 export const InsetOffset = ({
   headerMagnetEnabled,
 }: Pick<FixedInsetSidebarConfig, "headerMagnetEnabled">) => {
-  const { scheme } = useLayoutCtx();
+  const { builder } = useLayoutCtx();
   const theme = useTheme();
   const screen = useScreen();
 
@@ -24,9 +24,9 @@ export const InsetOffset = ({
   const scrollY = useScrollY(!headerMagnetEnabled);
 
   const { totalHeight, diffHeight } = HeadersCompiler([
-    scheme.header,
-    scheme.topHeader,
-    scheme.subheader,
+    builder.header,
+    builder.topHeader,
+    builder.subheader,
   ]).getAllHeight();
 
   // header magnet feature

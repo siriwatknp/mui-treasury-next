@@ -5,10 +5,10 @@ import { EDGE_SIDEBAR_ID } from "../utils/constant";
 import { BREAKPOINT_KEYS } from "../utils/muiBreakpoints";
 
 export const useSidebarAutoCollapse = (sidebarId?: EDGE_SIDEBAR_ID) => {
-  const { scheme, setCollapsed } = useLayoutCtx();
+  const { builder, setCollapsed } = useLayoutCtx();
   const screen = useScreen();
   const prevScreen = useRef(screen);
-  const collapsedBp = sidebarId ? scheme[sidebarId]?.autoCollapse : undefined;
+  const collapsedBp = sidebarId ? builder[sidebarId]?.autoCollapse : undefined;
   useEffect(() => {
     if (sidebarId && collapsedBp && screen && prevScreen.current) {
       if (

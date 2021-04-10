@@ -30,7 +30,7 @@ export type InsetSidebarConfig =
   | AbsoluteInsetSidebarConfig
   | StickyInsetSidebarConfig;
 
-type InsetSetupParams = {
+export type InsetSetupParams = {
   hidden?: Breakpoint[] | boolean;
 } & InsetSidebarConfig;
 

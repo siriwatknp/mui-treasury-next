@@ -57,9 +57,9 @@ export const EdgeSidebar = ({
   }
   const theme = useTheme();
   const screen = useScreen();
-  const { scheme, state: layoutState, setOpen } = useLayoutCtx();
+  const { builder, state: layoutState, setOpen } = useLayoutCtx();
   const sidebarId = `${anchor}EdgeSidebar` as const;
-  const edgeSidebar = scheme[sidebarId];
+  const edgeSidebar = builder[sidebarId];
   const sidebarState = layoutState[sidebarId];
   const config = pickNearestBreakpoint(edgeSidebar?.config, screen);
 
@@ -148,7 +148,7 @@ export const EdgeSidebar = ({
               }),
               transitionProperty: "all !important",
             }),
-            ...scheme[sidebarId]?.getSxProps(),
+            ...builder[sidebarId]?.getSxProps(),
           },
         }}
       >

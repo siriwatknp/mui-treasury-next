@@ -20,10 +20,10 @@ export const InsetSidebar = ({
   RootProps,
   BodyProps,
 }: PropsWithChildren<InsetSidebarProps>) => {
-  const { scheme } = useLayoutCtx();
+  const { builder } = useLayoutCtx();
 
   // anchor should be injected via InsetContainer
-  const sidebar = scheme[`${anchor!}InsetSidebar` as const];
+  const sidebar = builder[`${anchor!}InsetSidebar` as const];
   return (
     <InsetSidebarRoot
       {...RootProps}

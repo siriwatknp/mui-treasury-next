@@ -14,8 +14,8 @@ const ContentRoot = experimentalStyled(
 type ContentProps = Parameters<typeof ContentRoot>[0];
 
 export const Content = (props: ContentProps) => {
-  const { scheme } = useLayoutCtx();
-  const sxProps = getContentSxProps(scheme, CONTENT_ID);
+  const { builder } = useLayoutCtx();
+  const sxProps = getContentSxProps(builder, CONTENT_ID);
   return (
     <ContentRoot
       {...props}

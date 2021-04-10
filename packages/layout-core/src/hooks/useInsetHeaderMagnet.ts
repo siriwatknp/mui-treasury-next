@@ -7,7 +7,7 @@ import { HeadersCompiler } from "../MultiHeaders/HeadersCompiler";
 // todo write test
 export const useInsetHeaderMagnet = (disabled?: boolean) => {
   // this hook will run only for <InsetSidebar position="fixed" />
-  const { scheme } = useLayoutCtx();
+  const { builder } = useLayoutCtx();
   const screen = useScreen();
 
   // dont't calculate scrollY if not magnet for performance
@@ -16,9 +16,9 @@ export const useInsetHeaderMagnet = (disabled?: boolean) => {
   if (disabled) return { marginTop: "" };
 
   const offset = HeadersCompiler([
-    scheme.header,
-    scheme.topHeader,
-    scheme.subheader,
+    builder.header,
+    builder.topHeader,
+    builder.subheader,
   ]).getAllHeight().diffHeight;
 
   const maxOffset =

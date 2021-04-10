@@ -16,10 +16,10 @@ const OffsetRoot = experimentalStyled(
 )();
 
 export const EdgeOffset = ({ sidebarId }: { sidebarId: ClippableElement }) => {
-  const { scheme } = useLayoutCtx();
+  const { builder } = useLayoutCtx();
   const theme = useTheme();
   const screen = useScreen();
-  const edgeSidebar = scheme[sidebarId];
+  const edgeSidebar = builder[sidebarId];
   const sidebarConfig = pickNearestBreakpoint(edgeSidebar?.config, screen);
   const headerMagnetEnabled =
     (EdgeSidebarBuilder.isPermanentConfig(sidebarConfig) ||
@@ -30,9 +30,9 @@ export const EdgeOffset = ({ sidebarId }: { sidebarId: ClippableElement }) => {
   const scrollY = useScrollY(!headerMagnetEnabled);
 
   const { totalHeight, diffHeight } = HeadersCompiler([
-    scheme.header,
-    scheme.topHeader,
-    scheme.subheader,
+    builder.header,
+    builder.topHeader,
+    builder.subheader,
   ]).getClippedHeight(sidebarId);
 
   // header magnet geature

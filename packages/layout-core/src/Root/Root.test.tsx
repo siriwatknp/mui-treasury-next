@@ -8,11 +8,11 @@ describe("Root", () => {
     wrapper: Root,
     initialProps: {
       scheme: {
-        leftEdgeSidebar: new EdgeSidebarBuilder({
+        leftEdgeSidebar: {
           config: {
-            xs: { variant: "temporary", width: 256 },
+            xs: { variant: "temporary" as const, width: 256 },
           },
-        }),
+        },
       },
     },
   };
@@ -81,16 +81,16 @@ describe("Root", () => {
         wrapper: Root,
         initialProps: {
           scheme: {
-            leftEdgeSidebar: new EdgeSidebarBuilder({
+            leftEdgeSidebar: {
               config: {
                 xs: { variant: "temporary", width: 256 },
               },
-            }),
-            rightEdgeSidebar: new EdgeSidebarBuilder({
+            },
+            rightEdgeSidebar: {
               config: {
                 xs: { variant: "temporary", width: 256 },
               },
-            }),
+            },
           },
         },
       });

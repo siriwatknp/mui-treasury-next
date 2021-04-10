@@ -22,7 +22,7 @@ export type HeaderConfig = {
   layer?: number;
   clipped?: boolean | Partial<Record<ClippableElement, boolean>>;
 };
-type HeaderSetupParams = {
+export type HeaderSetupParams = {
   config: Responsive<HeaderConfig>;
   hidden?: boolean | Breakpoint[];
 };
@@ -86,38 +86,6 @@ export class HeaderBuilder {
   getOffsetHeight() {
     return generateSxWithHidden(this, (breakpointConfig) =>
       breakpointConfig.position === "fixed" ? breakpointConfig.height : 0
-    );
-  }
-
-  getClippedRelativeHeight(sidebarId: ClippableElement) {
-    return generateSxWithHidden(this, (breakpointConfig, bp) =>
-      this.isClipped(sidebarId, bp) && breakpointConfig.position === "relative"
-        ? toValidCssValue(breakpointConfig.height)
-        : "0px"
-    );
-  }
-
-  getClippedHeight(sidebarId: ClippableElement) {
-    return generateSxWithHidden(this, (breakpointConfig, bp) =>
-      this.isClipped(sidebarId, bp)
-        ? toValidCssValue(breakpointConfig?.height)
-        : 0
-    );
-  }
-
-  getRelativeHeight() {
-    return generateSxWithHidden(this, (breakpointConfig) =>
-      breakpointConfig.position === "relative"
-        ? toValidCssValue(breakpointConfig?.height)
-        : 0
-    );
-  }
-
-  getNonRelativeHeight() {
-    return generateSxWithHidden(this, (breakpointConfig) =>
-      breakpointConfig.position !== "relative"
-        ? toValidCssValue(breakpointConfig?.height)
-        : 0
     );
   }
 

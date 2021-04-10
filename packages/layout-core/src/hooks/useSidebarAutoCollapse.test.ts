@@ -1,6 +1,5 @@
 import { renderHook } from "@testing-library/react-hooks";
 import { mocked } from "ts-jest/utils";
-import { EdgeSidebarBuilder } from "../EdgeSidebar/EdgeSidebarBuilder";
 import { Root, useLayoutCtx } from "../Root/Root";
 import { EDGE_SIDEBAR_ID } from "../utils/constant";
 import { useScreen } from "./useScreen";
@@ -19,11 +18,11 @@ describe("useSidebarAutoCollapse", () => {
   });
   it("do nothing if autoCollapse is not specified", () => {
     mocked(useScreen).mockReturnValue(undefined);
-    const { result, rerender } = renderHook(() => hook("leftEdgeSidebar"), {
+    const { result } = renderHook(() => hook("leftEdgeSidebar"), {
       wrapper: Root,
       initialProps: {
         scheme: {
-          leftEdgeSidebar: new EdgeSidebarBuilder({
+          leftEdgeSidebar: {
             config: {
               md: {
                 variant: "permanent",
@@ -33,7 +32,7 @@ describe("useSidebarAutoCollapse", () => {
               },
             },
             autoCollapse: undefined,
-          }),
+          },
         },
       },
     });
@@ -47,7 +46,7 @@ describe("useSidebarAutoCollapse", () => {
       wrapper: Root,
       initialProps: {
         scheme: {
-          leftEdgeSidebar: new EdgeSidebarBuilder({
+          leftEdgeSidebar: {
             config: {
               md: {
                 variant: "permanent",
@@ -57,7 +56,7 @@ describe("useSidebarAutoCollapse", () => {
               },
             },
             autoCollapse: "md",
-          }),
+          },
         },
       },
     });
@@ -75,7 +74,7 @@ describe("useSidebarAutoCollapse", () => {
       wrapper: Root,
       initialProps: {
         scheme: {
-          leftEdgeSidebar: new EdgeSidebarBuilder({
+          leftEdgeSidebar: {
             config: {
               md: {
                 variant: "permanent",
@@ -85,7 +84,7 @@ describe("useSidebarAutoCollapse", () => {
               },
             },
             autoCollapse: "md",
-          }),
+          },
         },
         initialState: { leftEdgeSidebar: { collapsed: true } },
       },

@@ -18,17 +18,17 @@ const Offset = ({
 }: {
   element: "header" | "topHeader" | "subheader";
 }) => {
-  const { scheme } = useLayoutCtx();
+  const { builder } = useLayoutCtx();
   return (
     <OffsetRoot
       className="HeaderOffset"
-      sx={{ height: scheme[element]?.getOffsetHeight(), flexShrink: 0 }}
+      sx={{ height: builder[element]?.getOffsetHeight(), flexShrink: 0 }}
     />
   );
 };
 
 export const TopHeader = (props: Parameters<typeof Div>[0]) => {
-  const { scheme } = useLayoutCtx();
+  const { builder } = useLayoutCtx();
   return (
     <>
       <Div
@@ -37,7 +37,7 @@ export const TopHeader = (props: Parameters<typeof Div>[0]) => {
         sx={{
           transition: CSS_TRANSITION,
           ...props.sx,
-          ...scheme.topHeader?.getSxProps(),
+          ...builder.topHeader?.getSxProps(),
         }}
       />
       <Offset element="topHeader" />
@@ -46,7 +46,7 @@ export const TopHeader = (props: Parameters<typeof Div>[0]) => {
 };
 
 export const Subheader = (props: Parameters<typeof Div>[0]) => {
-  const { scheme } = useLayoutCtx();
+  const { builder } = useLayoutCtx();
   return (
     <>
       <Div
@@ -55,7 +55,7 @@ export const Subheader = (props: Parameters<typeof Div>[0]) => {
         sx={{
           transition: CSS_TRANSITION,
           ...props.sx,
-          ...scheme.subheader?.getSxProps(),
+          ...builder.subheader?.getSxProps(),
         }}
       />
       <Offset element="subheader" />
@@ -64,7 +64,7 @@ export const Subheader = (props: Parameters<typeof Div>[0]) => {
 };
 
 export const Header = (props: AppBarProps) => {
-  const { scheme } = useLayoutCtx();
+  const { builder } = useLayoutCtx();
   return (
     <>
       <AppBar
@@ -75,7 +75,7 @@ export const Header = (props: AppBarProps) => {
         sx={{
           transition: CSS_TRANSITION,
           ...props.sx,
-          ...scheme.header?.getSxProps(),
+          ...builder.header?.getSxProps(),
         }}
       />
       <Offset element="header" />

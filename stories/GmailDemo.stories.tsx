@@ -12,9 +12,7 @@ import AppSubSidebar from "./mockup/gmail/AppSubSidebar";
 import CustomTrigger from "./mockup/gmail/CustomTrigger";
 
 import { Root, useLayoutCtx } from "../packages/layout-core/src/Root/Root";
-import { HeaderBuilder } from "../packages/layout-core/src/Header/HeaderBuilder";
 import { Header } from "../packages/layout-core/src/Header/Header";
-import { EdgeSidebarBuilder } from "../packages/layout-core/src/EdgeSidebar/EdgeSidebarBuilder";
 import { EdgeSidebar } from "../packages/layout-core/src/EdgeSidebar/EdgeSidebar";
 import { Content } from "../packages/layout-core/src/Content/Content";
 
@@ -53,7 +51,7 @@ export const Gmail = () => {
         rightEdgeSidebar: { open: true },
       }}
       scheme={{
-        header: new HeaderBuilder({
+        header: {
           config: {
             xs: {
               position: "fixed",
@@ -61,8 +59,8 @@ export const Gmail = () => {
               height: 64,
             },
           },
-        }),
-        leftEdgeSidebar: new EdgeSidebarBuilder({
+        },
+        leftEdgeSidebar: {
           config: {
             xs: {
               variant: "permanent",
@@ -72,8 +70,8 @@ export const Gmail = () => {
               uncollapsedOnHover: true,
             },
           },
-        }),
-        rightEdgeSidebar: new EdgeSidebarBuilder({
+        },
+        rightEdgeSidebar: {
           config: {
             sm: {
               variant: "persistent",
@@ -81,7 +79,7 @@ export const Gmail = () => {
               persistentBehavior: "fit",
             },
           },
-        }),
+        },
       }}
     >
       <Header>

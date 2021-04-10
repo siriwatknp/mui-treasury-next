@@ -14,8 +14,8 @@ const FooterRoot = experimentalStyled(
 type FooterProps = Parameters<typeof FooterRoot>[0];
 
 export const Footer = (props: FooterProps) => {
-  const { scheme } = useLayoutCtx();
-  const sxProps = getContentSxProps(scheme, FOOTER_ID);
+  const { builder } = useLayoutCtx();
+  const sxProps = getContentSxProps(builder, FOOTER_ID);
   return (
     <FooterRoot
       {...props}

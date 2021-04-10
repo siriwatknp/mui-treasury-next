@@ -4,19 +4,14 @@ import { Meta } from "@storybook/react/types-6-0";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import Menu from "@material-ui/icons/Menu";
 
 import { Root, useLayoutCtx } from "./Root/Root";
-import { HeaderBuilder } from "./Header/HeaderBuilder";
 import { Header, TopHeader, Subheader } from "./Header/Header";
-import { EdgeSidebarBuilder } from "./EdgeSidebar/EdgeSidebarBuilder";
 import { EdgeSidebar } from "./EdgeSidebar/EdgeSidebar";
 import { Content } from "./Content/Content";
 import { Footer } from "./Footer/Footer";
 import { InsetContainer } from "./InsetSidebar/InsetContainer";
 import { InsetSidebar } from "./InsetSidebar/InsetSidebar";
-import { InsetSidebarBuilder } from "./InsetSidebar/InsetSidebarBuilder";
 import { InsetAvoidingView } from "./InsetSidebar/InsetAvoidingView";
 
 export default {
@@ -51,13 +46,13 @@ export const Development = () => {
   return (
     <Root
       scheme={{
-        topHeader: new HeaderBuilder({
+        topHeader: {
           config: {
             xs: { position: "relative", height: 20, clipped: true },
           },
           hidden: topHidden,
-        }),
-        header: new HeaderBuilder({
+        },
+        header: {
           config: {
             xs: {
               position: "sticky",
@@ -72,8 +67,8 @@ export const Development = () => {
               clipped: true,
             },
           },
-        }),
-        subheader: new HeaderBuilder({
+        },
+        subheader: {
           config: {
             md: {
               position: "sticky",
@@ -82,8 +77,8 @@ export const Development = () => {
             },
           },
           hidden: ["xs", "sm"],
-        }),
-        leftEdgeSidebar: new EdgeSidebarBuilder({
+        },
+        leftEdgeSidebar: {
           config: {
             xs: {
               variant: "temporary",
@@ -110,23 +105,12 @@ export const Development = () => {
             },
           },
           autoCollapse: "sm",
-          // hidden: ["md"],
-        }),
-        // rightEdgeSidebar: new EdgeSidebarBuilder({
-        //   config: {
-        //     xs: {
-        //       variant: "persistent",
-        //       width: 80,
-        //       persistentBehavior: "fit",
-        //     },
-        //   },
-        //   hidden: ["xs", "sm"],
-        // }),
-        rightInsetSidebar: new InsetSidebarBuilder({
+        },
+        rightInsetSidebar: {
           position: "fixed",
           headerMagnetEnabled: true,
           width: 256,
-        }),
+        },
       }}
       initialState={{ rightEdgeSidebar: { open: true } }}
     >

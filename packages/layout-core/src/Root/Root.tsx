@@ -1,7 +1,13 @@
 import React, { PropsWithChildren } from "react";
-import { EdgeSidebarBuilder } from "../EdgeSidebar/EdgeSidebarBuilder";
-import { HeaderBuilder } from "../Header/HeaderBuilder";
-import { InsetSidebarBuilder } from "../InsetSidebar/InsetSidebarBuilder";
+import {
+  EdgeSidebarBuilder,
+  EdgeSidebarSetupParams,
+} from "../EdgeSidebar/EdgeSidebarBuilder";
+import { HeaderBuilder, HeaderSetupParams } from "../Header/HeaderBuilder";
+import {
+  InsetSetupParams,
+  InsetSidebarBuilder,
+} from "../InsetSidebar/InsetSidebarBuilder";
 import {
   EDGE_SIDEBAR_ID,
   LEFT_EDGE_SIDEBAR_ID,
@@ -19,6 +25,16 @@ type State = {
 };
 
 type Scheme = {
+  header?: HeaderSetupParams;
+  topHeader?: HeaderSetupParams;
+  subheader?: HeaderSetupParams;
+  leftEdgeSidebar?: EdgeSidebarSetupParams;
+  rightEdgeSidebar?: EdgeSidebarSetupParams;
+  leftInsetSidebar?: InsetSetupParams;
+  rightInsetSidebar?: InsetSetupParams;
+};
+
+type Builder = {
   header?: HeaderBuilder;
   topHeader?: HeaderBuilder;
   subheader?: HeaderBuilder;
@@ -30,7 +46,7 @@ type Scheme = {
 
 export type ContextValue = {
   state: State;
-  scheme: Scheme;
+  builder: Builder;
   setOpen: (id: EDGE_SIDEBAR_ID, value: boolean) => void;
   toggleLeftSidebarOpen: () => void;
   toggleLeftSidebarCollapsed: () => void;
@@ -54,33 +70,33 @@ export const LayoutConsumer = LayoutContext.Consumer;
 
 export type RootProps = {
   initialState?: State;
-  scheme: ContextValue["scheme"];
+  scheme: Scheme;
 };
 
 const INITIAL_EDGE_SIDEBAR_STATE = { open: false, collapsed: false };
 
-const setUpEdgeSidebar = (scheme: Scheme) => {
+const setUpEdgeSidebar = (builder: Builder) => {
   const autoGenInitialState: State = {
     leftEdgeSidebar: {},
     rightEdgeSidebar: {},
   };
-  if (scheme.leftEdgeSidebar) {
-    scheme.leftEdgeSidebar.id = LEFT_EDGE_SIDEBAR_ID;
+  if (builder.leftEdgeSidebar) {
+    builder.leftEdgeSidebar.id = LEFT_EDGE_SIDEBAR_ID;
     autoGenInitialState.leftEdgeSidebar = INITIAL_EDGE_SIDEBAR_STATE;
   }
-  if (scheme.rightEdgeSidebar) {
-    scheme.rightEdgeSidebar.id = RIGHT_EDGE_SIDEBAR_ID;
+  if (builder.rightEdgeSidebar) {
+    builder.rightEdgeSidebar.id = RIGHT_EDGE_SIDEBAR_ID;
     autoGenInitialState.rightEdgeSidebar = INITIAL_EDGE_SIDEBAR_STATE;
   }
   return autoGenInitialState;
 };
 
-const injectStateToEdgeSidebar = (scheme: Scheme, state: State) => {
-  if (scheme.leftEdgeSidebar) {
-    scheme.leftEdgeSidebar.setState(state.leftEdgeSidebar ?? {});
+const injectStateToEdgeSidebar = (builder: Builder, state: State) => {
+  if (builder.leftEdgeSidebar) {
+    builder.leftEdgeSidebar.setState(state.leftEdgeSidebar ?? {});
   }
-  if (scheme.rightEdgeSidebar) {
-    scheme.rightEdgeSidebar.setState(state.rightEdgeSidebar ?? {});
+  if (builder.rightEdgeSidebar) {
+    builder.rightEdgeSidebar.setState(state.rightEdgeSidebar ?? {});
   }
 };
 
@@ -94,7 +110,22 @@ export const Root = ({
       "Missing scheme! fixed by passing `scheme` to <Root scheme={scheme} />"
     );
   }
-  const autoGenInitialState = setUpEdgeSidebar(scheme);
+  const builder: Builder = {};
+  if (scheme.header) builder.header = new HeaderBuilder(scheme.header);
+  if (scheme.topHeader) builder.topHeader = new HeaderBuilder(scheme.topHeader);
+  if (scheme.subheader) builder.subheader = new HeaderBuilder(scheme.subheader);
+  if (scheme.leftEdgeSidebar)
+    builder.leftEdgeSidebar = new EdgeSidebarBuilder(scheme.leftEdgeSidebar);
+  if (scheme.rightEdgeSidebar)
+    builder.rightEdgeSidebar = new EdgeSidebarBuilder(scheme.rightEdgeSidebar);
+  if (scheme.rightInsetSidebar)
+    builder.rightInsetSidebar = new InsetSidebarBuilder(
+      scheme.rightInsetSidebar
+    );
+  if (scheme.leftInsetSidebar)
+    builder.leftInsetSidebar = new InsetSidebarBuilder(scheme.leftInsetSidebar);
+
+  const autoGenInitialState = setUpEdgeSidebar(builder);
   const [leftState, setLeftState] = React.useState({
     ...autoGenInitialState.leftEdgeSidebar,
     ...controlledInitialState?.leftEdgeSidebar,
@@ -134,47 +165,47 @@ export const Root = ({
   const toggleRightSidebarCollapsed = () =>
     setRightState((state) => ({ ...state, collapsed: !state.collapsed }));
 
-  injectStateToEdgeSidebar(scheme, {
+  injectStateToEdgeSidebar(builder, {
     leftEdgeSidebar: leftState,
     rightEdgeSidebar: rightState,
   });
 
   // assign Effect
-  if (scheme.header) {
-    scheme.header.effectedBy = {
-      leftEdgeSidebar: scheme.leftEdgeSidebar,
-      rightEdgeSidebar: scheme.rightEdgeSidebar,
+  if (builder.header) {
+    builder.header.effectedBy = {
+      leftEdgeSidebar: builder.leftEdgeSidebar,
+      rightEdgeSidebar: builder.rightEdgeSidebar,
     };
   }
-  if (scheme.topHeader) {
-    scheme.topHeader.effectedBy = {
-      leftEdgeSidebar: scheme.leftEdgeSidebar,
-      rightEdgeSidebar: scheme.rightEdgeSidebar,
+  if (builder.topHeader) {
+    builder.topHeader.effectedBy = {
+      leftEdgeSidebar: builder.leftEdgeSidebar,
+      rightEdgeSidebar: builder.rightEdgeSidebar,
     };
   }
-  if (scheme.subheader) {
-    scheme.subheader.effectedBy = {
-      leftEdgeSidebar: scheme.leftEdgeSidebar,
-      rightEdgeSidebar: scheme.rightEdgeSidebar,
+  if (builder.subheader) {
+    builder.subheader.effectedBy = {
+      leftEdgeSidebar: builder.leftEdgeSidebar,
+      rightEdgeSidebar: builder.rightEdgeSidebar,
     };
   }
-  if (scheme.leftInsetSidebar) {
-    scheme.leftInsetSidebar.anchor = "left";
-    scheme.leftInsetSidebar.effectedBy = {
-      header: scheme.header,
+  if (builder.leftInsetSidebar) {
+    builder.leftInsetSidebar.anchor = "left";
+    builder.leftInsetSidebar.effectedBy = {
+      header: builder.header,
     };
   }
-  if (scheme.rightInsetSidebar) {
-    scheme.rightInsetSidebar.anchor = "right";
-    scheme.rightInsetSidebar.effectedBy = {
-      header: scheme.header,
+  if (builder.rightInsetSidebar) {
+    builder.rightInsetSidebar.anchor = "right";
+    builder.rightInsetSidebar.effectedBy = {
+      header: builder.header,
     };
   }
   return (
     <LayoutContext.Provider
       value={{
         state: { leftEdgeSidebar: leftState, rightEdgeSidebar: rightState },
-        scheme,
+        builder,
         setOpen,
         setCollapsed,
         toggleLeftSidebarOpen,
