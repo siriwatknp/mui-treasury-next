@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import cx from "clsx";
 import { useTheme, experimentalStyled } from "@material-ui/core/styles";
 import Drawer, { DrawerProps } from "@material-ui/core/Drawer";
@@ -23,6 +23,22 @@ export type EdgeSidebarProps = { anchor: "left" | "right" } & Omit<
   DrawerProps,
   "anchor" | "variant"
 >;
+
+const SidebarContext = React.createContext<
+  | undefined
+  | {
+      expanded: boolean;
+      setExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+    }
+>(undefined);
+
+export const useSidebarCtx = () => {
+  const ctx = useContext(SidebarContext);
+  if (!ctx) {
+    throw new Error("useSidebarCtx must be called under <EdgeSidebar />");
+  }
+  return ctx;
+};
 
 const hasAutoExpanded = (
   config?: EdgeSidebarConfig
@@ -141,44 +157,46 @@ export const EdgeSidebar = ({
   if (!variant || edgeSidebar.isHidden(screen)) return null;
 
   return (
-    <Drawer
-      {...props}
-      open={layoutState[sidebarId]?.open}
-      anchor={anchor}
-      variant={variant}
-      onClose={(...args: Parameters<NonNullable<ModalProps["onClose"]>>) => {
-        props.onClose?.(...args);
-        setOpen(sidebarId, false);
-      }}
-      SlideProps={{
-        ...props.SlideProps,
-        onEntered,
-        onExit,
-      }}
-      PaperProps={{
-        ...props.PaperProps,
-        className: cx("EdgeSidebar-paper", props.PaperProps?.className),
-        style: {
-          ...props.PaperProps?.style,
-          ...(expanded && { width: config?.width }),
-        },
-        onMouseEnter,
-        onMouseLeave,
-        sx: {
-          ...props.PaperProps?.sx,
-          ...((entered || variant === "permanent") && {
-            transition: theme.transitions.create(["all"], {
-              easing: theme.transitions.easing.easeOut,
-              duration: theme.transitions.duration.leavingScreen,
+    <SidebarContext.Provider value={{ expanded, setExpanded }}>
+      <Drawer
+        {...props}
+        open={layoutState[sidebarId]?.open}
+        anchor={anchor}
+        variant={variant}
+        onClose={(...args: Parameters<NonNullable<ModalProps["onClose"]>>) => {
+          props.onClose?.(...args);
+          setOpen(sidebarId, false);
+        }}
+        SlideProps={{
+          ...props.SlideProps,
+          onEntered,
+          onExit,
+        }}
+        PaperProps={{
+          ...props.PaperProps,
+          className: cx("EdgeSidebar-paper", props.PaperProps?.className),
+          style: {
+            ...props.PaperProps?.style,
+            ...(expanded && { width: config?.width }),
+          },
+          onMouseEnter,
+          onMouseLeave,
+          sx: {
+            ...props.PaperProps?.sx,
+            ...((entered || variant === "permanent") && {
+              transition: theme.transitions.create(["all"], {
+                easing: theme.transitions.easing.easeOut,
+                duration: theme.transitions.duration.leavingScreen,
+              }),
+              transitionProperty: "all !important",
             }),
-            transitionProperty: "all !important",
-          }),
-          ...scheme[sidebarId]?.getSxProps(),
-        },
-      }}
-    >
-      <Offset sidebarId={sidebarId} />
-      {children}
-    </Drawer>
+            ...scheme[sidebarId]?.getSxProps(),
+          },
+        }}
+      >
+        <Offset sidebarId={sidebarId} />
+        {children}
+      </Drawer>
+    </SidebarContext.Provider>
   );
 };

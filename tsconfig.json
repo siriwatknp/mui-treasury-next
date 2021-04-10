@@ -1,6 +1,12 @@
 {
   "extends": "./tsconfig.build.json",
-  "include": ["packages", "types", "scripts", ".storybook/preview.tsx"],
+  "include": [
+    "packages",
+    "types",
+    "scripts",
+    ".storybook/preview.tsx",
+    "stories"
+  ],
   "exclude": ["node_modules", "dist"],
   "compilerOptions": {
     "module": "CommonJS",

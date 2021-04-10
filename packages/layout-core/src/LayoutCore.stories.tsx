@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Meta } from "@storybook/react/types-6-0";
 
 import Box from "@material-ui/core/Box";
@@ -9,7 +9,7 @@ import Menu from "@material-ui/icons/Menu";
 
 import { Root, useLayoutCtx } from "./Root/Root";
 import { HeaderBuilder } from "./Header/HeaderBuilder";
-import { Header } from "./Header/Header";
+import { Header, TopHeader, Subheader } from "./Header/Header";
 import { EdgeSidebarBuilder } from "./EdgeSidebar/EdgeSidebarBuilder";
 import { EdgeSidebar } from "./EdgeSidebar/EdgeSidebar";
 import { Content } from "./Content/Content";
@@ -47,24 +47,41 @@ const Trigger = () => {
 };
 
 export const Development = () => {
+  const [topHidden, setTopHidden] = useState(false);
   return (
     <Root
       scheme={{
+        topHeader: new HeaderBuilder({
+          config: {
+            xs: { position: "relative", height: 20, clipped: true },
+          },
+          hidden: topHidden,
+        }),
         header: new HeaderBuilder({
           config: {
             xs: {
-              position: "relative",
+              position: "sticky",
               height: 56,
               clipped: {
                 leftEdgeSidebar: true,
               },
             },
             md: {
-              position: "relative",
+              position: "sticky",
               height: 64,
               clipped: true,
             },
           },
+        }),
+        subheader: new HeaderBuilder({
+          config: {
+            md: {
+              position: "sticky",
+              top: 64,
+              height: 48,
+            },
+          },
+          hidden: ["xs", "sm"],
         }),
         leftEdgeSidebar: new EdgeSidebarBuilder({
           config: {
@@ -95,16 +112,16 @@ export const Development = () => {
           autoCollapse: "sm",
           // hidden: ["md"],
         }),
-        rightEdgeSidebar: new EdgeSidebarBuilder({
-          config: {
-            xs: {
-              variant: "persistent",
-              width: 80,
-              persistentBehavior: "fit",
-            },
-          },
-          hidden: ["xs", "sm"],
-        }),
+        // rightEdgeSidebar: new EdgeSidebarBuilder({
+        //   config: {
+        //     xs: {
+        //       variant: "persistent",
+        //       width: 80,
+        //       persistentBehavior: "fit",
+        //     },
+        //   },
+        //   hidden: ["xs", "sm"],
+        // }),
         rightInsetSidebar: new InsetSidebarBuilder({
           position: "fixed",
           headerMagnetEnabled: true,
@@ -113,11 +130,20 @@ export const Development = () => {
       }}
       initialState={{ rightEdgeSidebar: { open: true } }}
     >
+      <TopHeader
+        sx={{ backgroundColor: "primary.light" }}
+        onClick={() => setTopHidden(true)}
+      >
+        TopHeader
+      </TopHeader>
       <Header>
         <div>
           <Trigger />
         </div>
       </Header>
+      <Subheader sx={{ backgroundColor: "secondary.light" }}>
+        Subheader
+      </Subheader>
       <EdgeSidebar anchor="left">Hello</EdgeSidebar>
       {/* <EdgeSidebar anchor="right">Hello</EdgeSidebar> */}
       <Content>
