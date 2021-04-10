@@ -19,10 +19,13 @@ import Inbox from "@material-ui/icons/Inbox";
 import LocalOffer from "@material-ui/icons/LocalOffer";
 import People from "@material-ui/icons/People";
 import Info from "@material-ui/icons/Info";
-import { useSizedIconButtonStyles } from "@mui-treasury/styles/iconButton/sized";
-import { useRowGutterStyles } from "@mui-treasury/styles/gutter/row";
+
 import ArrowMenu from "@mui-treasury/components/menu/arrow";
 import { GmailTabs, GmailTabItem } from "@mui-treasury/components/tabs/gmail";
+
+import { useSizedIconButtonStyles } from "@mui-treasury/styles/iconButton/sized";
+import { useRowGutterStyles } from "@mui-treasury/styles/gutter/row";
+
 import MailListItem from "./MailListItem";
 import AppFooter from "./AppFooter";
 

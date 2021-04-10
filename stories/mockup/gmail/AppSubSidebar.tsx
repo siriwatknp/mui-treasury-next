@@ -5,8 +5,9 @@ import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 
-import { useSizedIconButtonStyles } from "@mui-treasury/styles/iconButton/sized";
 import Add from "@material-ui/icons/Add";
+
+import { useSizedIconButtonStyles } from "@mui-treasury/styles/iconButton/sized";
 
 const AppSubSidebar = () => {
   const actionStyles = useSizedIconButtonStyles({ childSize: 20, padding: 10 });

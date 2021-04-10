@@ -4,10 +4,6 @@ import Box from "@material-ui/core/Box";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 
-import GmailButton from "@mui-treasury/components/button/gmail";
-import GmailSidebarItem from "@mui-treasury/components/sidebarItem/gmail";
-import Menu from "@mui-treasury/components/menu/collapsible";
-
 import Inbox from "@material-ui/icons/Inbox";
 import Star from "@material-ui/icons/Star";
 import InsertDriveFile from "@material-ui/icons/InsertDriveFile";
@@ -22,6 +18,10 @@ import Report from "@material-ui/icons/Report";
 import Settings from "@material-ui/icons/Settings";
 import Videocam from "@material-ui/icons/Videocam";
 import Keyboard from "@material-ui/icons/Keyboard";
+
+import GmailButton from "@mui-treasury/components/button/gmail";
+import GmailSidebarItem from "@mui-treasury/components/sidebarItem/gmail";
+import Menu from "@mui-treasury/components/menu/collapsible";
 
 import { useLayoutCtx } from "../../../packages/layout-core/src/Root/Root";
 import { useSidebarCtx } from "../../../packages/layout-core/src/EdgeSidebar/EdgeSidebar";

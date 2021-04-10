@@ -3,6 +3,5 @@
 .idea
 node_modules
 dist
+storybook-static
 coverage
-
-node_modules

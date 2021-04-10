@@ -1,7 +1,4 @@
 import React from "react";
-import { useSizedIconButtonStyles } from "@mui-treasury/styles/iconButton/sized";
-import { useRowGutterStyles } from "@mui-treasury/styles/gutter/row";
-import { useGoogleAvatarStyles } from "@mui-treasury/styles/avatar/google";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
@@ -14,6 +11,10 @@ import Search from "@material-ui/icons/Search";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import HelpOutline from "@material-ui/icons/HelpOutline";
 import Apps from "@material-ui/icons/Apps";
+
+import { useSizedIconButtonStyles } from "@mui-treasury/styles/iconButton/sized";
+import { useRowGutterStyles } from "@mui-treasury/styles/gutter/row";
+import { useGoogleAvatarStyles } from "@mui-treasury/styles/avatar/google";
 
 const useStyles = makeStyles({
   collapse: {

@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { MuiThemeProvider } from "@material-ui/core/styles";
+import StyledEngineProvider from "@material-ui/core/StyledEngineProvider";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createTreasuryTheme } from "@mui-treasury/theme-treasury";
 
@@ -26,10 +27,12 @@ const withThemeProvider = (Story: any, context: any) => {
   );
   return (
     <Suspense fallback={<div>loading...</div>}>
-      <MuiThemeProvider theme={theme}>
-        <CssBaseline />
-        <Story {...context} />
-      </MuiThemeProvider>
+      <StyledEngineProvider injectFirst>
+        <MuiThemeProvider theme={theme}>
+          <CssBaseline />
+          <Story {...context} />
+        </MuiThemeProvider>
+      </StyledEngineProvider>
     </Suspense>
   );
 };

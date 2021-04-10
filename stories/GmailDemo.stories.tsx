@@ -1,11 +1,6 @@
 import React from "react";
-import {
-  createMuiTheme,
-  makeStyles,
-  ThemeProvider,
-} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
-import CssBaseline from "@material-ui/core/CssBaseline";
 import IconButton from "@material-ui/core/IconButton";
 
 import Menu from "@material-ui/icons/Menu";
@@ -30,14 +25,6 @@ export default {
   },
 };
 
-const theme = createMuiTheme({
-  palette: {
-    background: {
-      default: "#fff",
-    },
-  },
-});
-
 const CollapseTrigger = () => {
   const { toggleLeftSidebarCollapsed } = useLayoutCtx();
   return (
@@ -60,59 +47,56 @@ const useDrawerStyles = makeStyles(() => ({
 export const Gmail = () => {
   const drawerStyles = useDrawerStyles();
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Root
-        initialState={{
-          leftEdgeSidebar: { collapsed: true },
-          rightEdgeSidebar: { open: true },
-        }}
-        scheme={{
-          header: new HeaderBuilder({
-            config: {
-              xs: {
-                position: "fixed",
-                clipped: true,
-                height: 64,
-              },
+    <Root
+      initialState={{
+        leftEdgeSidebar: { collapsed: true },
+        rightEdgeSidebar: { open: true },
+      }}
+      scheme={{
+        header: new HeaderBuilder({
+          config: {
+            xs: {
+              position: "fixed",
+              clipped: true,
+              height: 64,
             },
-          }),
-          leftEdgeSidebar: new EdgeSidebarBuilder({
-            config: {
-              xs: {
-                variant: "permanent",
-                width: 256,
-                collapsible: true,
-                collapsedWidth: 72,
-                uncollapsedOnHover: true,
-              },
+          },
+        }),
+        leftEdgeSidebar: new EdgeSidebarBuilder({
+          config: {
+            xs: {
+              variant: "permanent",
+              width: 256,
+              collapsible: true,
+              collapsedWidth: 72,
+              uncollapsedOnHover: true,
             },
-          }),
-          rightEdgeSidebar: new EdgeSidebarBuilder({
-            config: {
-              sm: {
-                variant: "persistent",
-                width: 56,
-                persistentBehavior: "fit",
-              },
+          },
+        }),
+        rightEdgeSidebar: new EdgeSidebarBuilder({
+          config: {
+            sm: {
+              variant: "persistent",
+              width: 56,
+              persistentBehavior: "fit",
             },
-          }),
-        }}
-      >
-        <Header>
-          <AppHeader collapse={<CollapseTrigger />} />
-        </Header>
-        <EdgeSidebar anchor="left" classes={drawerStyles}>
-          <AppSidebar />
-        </EdgeSidebar>
-        <EdgeSidebar anchor="right">
-          <AppSubSidebar />
-        </EdgeSidebar>
-        <Content>
-          <AppContent onTabIndexChange={() => {}} />
-        </Content>
-        <CustomTrigger />
-      </Root>
-    </ThemeProvider>
+          },
+        }),
+      }}
+    >
+      <Header>
+        <AppHeader collapse={<CollapseTrigger />} />
+      </Header>
+      <EdgeSidebar anchor="left" classes={drawerStyles}>
+        <AppSidebar />
+      </EdgeSidebar>
+      <EdgeSidebar anchor="right">
+        <AppSubSidebar />
+      </EdgeSidebar>
+      <Content>
+        <AppContent onTabIndexChange={() => {}} />
+      </Content>
+      <CustomTrigger />
+    </Root>
   );
 };
