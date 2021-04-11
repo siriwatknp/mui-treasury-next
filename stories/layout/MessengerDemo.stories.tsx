@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   createMuiTheme,
   makeStyles,
@@ -38,34 +38,6 @@ export default {
   title: "Layout/Demo App",
   parameters: {
     layout: "fullscreen",
-    muiTheme: responsiveFontSizes(
-      createMuiTheme({
-        palette: {
-          primary: {
-            main: "rgb(0, 153, 255)",
-          },
-          background: {
-            default: "#fff",
-          },
-        },
-        typography: {
-          fontFamily:
-            '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-          body1: {
-            fontSize: `${15 / 16}rem`,
-          },
-        },
-        components: {
-          MuiCssBaseline: {
-            styleOverrides: {
-              "strong, b": {
-                fontWeight: "bold",
-              },
-            },
-          },
-        },
-      })
-    ),
   },
 };
 
@@ -84,8 +56,40 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const Messenger = () => {
+const theme = responsiveFontSizes(
+  createMuiTheme({
+    palette: {
+      primary: {
+        main: "rgb(0, 153, 255)",
+      },
+      background: {
+        default: "#fff",
+      },
+    },
+    typography: {
+      fontFamily:
+        '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+      body1: {
+        fontSize: `${15 / 16}rem`,
+      },
+    },
+    components: {
+      MuiCssBaseline: {
+        styleOverrides: {
+          "strong, b": {
+            fontWeight: "bold",
+          },
+        },
+      },
+    },
+  })
+);
+
+export const Messenger = (props: {}, context: any) => {
   const styles = useStyles();
+  useEffect(() => {
+    context?.setTheme(theme);
+  }, []);
   return (
     <Fullscreen>
       <Root

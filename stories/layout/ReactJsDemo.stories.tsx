@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import cx from "clsx";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
@@ -113,7 +113,6 @@ export default {
   title: "Layout/Demo App",
   parameters: {
     layout: "fullscreen",
-    muiTheme: theme,
   },
 };
 
@@ -131,7 +130,10 @@ const FooterMenu = ({ isHeader, ...props }) => {
   );
 };
 
-export const ReactJs = () => {
+export const ReactJs = (props: {}, context: any) => {
+  useEffect(() => {
+    context?.setTheme(theme);
+  }, []);
   const styles = useStyles();
   const sidebarContent = (
     <Box mt={7.5} ml={3}>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createMuiTheme, makeStyles } from "@material-ui/core/styles";
 
 import IconButton from "@material-ui/core/IconButton";
@@ -23,15 +23,16 @@ export default {
   title: "Layout/Demo App",
   parameters: {
     layout: "fullscreen",
-    muiTheme: createMuiTheme({
-      palette: {
-        background: {
-          default: "#fff",
-        },
-      },
-    }),
   },
 };
+
+const theme = createMuiTheme({
+  palette: {
+    background: {
+      default: "#fff",
+    },
+  },
+});
 
 const CollapseTrigger = () => {
   const { toggleLeftSidebarCollapsed } = useLayoutCtx();
@@ -52,7 +53,10 @@ const useDrawerStyles = makeStyles(() => ({
   },
 }));
 
-export const Gmail = () => {
+export const Gmail = (props: {}, context: any) => {
+  useEffect(() => {
+    context?.setTheme(theme);
+  }, []);
   const drawerStyles = useDrawerStyles();
   return (
     <Root

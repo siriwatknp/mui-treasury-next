@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import cx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -30,7 +30,7 @@ import {
 export default {
   title: "Layout/Demo App",
   parameters: {
-    muiTheme: dailyShoppingTheme,
+    layout: "fullscreen",
   },
 };
 
@@ -109,7 +109,10 @@ const useStyles = makeStyles(({ breakpoints }) => ({
   },
 }));
 
-export const ShoppingCart = () => {
+export const ShoppingCart = (props: {}, context: any) => {
+  useEffect(() => {
+    context?.setTheme(dailyShoppingTheme);
+  }, []);
   const styles = useStyles();
   return (
     <Fullscreen>
