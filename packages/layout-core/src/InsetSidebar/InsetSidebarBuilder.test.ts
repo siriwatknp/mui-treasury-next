@@ -21,6 +21,26 @@ describe("InsetSidebarBuilder", () => {
         },
       });
     });
+
+    it("hidden some breakpoint", () => {
+      expect(
+        new InsetSidebarBuilder({
+          position: "fixed",
+          width: { sm: 200, md: 256 },
+          hidden: ["xs", "sm", "xl"],
+        }).getSxRoot()
+      ).toEqual({
+        display: {
+          xs: "none",
+          md: "block",
+          xl: "none",
+        },
+        width: {
+          sm: 200,
+          md: 256,
+        },
+      });
+    });
   });
 
   describe("Body", () => {
@@ -83,6 +103,7 @@ describe("InsetSidebarBuilder", () => {
         top: 0,
         width: "auto",
         height: "100%",
+        overflowY: "auto",
         marginLeft: "-9999px",
         paddingLeft: "9999px",
         borderRight: "1px solid",

@@ -1,5 +1,6 @@
 import { Breakpoint } from "@material-ui/core/styles/createBreakpoints";
 import { HeaderBuilder } from "../Header/HeaderBuilder";
+import { ResponsiveBuilder } from "../shared/ResponsiveBuilder";
 import { combineBreakpoints } from "../utils/combineBreakpoints";
 import {
   LEFT_EDGE_SIDEBAR_ID,
@@ -62,10 +63,8 @@ export type SidebarState = {
   collapsed?: boolean;
   open?: boolean;
 };
-export class EdgeSidebarBuilder {
+export class EdgeSidebarBuilder extends ResponsiveBuilder<EdgeSidebarConfig> {
   id?: LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID;
-  readonly config: EdgeSidebarSetupParams["config"];
-  readonly hidden: EdgeSidebarSetupParams["hidden"];
   readonly autoCollapse: EdgeSidebarSetupParams["autoCollapse"];
   state?: SidebarState;
   effectedBy: {
@@ -73,20 +72,12 @@ export class EdgeSidebarBuilder {
   } = {};
 
   constructor(params: EdgeSidebarSetupParams) {
-    const { config, hidden = false, autoCollapse } = params;
-    this.config = config;
-    this.hidden = hidden;
-    this.autoCollapse = autoCollapse;
+    super(params);
+    this.autoCollapse = params.autoCollapse;
   }
 
   setState(state: SidebarState) {
     this.state = state;
-  }
-
-  isHidden(breakpoint: Breakpoint) {
-    if (!this.hidden) return false;
-    if (typeof this.hidden === "boolean" && this.hidden) return true;
-    return this.hidden.includes(breakpoint);
   }
 
   isFlexiblePersistent(
@@ -159,9 +150,11 @@ export class EdgeSidebarBuilder {
   }
 
   getSxProps(theme = DEFAULT_THEME) {
+    const sxDisplay = this.getSxDisplay("flex");
     return {
       width: this.getWidth(),
       zIndex: this.getZIndex(theme),
+      ...(Object.keys(sxDisplay).length && { display: sxDisplay }),
     };
   }
 

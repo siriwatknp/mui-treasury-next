@@ -2,7 +2,7 @@ import { Breakpoint } from "@material-ui/core/styles/createBreakpoints";
 import { BREAKPOINT_KEYS } from "./muiBreakpoints";
 import { Responsive } from "./types";
 
-export const sortBreakpoints = (breakpoints: Breakpoint[]) =>
+export const sortBreakpoints = (breakpoints: Breakpoint[]): Breakpoint[] =>
   breakpoints.sort(
     (a, b) => BREAKPOINT_KEYS.indexOf(a) - BREAKPOINT_KEYS.indexOf(b)
   );

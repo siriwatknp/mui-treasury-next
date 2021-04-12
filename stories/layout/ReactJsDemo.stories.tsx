@@ -173,6 +173,7 @@ export const ReactJs = (props: {}, context: any) => {
             sm: 200,
             md: 256,
           },
+          hidden: ["xs"],
         },
       }}
     >

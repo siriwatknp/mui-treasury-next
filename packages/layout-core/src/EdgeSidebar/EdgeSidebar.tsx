@@ -112,7 +112,7 @@ export const EdgeSidebar = ({
 
   const responsiveVariant = edgeSidebar.getDrawerVariant();
   const variant = pickNearestBreakpoint(responsiveVariant, screen);
-  if (!variant || edgeSidebar.isHidden(screen)) return null;
+  if (!variant) return null;
 
   return (
     <SidebarContext.Provider value={{ expanded, setExpanded }}>

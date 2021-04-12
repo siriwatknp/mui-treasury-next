@@ -93,6 +93,7 @@ export const Gmail = (props: {}, context: any) => {
               persistentBehavior: "fit",
             },
           },
+          hidden: ["md"],
         },
       }}
     >

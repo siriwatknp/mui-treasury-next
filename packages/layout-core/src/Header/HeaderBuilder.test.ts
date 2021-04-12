@@ -3,23 +3,6 @@ import { HeaderBuilder } from "./HeaderBuilder";
 
 describe("HeaderBuilder", () => {
   /**
-   * ==== Info ====
-   */
-  describe("Max height", () => {
-    it("fixed position", () => {
-      expect(
-        HeaderBuilder.getMaxHeight({ position: "fixed", top: 40, height: 64 })
-      ).toEqual("calc(64px + 40px)");
-    });
-
-    it("sticky position", () => {
-      expect(
-        HeaderBuilder.getMaxHeight({ position: "sticky", top: 40, height: 64 })
-      ).toEqual("calc(64px + 40px)");
-    });
-  });
-
-  /**
    * ==== Header Effect =====
    */
   describe("Clipped on EdgeSidebar", () => {

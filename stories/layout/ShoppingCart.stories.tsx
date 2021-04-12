@@ -129,6 +129,7 @@ export const ShoppingCart = (props: {}, context: any) => {
           rightInsetSidebar: {
             position: "absolute",
             width: "33%",
+            hidden: ["xs", "sm"],
           },
           rightEdgeSidebar: {
             config: {

@@ -2,6 +2,8 @@ import { Breakpoint } from "@material-ui/core/styles/createBreakpoints";
 import { HeaderBuilder } from "../Header/HeaderBuilder";
 import { subtractCalc } from "../utils/calc";
 import { generateSxWithHidden } from "../utils/generateSxWithHidden";
+import { BREAKPOINT_KEYS } from "../utils/muiBreakpoints";
+import { pickNearestBreakpoint } from "../utils/pickNearestBreakpoint";
 import { Responsive } from "../utils/types";
 
 export type DrawerAnchor = "left" | "right";
@@ -75,6 +77,7 @@ export class InsetSidebarBuilder {
         top: top,
         width: "auto",
         height: "100%",
+        overflowY: "auto",
         ...(anchor === "left" && {
           marginLeft: "-9999px",
           paddingLeft: "9999px",
@@ -102,21 +105,28 @@ export class InsetSidebarBuilder {
   }
 
   getSxRoot() {
-    let hiddenConfig = {};
+    let hiddenConfig: Responsive<string> = {};
     if (this.hidden) {
       if (typeof this.hidden === "boolean") {
-        hiddenConfig = { display: { xs: "none" } };
-      }
-      if (Array.isArray(this.hidden)) {
-        hiddenConfig = {
-          display: generateSxWithHidden(
-            { config: {}, hidden: this.hidden },
-            () => "block",
-            () => "none"
-          ),
-        };
+        hiddenConfig = { xs: "none" };
+      } else {
+        BREAKPOINT_KEYS.forEach((bp) => {
+          const lastResultVal = pickNearestBreakpoint(hiddenConfig, bp);
+          const isWithinHidden =
+            Array.isArray(this.hidden) && this.hidden.includes(bp);
+          if (isWithinHidden && lastResultVal !== "none") {
+            hiddenConfig[bp] = "none";
+          }
+
+          if (!isWithinHidden && lastResultVal === "none") {
+            hiddenConfig[bp] = "block";
+          }
+        });
       }
     }
-    return { ...hiddenConfig, width: this.config.width };
+    return {
+      ...(Object.keys(hiddenConfig).length && { display: hiddenConfig }),
+      width: this.config.width,
+    };
   }
 }

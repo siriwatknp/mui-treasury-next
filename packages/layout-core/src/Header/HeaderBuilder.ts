@@ -12,7 +12,7 @@ import { createWidthInterface } from "../Width/WidthModel";
 import { toValidCssValue } from "../utils/toValidCssValue";
 import { generateSxWithHidden } from "../utils/generateSxWithHidden";
 import { generateSx } from "../utils/generateSx";
-import { plusCalc } from "../utils/calc";
+import { ResponsiveBuilder } from "../shared/ResponsiveBuilder";
 
 export type ClippableElement = LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID;
 export type HeaderConfig = {
@@ -27,30 +27,14 @@ export type HeaderSetupParams = {
   hidden?: boolean | Breakpoint[];
 };
 
-export class HeaderBuilder {
-  readonly config: HeaderSetupParams["config"];
-  readonly hidden: HeaderSetupParams["hidden"];
+export class HeaderBuilder extends ResponsiveBuilder<HeaderConfig> {
   effectedBy: {
     leftEdgeSidebar?: EdgeSidebarBuilder;
     rightEdgeSidebar?: EdgeSidebarBuilder;
   } = {};
 
-  static getMaxHeight(config: HeaderConfig) {
-    if (["fixed", "sticky"].includes(config.position)) {
-      return plusCalc(config.height, config.top ?? 0);
-    }
-  }
-
   constructor(params: HeaderSetupParams) {
-    const { config, hidden } = params;
-    this.config = config;
-    this.hidden = hidden;
-  }
-
-  isHidden(breakpoint: Breakpoint) {
-    if (!this.hidden) return false;
-    if (typeof this.hidden === "boolean" && this.hidden) return true;
-    return this.hidden.includes(breakpoint);
+    super(params);
   }
 
   isClipped(clippableId: ClippableElement, breakpoint: Breakpoint) {
@@ -180,9 +164,11 @@ export class HeaderBuilder {
 
   getSxProps(theme = DEFAULT_THEME): object {
     const sxTop = generateSx(this.config, "top");
+    const sxDisplay = this.getSxDisplay("flex");
     return {
       position: generateSx(this.config, "position"),
       ...(Object.keys(sxTop).length && { top: sxTop }),
+      ...(Object.keys(sxDisplay).length && { display: sxDisplay }),
       ...this.getSxHeight(),
       ...this.getSxWidth(),
       ...this.getSxMarginHorizontal(),
