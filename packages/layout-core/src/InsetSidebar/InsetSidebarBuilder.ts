@@ -1,4 +1,5 @@
 import { Breakpoint } from "@material-ui/core/styles/createBreakpoints";
+import { SxProps } from "@material-ui/system";
 import { HeaderBuilder } from "../Header/HeaderBuilder";
 import { subtractCalc } from "../utils/calc";
 import { BREAKPOINT_KEYS } from "../utils/muiBreakpoints";
@@ -49,7 +50,7 @@ export class InsetSidebarBuilder {
   getSxBody() {
     const { position, top = 0 } = this.config;
     const anchor = this.anchor;
-    let bodySx = {};
+    let bodySx: SxProps = {};
     if (position === "absolute") {
       bodySx = {
         position: "absolute" as const,
@@ -97,6 +98,11 @@ export class InsetSidebarBuilder {
         height: "auto",
       };
     }
+    bodySx = {
+      ...bodySx,
+      display: "flex",
+      flexDirection: "column",
+    };
     return bodySx;
   }
 

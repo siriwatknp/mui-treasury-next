@@ -16,6 +16,7 @@ import {
   Subheader,
   EdgeSidebar,
   Trigger,
+  SidebarContent,
   Content,
   Footer,
   InsetContainer,
@@ -78,10 +79,7 @@ export const Development = () => {
             },
             sm: {
               variant: "persistent",
-              persistentBehavior: {
-                content: "flexible",
-                footer: "fit",
-              },
+              persistentBehavior: "fit",
               width: 256,
               collapsible: true,
               collapsedWidth: 72,
@@ -125,7 +123,7 @@ export const Development = () => {
         Subheader
       </Subheader>
       <EdgeSidebar anchor="left">
-        Hello
+        <SidebarContent>Hello</SidebarContent>
         <Trigger>
           {({ toggleLeftSidebarCollapsed, collapsed }) => (
             <ButtonBase

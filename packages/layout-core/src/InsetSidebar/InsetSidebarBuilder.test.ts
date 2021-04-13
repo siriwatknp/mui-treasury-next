@@ -64,6 +64,8 @@ describe("InsetSidebarBuilder", () => {
       });
       sidebar.effectedBy = { header };
       expect(sidebar.getSxBody()).toEqual({
+        display: "flex",
+        flexDirection: "column",
         position: "absolute",
         top: 0,
         width: "100%",
@@ -99,6 +101,8 @@ describe("InsetSidebarBuilder", () => {
       sidebar.anchor = "left";
       sidebar.effectedBy = { header };
       expect(sidebar.getSxBody()).toEqual({
+        display: "flex",
+        flexDirection: "column",
         position: "fixed",
         top: 0,
         width: "auto",
@@ -136,6 +140,8 @@ describe("InsetSidebarBuilder", () => {
       sidebar.anchor = "left";
       sidebar.effectedBy = { header };
       expect(sidebar.getSxBody()).toEqual({
+        display: "flex",
+        flexDirection: "column",
         position: "sticky",
         top: {
           xs: 56,
