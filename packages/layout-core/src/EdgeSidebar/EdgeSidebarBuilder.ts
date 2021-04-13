@@ -11,7 +11,6 @@ import {
   FOOTER_ID,
 } from "../utils/constant";
 import { generateSx } from "../utils/generateSx";
-import { generateSxWithHidden } from "../utils/generateSxWithHidden";
 import { pickNearestBreakpoint } from "../utils/pickNearestBreakpoint";
 import { Responsive } from "../utils/types";
 
@@ -89,26 +88,29 @@ export class EdgeSidebarBuilder extends ResponsiveBuilder<EdgeSidebarConfig> {
   }
 
   getOccupiedSpace(id?: HEADER_ID | CONTENT_ID | FOOTER_ID) {
-    return generateSxWithHidden(this, (breakpointConfig, bp) => {
-      if (EdgeSidebarBuilder.isTemporaryConfig(breakpointConfig)) {
-        if (bp !== "xs") {
-          return 0;
+    return this.generateSxWithHidden({
+      hiddenValue: 0,
+      assignValue: (breakpointConfig, bp) => {
+        if (EdgeSidebarBuilder.isTemporaryConfig(breakpointConfig)) {
+          if (bp !== "xs") {
+            return 0;
+          }
+          // do nothing for xs because temporary variant will be modal
         }
-        // do nothing for xs because temporary variant will be modal
-      }
-      if (EdgeSidebarBuilder.isPersistentConfig(breakpointConfig)) {
-        if (
-          this.state?.open &&
-          !EdgeSidebarBuilder.isNonePersistentConfig(breakpointConfig, id)
-        ) {
+        if (EdgeSidebarBuilder.isPersistentConfig(breakpointConfig)) {
+          if (
+            this.state?.open &&
+            !EdgeSidebarBuilder.isNonePersistentConfig(breakpointConfig, id)
+          ) {
+            return this.getFinalWidth(breakpointConfig);
+          } else {
+            return 0;
+          }
+        }
+        if (EdgeSidebarBuilder.isPermanentConfig(breakpointConfig)) {
           return this.getFinalWidth(breakpointConfig);
-        } else {
-          return 0;
         }
-      }
-      if (EdgeSidebarBuilder.isPermanentConfig(breakpointConfig)) {
-        return this.getFinalWidth(breakpointConfig);
-      }
+      },
     });
   }
 
@@ -151,10 +153,14 @@ export class EdgeSidebarBuilder extends ResponsiveBuilder<EdgeSidebarConfig> {
 
   getSxProps(theme = DEFAULT_THEME) {
     const sxDisplay = this.getSxDisplay("flex");
+    const displayKeys = Object.keys(sxDisplay);
+    const shouldAttachDisplay =
+      displayKeys.length > 1 ||
+      (displayKeys.length === 1 && displayKeys[0] !== "xs");
     return {
       width: this.getWidth(),
       zIndex: this.getZIndex(theme),
-      ...(Object.keys(sxDisplay).length && { display: sxDisplay }),
+      ...(shouldAttachDisplay && { display: sxDisplay }),
     };
   }
 

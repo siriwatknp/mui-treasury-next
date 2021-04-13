@@ -84,9 +84,7 @@ describe("EdgeSidebarBuilder", () => {
         },
       });
 
-      expect(edgeSidebar.getOccupiedSpace()).toEqual({
-        md: 0,
-      });
+      expect(edgeSidebar.getOccupiedSpace()).toEqual({});
     });
 
     it("persistent: uncollasible should remain the same width", () => {
@@ -126,7 +124,7 @@ describe("EdgeSidebarBuilder", () => {
         collapsed: false,
       });
 
-      expect(edgeSidebar.getOccupiedSpace()).toEqual({ sm: 0 });
+      expect(edgeSidebar.getOccupiedSpace()).toEqual({});
     });
 
     it("persistent: sidebar is open with behavior 'fit'", () => {
@@ -175,7 +173,7 @@ describe("EdgeSidebarBuilder", () => {
         collapsed: false,
       });
 
-      expect(edgeSidebar.getOccupiedSpace()).toEqual({ sm: 0 });
+      expect(edgeSidebar.getOccupiedSpace()).toEqual({});
 
       edgeSidebar.setState({
         open: true,
@@ -209,7 +207,7 @@ describe("EdgeSidebarBuilder", () => {
 
       expect(edgeSidebar.getOccupiedSpace("header")).toEqual({ sm: 256 });
       expect(edgeSidebar.getOccupiedSpace("content")).toEqual({ sm: 256 });
-      expect(edgeSidebar.getOccupiedSpace("footer")).toEqual({ sm: 0 });
+      expect(edgeSidebar.getOccupiedSpace("footer")).toEqual({});
     });
 
     it("permanent: uncollasible should remain the same width", () => {

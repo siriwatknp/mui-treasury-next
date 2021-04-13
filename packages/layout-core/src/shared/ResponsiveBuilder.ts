@@ -1,5 +1,4 @@
 import { Breakpoint } from "@material-ui/core/styles/createBreakpoints";
-import { generateSxWithHidden } from "../utils/generateSxWithHidden";
 import { BREAKPOINT_KEYS } from "../utils/muiBreakpoints";
 import { pickNearestBreakpoint } from "../utils/pickNearestBreakpoint";
 import { Responsive } from "../utils/types";
@@ -22,11 +21,70 @@ export class ResponsiveBuilder<T> {
     return this.hidden.includes(breakpoint);
   }
 
+  generateSxWithHidden(options: {
+    assignValue: (
+      breakpointConfig: T,
+      bp: Breakpoint
+    ) => number | string | undefined;
+    hiddenValue?: string | number;
+    /**
+     * if true, will calculate from xs
+     */
+    strict?: boolean;
+  }) {
+    const { config, hidden } = this;
+    const hiddenValue = options.hiddenValue;
+
+    if (typeof hidden === "boolean" && hidden && hiddenValue !== undefined) {
+      return { xs: hiddenValue };
+    }
+
+    const result: Responsive<number | string> = {};
+
+    BREAKPOINT_KEYS.forEach((bp) => {
+      const candidate = pickNearestBreakpoint(config, bp);
+      const lastResultVal = pickNearestBreakpoint(result, bp);
+
+      if (
+        options.strict &&
+        candidate === undefined &&
+        lastResultVal === undefined &&
+        hiddenValue !== undefined
+      ) {
+        // cannot find valid config and no result yet
+        result[bp] = hiddenValue;
+      }
+
+      const isHidden = Array.isArray(hidden) && hidden.includes(bp);
+
+      if (isHidden) {
+        if (hiddenValue !== undefined && lastResultVal !== hiddenValue) {
+          result[bp] = hiddenValue;
+        }
+      } else {
+        if (candidate !== undefined) {
+          const assignedValue = options.assignValue(candidate, bp);
+
+          if (assignedValue !== undefined) {
+            if (assignedValue !== hiddenValue) {
+              result[bp] = assignedValue;
+
+              if (assignedValue === lastResultVal) {
+                delete result[bp];
+              }
+            }
+          }
+        }
+      }
+    });
+    return result;
+  }
+
   getSxDisplay(appearance: string) {
-    return generateSxWithHidden(
-      this,
-      () => appearance,
-      () => "none"
-    );
+    return this.generateSxWithHidden({
+      assignValue: () => appearance,
+      hiddenValue: "none",
+      strict: true,
+    });
   }
 }

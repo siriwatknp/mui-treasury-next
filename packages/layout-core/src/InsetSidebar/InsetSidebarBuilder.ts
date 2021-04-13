@@ -1,7 +1,6 @@
 import { Breakpoint } from "@material-ui/core/styles/createBreakpoints";
 import { HeaderBuilder } from "../Header/HeaderBuilder";
 import { subtractCalc } from "../utils/calc";
-import { generateSxWithHidden } from "../utils/generateSxWithHidden";
 import { BREAKPOINT_KEYS } from "../utils/muiBreakpoints";
 import { pickNearestBreakpoint } from "../utils/pickNearestBreakpoint";
 import { Responsive } from "../utils/types";
@@ -60,14 +59,11 @@ export class InsetSidebarBuilder {
         margin: "unset",
         overflow: "auto",
         height: this.effectedBy.header
-          ? generateSxWithHidden(
-              {
-                config: this.effectedBy.header.config,
-                hidden: this.effectedBy.header.hidden,
-              },
-              (config) => subtractCalc("100vh", config.height ?? 0),
-              () => "100vh"
-            )
+          ? this.effectedBy.header.generateSxWithHidden({
+              assignValue: (config) =>
+                subtractCalc("100vh", config.height ?? 0),
+              hiddenValue: "100vh",
+            })
           : "100vh",
       };
     }

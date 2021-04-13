@@ -10,7 +10,6 @@ import { EdgeSidebarBuilder } from "../EdgeSidebar/EdgeSidebarBuilder";
 import { combineBreakpoints } from "../utils/combineBreakpoints";
 import { createWidthInterface } from "../Width/WidthModel";
 import { toValidCssValue } from "../utils/toValidCssValue";
-import { generateSxWithHidden } from "../utils/generateSxWithHidden";
 import { generateSx } from "../utils/generateSx";
 import { ResponsiveBuilder } from "../shared/ResponsiveBuilder";
 
@@ -68,16 +67,18 @@ export class HeaderBuilder extends ResponsiveBuilder<HeaderConfig> {
   }
 
   getOffsetHeight() {
-    return generateSxWithHidden(this, (breakpointConfig) =>
-      breakpointConfig.position === "fixed" ? breakpointConfig.height : 0
-    );
+    return this.generateSxWithHidden({
+      hiddenValue: 0,
+      assignValue: (breakpointConfig) =>
+        breakpointConfig.position === "fixed" ? breakpointConfig.height : 0,
+    });
   }
 
   getSxHeight() {
-    const result = generateSxWithHidden(
-      this,
-      (breakpointConfig) => breakpointConfig.height
-    );
+    const result = this.generateSxWithHidden({
+      assignValue: (breakpointConfig) => breakpointConfig.height,
+      hiddenValue: 0,
+    });
     return {
       ...(Object.keys(result).length && { height: result }),
     };
@@ -165,10 +166,14 @@ export class HeaderBuilder extends ResponsiveBuilder<HeaderConfig> {
   getSxProps(theme = DEFAULT_THEME): object {
     const sxTop = generateSx(this.config, "top");
     const sxDisplay = this.getSxDisplay("flex");
+    const displayKeys = Object.keys(sxDisplay);
+    const shouldAttachDisplay =
+      displayKeys.length > 1 ||
+      (displayKeys.length === 1 && displayKeys[0] !== "xs");
     return {
       position: generateSx(this.config, "position"),
       ...(Object.keys(sxTop).length && { top: sxTop }),
-      ...(Object.keys(sxDisplay).length && { display: sxDisplay }),
+      ...(shouldAttachDisplay && { display: sxDisplay }),
       ...this.getSxHeight(),
       ...this.getSxWidth(),
       ...this.getSxMarginHorizontal(),
