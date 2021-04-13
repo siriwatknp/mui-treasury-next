@@ -2,11 +2,8 @@ import { useLayoutCtx } from "../Root/Root";
 import { useLooseSidebarCtx } from "./EdgeSidebar";
 import { DrawerAnchor } from "./EdgeSidebarBuilder";
 
-export const useEdgeSidebar = (options?: {
-  anchor?: DrawerAnchor;
-  display?: string;
-}) => {
-  const { anchor, display = "inline-flex" } = options ?? {};
+export const useEdgeSidebar = (options?: { anchor?: DrawerAnchor }) => {
+  const { anchor } = options ?? {};
   const sidebar = useLooseSidebarCtx();
   const { state, builder, ...triggers } = useLayoutCtx();
   if (!sidebar && !anchor) {
@@ -21,8 +18,9 @@ export const useEdgeSidebar = (options?: {
   const sidebarState = state[sidebarId];
 
   return {
+    sidebarId,
     ...sidebarState,
     ...triggers,
-    sxDisplay: builder[sidebarId]?.getSxDisplay(display),
+    edgeSidebar: builder[sidebarId],
   };
 };

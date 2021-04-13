@@ -1,0 +1,66 @@
+import React, { ReactNode } from "react";
+import { experimentalStyled } from "@material-ui/core/styles";
+import { DrawerAnchor, EdgeSidebarBuilder } from "./EdgeSidebarBuilder";
+import { useEdgeSidebar } from "./useEdgeSidebar";
+
+const EdgeTriggerRoot = experimentalStyled(
+  "div",
+  {},
+  { name: "EdgeTrigger" }
+)();
+
+export type EdgeTriggerProps = Parameters<typeof EdgeTriggerRoot>[0] & {
+  target: {
+    anchor?: DrawerAnchor;
+    field: "open" | "collapsed";
+  };
+  display?: string;
+  children?: (
+    state: boolean,
+    setState: (newState: boolean) => void
+  ) => ReactNode;
+};
+
+export const EdgeTrigger = ({
+  target,
+  display = "inline-flex",
+  children,
+  ...props
+}: EdgeTriggerProps) => {
+  const { anchor, field } = target;
+  const { sidebarId, edgeSidebar, ...state } = useEdgeSidebar({ anchor });
+  const sxDisplay = edgeSidebar?.generateSxWithHidden({
+    strict: true,
+    hiddenValue: "none",
+    assignValue: (config) => {
+      console.log("config", config);
+      if (field === "open") {
+        if (EdgeSidebarBuilder.isPermanentConfig(config)) {
+          return "none";
+        } else {
+          return display;
+        }
+      }
+      if (field === "collapsed") {
+        if (EdgeSidebarBuilder.isTemporaryConfig(config)) {
+          return "none";
+        } else {
+          return display;
+        }
+      }
+    },
+  });
+  let setState = (val: boolean) => {};
+  if (field === "collapsed") {
+    setState = (val: boolean) => state.setCollapsed(sidebarId, val);
+  }
+  if (field === "open") {
+    setState = (val: boolean) => state.setOpen(sidebarId, val);
+  }
+  return (
+    <EdgeTriggerRoot {...props} sx={{ display: sxDisplay, ...props.sx }}>
+      {typeof children === "function" &&
+        children(state[field] ?? false, setState)}
+    </EdgeTriggerRoot>
+  );
+};

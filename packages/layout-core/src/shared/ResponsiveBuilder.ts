@@ -65,12 +65,10 @@ export class ResponsiveBuilder<T> {
           const assignedValue = options.assignValue(candidate, bp);
 
           if (assignedValue !== undefined) {
-            if (assignedValue !== hiddenValue) {
-              result[bp] = assignedValue;
+            result[bp] = assignedValue;
 
-              if (assignedValue === lastResultVal) {
-                delete result[bp];
-              }
+            if (assignedValue === lastResultVal) {
+              delete result[bp];
             }
           }
         }

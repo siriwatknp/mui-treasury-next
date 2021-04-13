@@ -15,7 +15,7 @@ import {
   Root,
   Header,
   EdgeSidebar,
-  Trigger,
+  EdgeTrigger,
   Content,
 } from "@mui-treasury/layout";
 
@@ -88,13 +88,13 @@ export const Gmail = (props: {}, context: any) => {
       <Header>
         <AppHeader
           collapse={
-            <Trigger anchor="left">
-              {({ toggleLeftSidebarCollapsed }) => (
-                <IconButton onClick={toggleLeftSidebarCollapsed}>
+            <EdgeTrigger target={{ anchor: "left", field: "collapsed" }}>
+              {(collapsed, setCollapsed) => (
+                <IconButton onClick={() => setCollapsed(!collapsed)}>
                   <Menu />
                 </IconButton>
               )}
-            </Trigger>
+            </EdgeTrigger>
           }
         />
       </Header>

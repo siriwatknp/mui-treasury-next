@@ -27,10 +27,6 @@ describe("useEdgeSidebar", () => {
         ),
       });
       expect(result.current).toMatchObject({
-        sxDisplay: {
-          xs: "none",
-          md: "inline-flex",
-        },
         open: false,
         collapsed: false,
         setOpen: expect.any(Function),

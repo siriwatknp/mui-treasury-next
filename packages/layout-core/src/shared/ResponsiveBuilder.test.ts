@@ -98,6 +98,28 @@ describe("ResponsiveBuilder", () => {
       });
       expect(result).toEqual({ xs: 0, md: 64, lg: 40, xl: 0 });
     });
+
+    it("use assign value", () => {
+      const builder = new ResponsiveBuilder({
+        config: {
+          xs: { variant: "temporary" },
+          sm: { variant: "persistent" },
+          lg: { variant: "permanent" },
+        },
+      });
+      const result = builder.generateSxWithHidden({
+        assignValue: (breakpointConfig) => {
+          if (breakpointConfig.variant === "permanent") {
+            return "none";
+          } else {
+            return "inline-flex";
+          }
+        },
+        hiddenValue: "none",
+        strict: true,
+      });
+      expect(result).toEqual({ xs: "inline-flex", lg: "none" });
+    });
   });
   describe("getSxDisplay", () => {
     it("config start at xs", () => {

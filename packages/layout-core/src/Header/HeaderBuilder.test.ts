@@ -433,9 +433,11 @@ describe("HeaderBuilder", () => {
           xs: 56,
         },
         width: {
+          sm: "100%",
           lg: "calc(100% - 296px)",
         },
         marginLeft: {
+          sm: "0px",
           lg: "296px",
         },
         zIndex: {
@@ -486,10 +488,12 @@ describe("HeaderBuilder", () => {
           xs: 56,
         },
         width: {
+          sm: "100%",
           md: "calc(100% - 80px)",
           lg: "calc(100% - (296px + 80px))",
         },
         marginLeft: {
+          sm: "0px",
           lg: "296px",
         },
         marginRight: {
@@ -510,10 +514,12 @@ describe("HeaderBuilder", () => {
           xs: 56,
         },
         width: {
+          sm: "100%",
           md: "calc(100% - 80px)",
           lg: "calc(100% - (80px + 80px))",
         },
         marginLeft: {
+          sm: "0px",
           lg: "80px",
         },
         marginRight: {
