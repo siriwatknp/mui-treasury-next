@@ -2,6 +2,17 @@ import { ResponsiveBuilder } from "./ResponsiveBuilder";
 
 describe("ResponsiveBuilder", () => {
   describe("getSxDisplay", () => {
+    it("config start at xs", () => {
+      const builder = new ResponsiveBuilder({
+        config: {
+          xs: "anything",
+          lg: "anything",
+        },
+      });
+      expect(builder.getSxDisplay("block")).toEqual({
+        xs: "block",
+      });
+    });
     it("config start at md", () => {
       const builder = new ResponsiveBuilder({
         config: {

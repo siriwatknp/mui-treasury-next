@@ -74,4 +74,18 @@ describe("generateSxWithHidden", () => {
     );
     expect(result).toEqual({ xs: 100, sm: 0, md: 64, lg: 40, xl: 0 });
   });
+
+  it("config start at md", () => {
+    const result = generateSxWithHidden(
+      {
+        config: {
+          md: { height: 64 },
+          lg: { height: 40 },
+        },
+        hidden: ["sm", "xl"],
+      },
+      (breakpointConfig) => breakpointConfig?.height
+    );
+    expect(result).toEqual({ xs: 0, md: 64, lg: 40, xl: 0 });
+  });
 });

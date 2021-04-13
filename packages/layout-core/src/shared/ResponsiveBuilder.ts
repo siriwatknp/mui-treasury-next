@@ -1,4 +1,5 @@
 import { Breakpoint } from "@material-ui/core/styles/createBreakpoints";
+import { generateSxWithHidden } from "../utils/generateSxWithHidden";
 import { BREAKPOINT_KEYS } from "../utils/muiBreakpoints";
 import { pickNearestBreakpoint } from "../utils/pickNearestBreakpoint";
 import { Responsive } from "../utils/types";
@@ -22,32 +23,10 @@ export class ResponsiveBuilder<T> {
   }
 
   getSxDisplay(appearance: string) {
-    let result: Responsive<string> = {};
-    if (this.hidden === true) {
-      return { xs: "none" };
-    }
-    BREAKPOINT_KEYS.forEach((bp) => {
-      const candidate = pickNearestBreakpoint(this.config, bp);
-      const lastResultVal = pickNearestBreakpoint(result, bp);
-
-      if (!candidate && !lastResultVal) {
-        // cannot find valid config and no result yet
-        result[bp] = "none";
-      }
-
-      if (candidate) {
-        const isWithinHidden =
-          Array.isArray(this.hidden) && this.hidden.includes(bp);
-
-        if (isWithinHidden && lastResultVal !== "none") {
-          result[bp] = "none";
-        }
-
-        if (!isWithinHidden && lastResultVal === "none") {
-          result[bp] = appearance;
-        }
-      }
-    });
-    return result;
+    return generateSxWithHidden(
+      this,
+      () => appearance,
+      () => "none"
+    );
   }
 }
