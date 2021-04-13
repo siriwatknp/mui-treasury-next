@@ -27,7 +27,7 @@
       "@mui-treasury/style-button-bootstrap": [
         "packages/style-shape-sticker/src/"
       ],
-      "@mui-treasury/layout": ["packages/layout-core/src/"]
+      "@mui-treasury/layout": ["packages/layout/src"]
     }
   }
 }

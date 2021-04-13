@@ -23,8 +23,7 @@ import GmailButton from "@mui-treasury/components/button/gmail";
 import GmailSidebarItem from "@mui-treasury/components/sidebarItem/gmail";
 import Menu from "@mui-treasury/components/menu/collapsible";
 
-import { useLayoutCtx } from "../../../packages/layout-core/src/Root/Root";
-import { useSidebarCtx } from "../../../packages/layout-core/src/EdgeSidebar/EdgeSidebar";
+import { useLayoutCtx, useSidebarCtx } from "@mui-treasury/layout";
 
 const SidebarContent = styled("div")`
   min-height: 0;

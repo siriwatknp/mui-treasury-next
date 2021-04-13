@@ -5,7 +5,7 @@ import { set } from "edit-package-json";
 
 const PUBLISH_DIR = "dist";
 
-type PackageType = "cli" | "theme" | "component" | "style";
+type PackageType = "cli" | "theme" | "component" | "style" | "layout";
 
 const program = new commander.Command();
 
@@ -32,6 +32,9 @@ async function run() {
       .then((newFile) => set(newFile, "types", "index.d.ts"))
       .then((newFile) => newFile.replace("dependencies", "peerDependencies"))
       .then((result) => fsp.writeFile(`${PUBLISH_DIR}/package.json`, result));
+  }
+  if (packageType === "layout") {
+    await fsp.writeFile(`${PUBLISH_DIR}/package.json`, file);
   }
   await cpy(["README.md", "CHANGELOG.md"], PUBLISH_DIR);
 }

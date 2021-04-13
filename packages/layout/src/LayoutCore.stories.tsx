@@ -25,7 +25,7 @@ import {
   InsetContainer,
   InsetSidebar,
   InsetAvoidingView,
-} from "@mui-treasury/layout";
+} from "packages/layout/src";
 import { IconButton } from "@material-ui/core";
 
 export default {

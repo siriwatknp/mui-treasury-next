@@ -5,7 +5,7 @@ import IconButton from "@material-ui/core/IconButton";
 
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 
-import { useLayoutCtx } from "../../../packages/layout-core/src/Root/Root";
+import { useLayoutCtx } from "@mui-treasury/layout";
 
 const StyledIconButton = styled(IconButton)`
   position: fixed;
