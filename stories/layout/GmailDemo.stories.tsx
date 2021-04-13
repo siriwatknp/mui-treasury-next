@@ -15,8 +15,8 @@ import {
   Root,
   Header,
   EdgeSidebar,
+  Trigger,
   Content,
-  useLayoutCtx,
 } from "@mui-treasury/layout";
 
 export default {
@@ -33,18 +33,6 @@ const theme = createMuiTheme({
     },
   },
 });
-
-const CollapseTrigger = () => {
-  const { toggleLeftSidebarCollapsed } = useLayoutCtx();
-  return (
-    <IconButton
-      onClick={toggleLeftSidebarCollapsed}
-      sx={{ marginLeft: -1.5, marginRight: 0.5 }}
-    >
-      <Menu />
-    </IconButton>
-  );
-};
 
 const useDrawerStyles = makeStyles(() => ({
   paper: {
@@ -98,7 +86,17 @@ export const Gmail = (props: {}, context: any) => {
       }}
     >
       <Header>
-        <AppHeader collapse={<CollapseTrigger />} />
+        <AppHeader
+          collapse={
+            <Trigger anchor="left">
+              {({ toggleLeftSidebarCollapsed }) => (
+                <IconButton onClick={toggleLeftSidebarCollapsed}>
+                  <Menu />
+                </IconButton>
+              )}
+            </Trigger>
+          }
+        />
       </Header>
       <EdgeSidebar anchor="left" classes={drawerStyles}>
         <AppSidebar />

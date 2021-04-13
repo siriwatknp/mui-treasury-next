@@ -3,21 +3,26 @@ import { Meta } from "@storybook/react/types-6-0";
 
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
-import Button from "@material-ui/core/Button";
+import ButtonBase from "@material-ui/core/ButtonBase";
+
+import Menu from "@material-ui/icons/Menu";
+import ArrowLeft from "@material-ui/icons/ArrowLeft";
+import ArrowRight from "@material-ui/icons/ArrowRight";
 
 import {
   Root,
-  useLayoutCtx,
   Header,
   TopHeader,
   Subheader,
   EdgeSidebar,
+  Trigger,
   Content,
   Footer,
   InsetContainer,
   InsetSidebar,
   InsetAvoidingView,
 } from "@mui-treasury/layout";
+import { IconButton } from "@material-ui/core";
 
 export default {
   title: "Layout",
@@ -27,24 +32,6 @@ export default {
     layout: "fullscreen",
   },
 } as Meta;
-
-const Trigger = () => {
-  const {
-    toggleLeftSidebarCollapsed,
-    toggleLeftSidebarOpen,
-    state,
-  } = useLayoutCtx();
-  return (
-    <>
-      <Button onClick={toggleLeftSidebarOpen} color="inherit">
-        {state.leftEdgeSidebar?.open ? "Close" : "Open"}
-      </Button>
-      <Button onClick={toggleLeftSidebarCollapsed} color="inherit">
-        {state.leftEdgeSidebar?.collapsed ? "Uncollapse" : "Collapse"}
-      </Button>
-    </>
-  );
-};
 
 export const Development = () => {
   const [topHidden, setTopHidden] = useState(false);
@@ -126,14 +113,30 @@ export const Development = () => {
         TopHeader
       </TopHeader>
       <Header>
-        <div>
-          <Trigger />
-        </div>
+        <Trigger anchor="left">
+          {({ toggleLeftSidebarOpen, open }) => (
+            <IconButton onClick={toggleLeftSidebarOpen}>
+              {open ? <ArrowLeft /> : <Menu />}
+            </IconButton>
+          )}
+        </Trigger>
       </Header>
       <Subheader sx={{ backgroundColor: "secondary.light" }}>
         Subheader
       </Subheader>
-      <EdgeSidebar anchor="left">Hello</EdgeSidebar>
+      <EdgeSidebar anchor="left">
+        Hello
+        <Trigger>
+          {({ toggleLeftSidebarCollapsed, collapsed }) => (
+            <ButtonBase
+              onClick={toggleLeftSidebarCollapsed}
+              sx={{ minHeight: 40, width: "100%" }}
+            >
+              {collapsed ? <ArrowRight /> : <ArrowLeft />}
+            </ButtonBase>
+          )}
+        </Trigger>
+      </EdgeSidebar>
       {/* <EdgeSidebar anchor="right">Hello</EdgeSidebar> */}
       <Content>
         <InsetContainer

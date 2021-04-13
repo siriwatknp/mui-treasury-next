@@ -9,9 +9,10 @@ import { pickNearestBreakpoint } from "../utils/pickNearestBreakpoint";
 import { useSidebarAutoCollapse } from "../hooks/useSidebarAutoCollapse";
 import {
   CollapsibleSidebarConfig,
+  DrawerAnchor,
   EdgeSidebarConfig,
 } from "./EdgeSidebarBuilder";
-import { EDGE_SIDEBAR_EXPAND_DELAY } from "../utils/constant";
+import { EDGE_SIDEBAR_EXPAND_DELAY, EDGE_SIDEBAR_ID } from "../utils/constant";
 import { EdgeOffset } from "./EdgeOffset";
 
 export type EdgeSidebarProps = { anchor: "left" | "right" } & Omit<
@@ -19,9 +20,11 @@ export type EdgeSidebarProps = { anchor: "left" | "right" } & Omit<
   "anchor" | "variant"
 >;
 
-const SidebarContext = React.createContext<
+export const SidebarContext = React.createContext<
   | undefined
   | {
+      id: EDGE_SIDEBAR_ID;
+      anchor: DrawerAnchor;
       expanded: boolean;
       setExpanded: React.Dispatch<React.SetStateAction<boolean>>;
     }
@@ -33,6 +36,10 @@ export const useSidebarCtx = () => {
     throw new Error("useSidebarCtx must be called under <EdgeSidebar />");
   }
   return ctx;
+};
+
+export const useLooseSidebarCtx = () => {
+  return useContext(SidebarContext);
 };
 
 const hasAutoExpanded = (
@@ -114,8 +121,13 @@ export const EdgeSidebar = ({
   const variant = pickNearestBreakpoint(responsiveVariant, screen);
   if (!variant) return null;
 
+  const sidebarValue = React.useMemo(
+    () => ({ id: sidebarId, anchor, expanded, setExpanded }),
+    [sidebarId, anchor, expanded, setExpanded]
+  );
+
   return (
-    <SidebarContext.Provider value={{ expanded, setExpanded }}>
+    <SidebarContext.Provider value={sidebarValue}>
       <Drawer
         {...props}
         open={layoutState[sidebarId]?.open}

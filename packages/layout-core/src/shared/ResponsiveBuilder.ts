@@ -3,6 +3,8 @@ import { BREAKPOINT_KEYS } from "../utils/muiBreakpoints";
 import { pickNearestBreakpoint } from "../utils/pickNearestBreakpoint";
 import { Responsive } from "../utils/types";
 
+type Result = string | number | undefined;
+
 export class ResponsiveBuilder<T> {
   readonly config: Responsive<T>;
   readonly hidden?: boolean | Breakpoint[];
@@ -21,12 +23,9 @@ export class ResponsiveBuilder<T> {
     return this.hidden.includes(breakpoint);
   }
 
-  generateSxWithHidden(options: {
-    assignValue: (
-      breakpointConfig: T,
-      bp: Breakpoint
-    ) => number | string | undefined;
-    hiddenValue?: string | number;
+  generateSxWithHidden<R extends Result = Result>(options: {
+    assignValue: (breakpointConfig: T, bp: Breakpoint) => R;
+    hiddenValue?: R;
     /**
      * if true, will calculate from xs
      */
@@ -39,7 +38,7 @@ export class ResponsiveBuilder<T> {
       return { xs: hiddenValue };
     }
 
-    const result: Responsive<number | string> = {};
+    const result: Responsive<R> = {};
 
     BREAKPOINT_KEYS.forEach((bp) => {
       const candidate = pickNearestBreakpoint(config, bp);
