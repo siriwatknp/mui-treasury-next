@@ -1,5 +1,6 @@
 import { EdgeSidebarBuilder } from "../EdgeSidebar/EdgeSidebarBuilder";
 import { HeaderBuilder } from "./HeaderBuilder";
+import { getStandardScheme } from "../presets/standard";
 
 describe("HeaderBuilder", () => {
   /**
@@ -62,7 +63,7 @@ describe("HeaderBuilder", () => {
       });
       header.effectedBy = { leftEdgeSidebar };
       expect(header.getSxMarginHorizontal()).toEqual({
-        marginLeft: { sm: 0 },
+        marginLeft: { sm: "0px" },
       });
     });
     it("should have margin on the left", () => {
@@ -347,7 +348,7 @@ describe("HeaderBuilder", () => {
         hidden: ["sm"],
       });
       expect(header.getSxHeight()).toEqual({
-        height: { xs: 56, sm: 0, md: 56, xl: 80 },
+        height: { xs: 56, sm: "0px", md: 56, xl: 80 },
       });
     });
   });
@@ -527,6 +528,38 @@ describe("HeaderBuilder", () => {
         },
         zIndex: {
           xs: 1100,
+        },
+      });
+    });
+  });
+
+  describe("Presets", () => {
+    it("standard", () => {
+      const scheme = getStandardScheme();
+      const header = new HeaderBuilder(scheme.header);
+      const leftEdgeSidebar = new EdgeSidebarBuilder(scheme.leftEdgeSidebar);
+
+      header.effectedBy = { leftEdgeSidebar };
+      expect(header.getSxProps()).toEqual({
+        position: {
+          xs: "sticky",
+          md: "relative",
+        },
+        height: {
+          xs: 56,
+          md: 64,
+        },
+        marginLeft: {
+          sm: "256px",
+          md: "0px",
+        },
+        width: {
+          sm: "calc(100% - 256px)",
+          md: "100%",
+        },
+        zIndex: {
+          xs: 1100,
+          md: 1210,
         },
       });
     });

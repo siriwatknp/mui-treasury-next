@@ -9,7 +9,6 @@ const withThemeProvider = (Story: any, context: any) => {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const [theme, setTheme] = useState(
     createTreasuryTheme({
-      direction: "rtl",
       palette: {
         mode: prefersDarkMode ? "dark" : "light",
       },

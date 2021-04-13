@@ -24,16 +24,6 @@ type State = {
   rightEdgeSidebar?: SidebarState;
 };
 
-type Scheme = {
-  header?: HeaderSetupParams;
-  topHeader?: HeaderSetupParams;
-  subheader?: HeaderSetupParams;
-  leftEdgeSidebar?: EdgeSidebarSetupParams;
-  rightEdgeSidebar?: EdgeSidebarSetupParams;
-  leftInsetSidebar?: InsetSetupParams;
-  rightInsetSidebar?: InsetSetupParams;
-};
-
 type Builder = {
   header?: HeaderBuilder;
   topHeader?: HeaderBuilder;
@@ -71,6 +61,16 @@ export const useLayoutCtx = () => {
 };
 
 export const LayoutConsumer = LayoutContext.Consumer;
+
+export type Scheme = {
+  header?: HeaderSetupParams;
+  topHeader?: HeaderSetupParams;
+  subheader?: HeaderSetupParams;
+  leftEdgeSidebar?: EdgeSidebarSetupParams;
+  rightEdgeSidebar?: EdgeSidebarSetupParams;
+  leftInsetSidebar?: InsetSetupParams;
+  rightInsetSidebar?: InsetSetupParams;
+};
 
 export type RootProps = {
   initialState?: State;

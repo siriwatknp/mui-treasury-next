@@ -1,3 +1,4 @@
+import { getStandardScheme } from "../presets/standard";
 import { ResponsiveBuilder } from "./ResponsiveBuilder";
 
 describe("ResponsiveBuilder", () => {
@@ -203,6 +204,14 @@ describe("ResponsiveBuilder", () => {
         lg: "none",
         xl: "block",
       });
+    });
+  });
+
+  describe("Presets", () => {
+    it("standard", () => {
+      const scheme = getStandardScheme();
+      const builder = new ResponsiveBuilder(scheme.header);
+      expect(builder.mergeBreakpoints({ sm: 256 })).toEqual(["sm", "md"]);
     });
   });
 });

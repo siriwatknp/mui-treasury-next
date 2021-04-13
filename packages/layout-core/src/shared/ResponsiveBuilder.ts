@@ -23,6 +23,32 @@ export class ResponsiveBuilder<T> {
     return this.hidden.includes(breakpoint);
   }
 
+  /**
+   * use target as base breakpoints, the result will start from the minimum of target
+   *          xs | sm | md | lg | xl
+   *  target     | y  |    |  y |
+   *   this   y  |    | y  |    |
+   *  ===============================
+   *  result     | y  | y  | y  |
+   */
+  mergeBreakpoints(target: Responsive<any> | Breakpoint[]) {
+    let targetFound = false;
+    const result: Breakpoint[] = [];
+    const targetKeys = Array.isArray(target) ? target : Object.keys(target);
+    const thisKeys = Object.keys(this.config);
+    BREAKPOINT_KEYS.forEach((key) => {
+      if (targetKeys.includes(key)) {
+        targetFound = true;
+        result.push(key);
+      } else {
+        if (thisKeys.includes(key) && targetFound) {
+          result.push(key);
+        }
+      }
+    });
+    return result;
+  }
+
   generateSxWithHidden<R extends Result = Result>(options: {
     assignValue: (breakpointConfig: T, bp: Breakpoint) => R;
     hiddenValue?: R;

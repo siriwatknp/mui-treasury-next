@@ -74,6 +74,8 @@ export const Header = (props: AppBarProps) => {
         className={cx("Header", props.className)}
         sx={{
           transition: CSS_TRANSITION,
+          flexDirection: "row",
+          alignItems: "center",
           ...props.sx,
           ...builder.header?.getSxProps(),
         }}

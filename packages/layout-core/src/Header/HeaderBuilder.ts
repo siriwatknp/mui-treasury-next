@@ -68,16 +68,18 @@ export class HeaderBuilder extends ResponsiveBuilder<HeaderConfig> {
 
   getOffsetHeight() {
     return this.generateSxWithHidden({
-      hiddenValue: 0,
+      // https://github.com/mui-org/material-ui/blob/next/packages/material-ui-system/src/sizing.js#L5
+      hiddenValue: "0px", // don't use 0 as number because it will become 0%
       assignValue: (breakpointConfig) =>
-        breakpointConfig.position === "fixed" ? breakpointConfig.height : 0,
+        breakpointConfig.position === "fixed" ? breakpointConfig.height : "0px",
     });
   }
 
   getSxHeight() {
     const result = this.generateSxWithHidden({
       assignValue: (breakpointConfig) => breakpointConfig.height,
-      hiddenValue: 0,
+      // https://github.com/mui-org/material-ui/blob/next/packages/material-ui-system/src/sizing.js#L5
+      hiddenValue: "0px", // don't use 0 as number because it will become 0%
     });
     return {
       ...(Object.keys(result).length && { height: result }),
@@ -89,20 +91,20 @@ export class HeaderBuilder extends ResponsiveBuilder<HeaderConfig> {
     const { leftEdgeSidebar, rightEdgeSidebar } = this.effectedBy;
     if (leftEdgeSidebar) {
       const occupiedSpace = leftEdgeSidebar?.getOccupiedSpace();
-      for (const key in occupiedSpace) {
-        const bp = key as Breakpoint;
+      const breakpoinst = this.mergeBreakpoints(occupiedSpace);
+      for (const bp of breakpoinst) {
         marginLeft[bp] = this.isClipped(LEFT_EDGE_SIDEBAR_ID, bp)
-          ? 0
+          ? "0px"
           : toValidCssValue(occupiedSpace[bp]!);
       }
     }
     const marginRight: Responsive<number | string> = {};
     if (rightEdgeSidebar) {
       const occupiedSpace = rightEdgeSidebar?.getOccupiedSpace();
-      for (const key in occupiedSpace) {
-        const bp = key as Breakpoint;
+      const breakpoinst = this.mergeBreakpoints(occupiedSpace);
+      for (const bp of breakpoinst) {
         marginRight[bp] = this.isClipped(RIGHT_EDGE_SIDEBAR_ID, bp)
-          ? 0
+          ? "0px"
           : toValidCssValue(occupiedSpace[bp]!);
       }
     }
@@ -117,9 +119,8 @@ export class HeaderBuilder extends ResponsiveBuilder<HeaderConfig> {
     const { leftEdgeSidebar, rightEdgeSidebar } = this.effectedBy;
     const leftOccupiedSpace = leftEdgeSidebar?.getOccupiedSpace() ?? {};
     const rightOccupiedSpace = rightEdgeSidebar?.getOccupiedSpace() ?? {};
-    const breakpoints = combineBreakpoints(
-      leftOccupiedSpace,
-      rightOccupiedSpace
+    const breakpoints = this.mergeBreakpoints(
+      combineBreakpoints(leftOccupiedSpace, rightOccupiedSpace)
     );
     for (const key of breakpoints) {
       const bp = key as Breakpoint;

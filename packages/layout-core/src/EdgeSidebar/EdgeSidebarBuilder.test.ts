@@ -1,5 +1,5 @@
-import { fabClasses } from "@material-ui/core";
 import { HeaderBuilder } from "../Header/HeaderBuilder";
+import { getStandardScheme } from "../presets/standard";
 import { EdgeSidebarBuilder } from "./EdgeSidebarBuilder";
 
 describe("EdgeSidebarBuilder", () => {
@@ -471,6 +471,17 @@ describe("EdgeSidebarBuilder", () => {
         lg: 80,
       },
       zIndex: {},
+    });
+  });
+
+  describe("Presets", () => {
+    it("standard", () => {
+      const scheme = getStandardScheme();
+      const sidebar = new EdgeSidebarBuilder(scheme.leftEdgeSidebar);
+
+      expect(sidebar.getOccupiedSpace()).toEqual({
+        sm: 256,
+      });
     });
   });
 });

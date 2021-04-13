@@ -33,7 +33,6 @@ export const EdgeTrigger = ({
     strict: true,
     hiddenValue: "none",
     assignValue: (config) => {
-      console.log("config", config);
       if (field === "open") {
         if (EdgeSidebarBuilder.isPermanentConfig(config)) {
           return "none";
