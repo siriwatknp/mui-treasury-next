@@ -14,6 +14,7 @@ import {
 } from "./EdgeSidebarBuilder";
 import { EDGE_SIDEBAR_EXPAND_DELAY, EDGE_SIDEBAR_ID } from "../utils/constant";
 import { EdgeOffset } from "./EdgeOffset";
+import { useWindowCtx } from "../WindowContext";
 
 export type EdgeSidebarProps = { anchor: "left" | "right" } & Omit<
   DrawerProps,
@@ -64,6 +65,7 @@ export const EdgeSidebar = ({
   }
   const theme = useTheme();
   const screen = useScreen();
+  const { iDocument } = useWindowCtx();
   const { builder, state: layoutState, setOpen } = useLayoutCtx();
   const sidebarId = `${anchor}EdgeSidebar` as const;
   const edgeSidebar = builder[sidebarId];
@@ -141,6 +143,10 @@ export const EdgeSidebar = ({
           ...props.SlideProps,
           onEntered,
           onExit,
+        }}
+        ModalProps={{
+          ...props.ModalProps,
+          container: iDocument?.body ?? props.ModalProps?.container,
         }}
         PaperProps={{
           ...props.PaperProps,

@@ -9,3 +9,4 @@ export * from "./Content/Content";
 export * from "./Content/SidebarContent";
 export * from "./Footer/Footer";
 export * from "./Fullscreen/Fullscreen";
+export * from "./WindowContext";

@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { debounce } from "@material-ui/core/utils";
-// import { useWindowCtx } from "../contexts"
+import { useWindowCtx } from "../WindowContext";
 
-function getScrollY(obj: Window) {
+function getScrollY(obj: Window | undefined) {
   return typeof obj === "object" ? obj.scrollY : undefined;
 }
 
 export const useScrollY = (disabled?: boolean) => {
-  // const { iWindow } = useWindowCtx()
-  const iWindow = window;
+  const { iWindow } = useWindowCtx();
   const [scrollY, setScrollY] = useState(getScrollY(iWindow));
   const debounceScrollListener = useRef(
     debounce(() => {
@@ -16,7 +15,7 @@ export const useScrollY = (disabled?: boolean) => {
     }, 300)
   );
   useEffect(() => {
-    if (!disabled) {
+    if (!disabled && iWindow !== undefined) {
       iWindow.addEventListener("scroll", debounceScrollListener.current);
       return () => {
         iWindow.removeEventListener("scroll", debounceScrollListener.current);
