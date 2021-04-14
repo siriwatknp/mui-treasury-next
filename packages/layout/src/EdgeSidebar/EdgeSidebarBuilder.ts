@@ -88,13 +88,14 @@ export class EdgeSidebarBuilder extends ResponsiveBuilder<EdgeSidebarConfig> {
   }
 
   getOccupiedSpace(id?: HEADER_ID | CONTENT_ID | FOOTER_ID) {
-    return this.generateSxWithHidden({
+    return this.generateSxWithHidden<string | number>({
       hiddenValue: 0,
-      assignValue: (breakpointConfig, bp) => {
+      assignValue: (breakpointConfig, _, lastResultVal) => {
         if (EdgeSidebarBuilder.isTemporaryConfig(breakpointConfig)) {
-          if (bp !== "xs") {
+          if (lastResultVal !== undefined) {
             return 0;
           }
+          return undefined;
           // do nothing for xs because temporary variant will be modal
         }
         if (EdgeSidebarBuilder.isPersistentConfig(breakpointConfig)) {

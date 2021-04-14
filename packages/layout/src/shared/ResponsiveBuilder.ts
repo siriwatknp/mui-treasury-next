@@ -52,7 +52,11 @@ export class ResponsiveBuilder<T> {
   }
 
   generateSxWithHidden<R extends Result = Result>(options: {
-    assignValue: (breakpointConfig: T, bp: Breakpoint) => R;
+    assignValue: (
+      breakpointConfig: T,
+      bp: Breakpoint,
+      lastResultVal: R | undefined
+    ) => R | undefined;
     hiddenValue?: R;
     /**
      * if true, will calculate from xs
@@ -63,11 +67,13 @@ export class ResponsiveBuilder<T> {
     const hiddenValue = options.hiddenValue;
 
     if (hidden === true) {
-      return { xs: hiddenValue };
+      return hiddenValue !== undefined
+        ? ({ xs: hiddenValue } as Responsive<R>)
+        : {};
     }
 
     let candidate: T | undefined;
-    return createSxResult((bp, lastResultVal) => {
+    return createSxResult<R>((bp, lastResultVal) => {
       candidate = config[bp] ?? candidate;
       if (
         options.strict &&
@@ -78,7 +84,7 @@ export class ResponsiveBuilder<T> {
         return hiddenValue;
       }
       if (candidate !== undefined) {
-        const assignedValue = options.assignValue(candidate, bp);
+        const assignedValue = options.assignValue(candidate, bp, lastResultVal);
         const isHidden = Array.isArray(hidden) && hidden.includes(bp);
         return isHidden ? hiddenValue : assignedValue;
       }

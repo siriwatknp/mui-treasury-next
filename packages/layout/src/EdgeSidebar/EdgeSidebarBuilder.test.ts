@@ -70,7 +70,7 @@ describe("EdgeSidebarBuilder", () => {
         },
       });
 
-      expect(edgeSidebar.getOccupiedSpace()).toEqual({ sm: 0 });
+      expect(edgeSidebar.getOccupiedSpace()).toEqual({});
     });
 
     it("temporary variant not xs", () => {
@@ -83,7 +83,7 @@ describe("EdgeSidebarBuilder", () => {
         },
       });
 
-      expect(edgeSidebar.getOccupiedSpace()).toEqual({ md: 0 });
+      expect(edgeSidebar.getOccupiedSpace()).toEqual({});
     });
 
     it("persistent: uncollasible should remain the same width", () => {
