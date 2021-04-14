@@ -37,7 +37,6 @@ describe("Standard Preset", () => {
         md: "100%", // because of clipped
       },
       zIndex: {
-        xs: 1100,
         md: 1210, // because of clipped
       },
     });

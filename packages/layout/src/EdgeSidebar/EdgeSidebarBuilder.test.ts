@@ -456,7 +456,6 @@ describe("EdgeSidebarBuilder", () => {
     expect(edgeSidebar.getSxProps()).toEqual({
       width: {
         xs: 256,
-        sm: 256,
         lg: 296,
       },
       zIndex: {},
@@ -466,7 +465,6 @@ describe("EdgeSidebarBuilder", () => {
     expect(edgeSidebar.getSxProps()).toEqual({
       width: {
         xs: 256,
-        sm: 256,
         lg: 80,
       },
       zIndex: {},

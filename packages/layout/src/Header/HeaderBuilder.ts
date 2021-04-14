@@ -10,7 +10,6 @@ import { EdgeSidebarBuilder } from "../EdgeSidebar/EdgeSidebarBuilder";
 import { combineBreakpoints } from "../utils/combineBreakpoints";
 import { createWidthInterface } from "../Width/WidthModel";
 import { toValidCssValue } from "../utils/toValidCssValue";
-import { generateSx } from "../utils/generateSx";
 import { ResponsiveBuilder } from "../shared/ResponsiveBuilder";
 
 export type ClippableElement = LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID;
@@ -154,25 +153,25 @@ export class HeaderBuilder extends ResponsiveBuilder<HeaderConfig> {
   }
 
   getSxZIndex(theme = DEFAULT_THEME) {
-    const result = generateSx(this.config, (breakpointConfig, bp) =>
-      this.isAboveSomeEdgeSidebar(bp)
-        ? theme.zIndex.drawer + 10 + (breakpointConfig.layer ?? 0)
-        : theme.zIndex.appBar
-    );
+    const result = this.generateSx((config, bp) => {
+      return this.isAboveSomeEdgeSidebar(bp)
+        ? theme.zIndex.drawer + 10 + (config.layer ?? 0)
+        : theme.zIndex.appBar;
+    }, theme.zIndex.appBar);
     return {
       ...(Object.keys(result).length && { zIndex: result }),
     };
   }
 
   getSxProps(theme = DEFAULT_THEME): object {
-    const sxTop = generateSx(this.config, "top");
+    const sxTop = this.generateSx((config) => config.top, 0);
     const sxDisplay = this.getSxDisplay("flex");
     const displayKeys = Object.keys(sxDisplay);
     const shouldAttachDisplay =
       displayKeys.length > 1 ||
       (displayKeys.length === 1 && displayKeys[0] !== "xs");
     return {
-      position: generateSx(this.config, "position"),
+      position: this.generateSx((config) => config.position),
       ...(Object.keys(sxTop).length && { top: sxTop }),
       ...(shouldAttachDisplay && { display: sxDisplay }),
       ...this.getSxHeight(),

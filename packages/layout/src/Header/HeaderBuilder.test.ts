@@ -440,9 +440,6 @@ describe("HeaderBuilder", () => {
           sm: "0px",
           lg: "296px",
         },
-        zIndex: {
-          xs: 1100,
-        },
       });
     });
     it("Header with Left & Right EdgeSidebar", () => {
@@ -499,9 +496,6 @@ describe("HeaderBuilder", () => {
         marginRight: {
           md: "80px",
         },
-        zIndex: {
-          xs: 1100,
-        },
       });
       leftEdgeSidebar.setState({ open: true, collapsed: true });
       header.effectedBy = { leftEdgeSidebar, rightEdgeSidebar };
@@ -524,9 +518,6 @@ describe("HeaderBuilder", () => {
         },
         marginRight: {
           md: "80px",
-        },
-        zIndex: {
-          xs: 1100,
         },
       });
     });

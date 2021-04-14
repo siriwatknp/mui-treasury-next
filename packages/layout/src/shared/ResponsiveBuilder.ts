@@ -1,6 +1,6 @@
 import { Breakpoint } from "@material-ui/core/styles/createBreakpoints";
+import { createSxResult } from "../utils/createSxResult";
 import { BREAKPOINT_KEYS } from "../utils/muiBreakpoints";
-import { pickNearestBreakpoint } from "../utils/pickNearestBreakpoint";
 import { Responsive } from "../utils/types";
 
 type Result = string | number | undefined;
@@ -8,6 +8,7 @@ type Result = string | number | undefined;
 export class ResponsiveBuilder<T> {
   readonly config: Responsive<T>;
   readonly hidden?: boolean | Breakpoint[];
+  readonly breakpointKeys: Breakpoint[];
 
   constructor(params: {
     config: Responsive<T>;
@@ -15,6 +16,7 @@ export class ResponsiveBuilder<T> {
   }) {
     this.config = params.config;
     this.hidden = params.hidden;
+    this.breakpointKeys = Object.keys(params.config) as Breakpoint[];
   }
 
   isHidden(breakpoint: Breakpoint) {
@@ -60,47 +62,38 @@ export class ResponsiveBuilder<T> {
     const { config, hidden } = this;
     const hiddenValue = options.hiddenValue;
 
-    if (typeof hidden === "boolean" && hidden && hiddenValue !== undefined) {
+    if (hidden === true) {
       return { xs: hiddenValue };
     }
 
-    const result: Responsive<R> = {};
-
-    BREAKPOINT_KEYS.forEach((bp) => {
-      const candidate = pickNearestBreakpoint(config, bp);
-      const lastResultVal = pickNearestBreakpoint(result, bp);
-
+    let candidate: T | undefined;
+    return createSxResult((bp, lastResultVal) => {
+      candidate = config[bp] ?? candidate;
       if (
         options.strict &&
-        candidate === undefined &&
         lastResultVal === undefined &&
-        hiddenValue !== undefined
+        candidate === undefined
       ) {
         // cannot find valid config and no result yet
-        result[bp] = hiddenValue;
+        return hiddenValue;
       }
-
-      const isHidden = Array.isArray(hidden) && hidden.includes(bp);
-
-      if (isHidden) {
-        if (hiddenValue !== undefined && lastResultVal !== hiddenValue) {
-          result[bp] = hiddenValue;
-        }
-      } else {
-        if (candidate !== undefined) {
-          const assignedValue = options.assignValue(candidate, bp);
-
-          if (assignedValue !== undefined) {
-            result[bp] = assignedValue;
-
-            if (assignedValue === lastResultVal) {
-              delete result[bp];
-            }
-          }
-        }
+      if (candidate !== undefined) {
+        const assignedValue = options.assignValue(candidate, bp);
+        const isHidden = Array.isArray(hidden) && hidden.includes(bp);
+        return isHidden ? hiddenValue : assignedValue;
       }
+      return undefined;
     });
-    return result;
+  }
+
+  generateSx<R extends any = Result>(
+    getValue: (breakpointConfig: T, bp: Breakpoint) => R,
+    initialValue?: R
+  ) {
+    return createSxResult((bp) => getValue(this.config[bp]!, bp), {
+      breakpoints: this.breakpointKeys,
+      initialValue,
+    });
   }
 
   getSxDisplay(appearance: string) {

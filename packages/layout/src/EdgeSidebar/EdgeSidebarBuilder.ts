@@ -11,7 +11,6 @@ import {
   CONTENT_ID,
   FOOTER_ID,
 } from "../utils/constant";
-import { generateSx } from "../utils/generateSx";
 import { pickNearestBreakpoint } from "../utils/pickNearestBreakpoint";
 import { Responsive } from "../utils/types";
 
@@ -141,7 +140,7 @@ export class EdgeSidebarBuilder extends ResponsiveBuilder<EdgeSidebarConfig> {
   }
 
   getWidth() {
-    return generateSx(this.config, (breakpointConfig, bp) =>
+    return this.generateSx((breakpointConfig, bp) =>
       EdgeSidebarBuilder.isTemporaryConfig(breakpointConfig)
         ? this.config[bp]?.width
         : this.getFinalWidth(breakpointConfig)
@@ -149,7 +148,7 @@ export class EdgeSidebarBuilder extends ResponsiveBuilder<EdgeSidebarConfig> {
   }
 
   getDrawerVariant() {
-    return generateSx(this.config, "variant") as Responsive<DrawerVariant>;
+    return this.generateSx((config) => config.variant);
   }
 
   getSxProps(theme = DEFAULT_THEME) {

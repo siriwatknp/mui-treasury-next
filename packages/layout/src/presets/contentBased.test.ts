@@ -23,7 +23,6 @@ describe("Content-Based Preset", () => {
       expect(header.getSxProps()).toEqual({
         position: {
           xs: "relative",
-          md: "relative",
         },
         height: {
           xs: 56,
@@ -36,10 +35,6 @@ describe("Content-Based Preset", () => {
         width: {
           sm: "100%",
           md: "100%",
-        },
-        zIndex: {
-          xs: 1100,
-          md: 1100,
         },
       });
     });
