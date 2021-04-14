@@ -1,5 +1,4 @@
 import { HeaderBuilder } from "../Header/HeaderBuilder";
-import { getStandardScheme } from "../presets/standard";
 import { EdgeSidebarBuilder } from "./EdgeSidebarBuilder";
 
 describe("EdgeSidebarBuilder", () => {
@@ -474,13 +473,24 @@ describe("EdgeSidebarBuilder", () => {
     });
   });
 
-  describe("Presets", () => {
-    it("standard", () => {
-      const scheme = getStandardScheme();
-      const sidebar = new EdgeSidebarBuilder(scheme.leftEdgeSidebar);
+  describe("EdgeTrigger", () => {
+    it("provide display none if not collapsible config", () => {
+      const sidebar = new EdgeSidebarBuilder({
+        config: {
+          xs: {
+            variant: "temporary",
+            width: 256,
+          },
+          sm: {
+            variant: "persistent",
+            width: 256,
+            persistentBehavior: "flexible",
+          },
+        },
+      });
 
-      expect(sidebar.getOccupiedSpace()).toEqual({
-        sm: 256,
+      expect(sidebar.getEdgeTriggerSxDisplay({ field: "collapsed" })).toEqual({
+        xs: "none",
       });
     });
   });

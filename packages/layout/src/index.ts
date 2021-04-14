@@ -11,3 +11,4 @@ export * from "./Footer/Footer";
 export * from "./Fullscreen/Fullscreen";
 export * from "./WindowContext";
 export * from "./presets/standard";
+export * from "./presets/contentBased";

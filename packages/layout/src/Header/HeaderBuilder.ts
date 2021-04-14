@@ -95,7 +95,7 @@ export class HeaderBuilder extends ResponsiveBuilder<HeaderConfig> {
       for (const bp of breakpoinst) {
         marginLeft[bp] = this.isClipped(LEFT_EDGE_SIDEBAR_ID, bp)
           ? "0px"
-          : toValidCssValue(occupiedSpace[bp]!);
+          : toValidCssValue(pickNearestBreakpoint(occupiedSpace, bp)!);
       }
     }
     const marginRight: Responsive<number | string> = {};
@@ -105,7 +105,7 @@ export class HeaderBuilder extends ResponsiveBuilder<HeaderConfig> {
       for (const bp of breakpoinst) {
         marginRight[bp] = this.isClipped(RIGHT_EDGE_SIDEBAR_ID, bp)
           ? "0px"
-          : toValidCssValue(occupiedSpace[bp]!);
+          : toValidCssValue(pickNearestBreakpoint(occupiedSpace, bp)!);
       }
     }
     return {

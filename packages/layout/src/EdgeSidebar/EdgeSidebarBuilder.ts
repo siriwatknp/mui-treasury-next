@@ -1,3 +1,4 @@
+import { CSSProperties } from "react";
 import { Breakpoint } from "@material-ui/core/styles/createBreakpoints";
 import { HeaderBuilder } from "../Header/HeaderBuilder";
 import { ResponsiveBuilder } from "../shared/ResponsiveBuilder";
@@ -170,6 +171,33 @@ export class EdgeSidebarBuilder extends ResponsiveBuilder<EdgeSidebarConfig> {
       : config?.width;
   };
 
+  getEdgeTriggerSxDisplay(options: {
+    field: "open" | "collapsed";
+    display?: CSSProperties["display"];
+  }) {
+    const { field, display = "inline-flex" } = options;
+    return this.generateSxWithHidden({
+      strict: true,
+      hiddenValue: "none",
+      assignValue: (config) => {
+        if (field === "open") {
+          if (EdgeSidebarBuilder.isPermanentConfig(config)) {
+            return "none";
+          } else {
+            return display;
+          }
+        }
+        if (field === "collapsed") {
+          if (EdgeSidebarBuilder.isCollapsibleConfig(config)) {
+            return display;
+          } else {
+            return "none";
+          }
+        }
+      },
+    });
+  }
+
   static isPersistentConfig = (
     config?: EdgeSidebarConfig
   ): config is PersistentSidebarConfig => {
@@ -203,6 +231,16 @@ export class EdgeSidebarBuilder extends ResponsiveBuilder<EdgeSidebarConfig> {
         (typeof config.persistentBehavior === "object" &&
           !!id &&
           config.persistentBehavior[id] === "flexible"))
+    );
+  };
+
+  static isCollapsibleConfig = (
+    config?: EdgeSidebarConfig
+  ): config is PersistentSidebarConfig | PermanentSidebarConfig => {
+    return (
+      (EdgeSidebarBuilder.isPermanentConfig(config) ||
+        EdgeSidebarBuilder.isPersistentConfig(config)) &&
+      !!config?.collapsible
     );
   };
 

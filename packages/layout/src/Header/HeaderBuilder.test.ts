@@ -1,6 +1,5 @@
 import { EdgeSidebarBuilder } from "../EdgeSidebar/EdgeSidebarBuilder";
 import { HeaderBuilder } from "./HeaderBuilder";
-import { getStandardScheme } from "../presets/standard";
 
 describe("HeaderBuilder", () => {
   /**
@@ -528,38 +527,6 @@ describe("HeaderBuilder", () => {
         },
         zIndex: {
           xs: 1100,
-        },
-      });
-    });
-  });
-
-  describe("Presets", () => {
-    it("standard", () => {
-      const scheme = getStandardScheme();
-      const header = new HeaderBuilder(scheme.header);
-      const leftEdgeSidebar = new EdgeSidebarBuilder(scheme.leftEdgeSidebar);
-
-      header.effectedBy = { leftEdgeSidebar };
-      expect(header.getSxProps()).toEqual({
-        position: {
-          xs: "sticky",
-          md: "relative",
-        },
-        height: {
-          xs: 56,
-          md: 64,
-        },
-        marginLeft: {
-          sm: "256px",
-          md: "0px",
-        },
-        width: {
-          sm: "calc(100% - 256px)",
-          md: "100%",
-        },
-        zIndex: {
-          xs: 1100,
-          md: 1210,
         },
       });
     });
