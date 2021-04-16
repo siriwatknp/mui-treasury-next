@@ -3,7 +3,6 @@ to: stories/layout/<%=category%>/<%=name%>.tsx
 unless_exists: true
 ---
 import React from "react";
-import React from "react";
 import {
   createMuiTheme,
   MuiThemeProvider,
@@ -15,6 +14,7 @@ import {
   Root,
   Header,
   EdgeSidebar,
+  SidebarContent,
   Content,
   InsetContainer,
   InsetSidebar,
