@@ -53,6 +53,7 @@
     "clean": "lerna run clean",
     "init:component": "hygen package component",
     "init:style": "hygen package style",
-    "dev:cli": "yarn workspace mui-treasury run dev"
+    "dev:cli": "yarn workspace mui-treasury run dev",
+    "create-layout-storybook": "npx hygen layout storybook"
   }
 }
