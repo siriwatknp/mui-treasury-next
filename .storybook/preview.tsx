@@ -4,6 +4,7 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import StyledEngineProvider from "@material-ui/core/StyledEngineProvider";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { createTreasuryTheme } from "@mui-treasury/theme-treasury";
 
 const withThemeProvider = (Story: any, context: StoryContext) => {
@@ -24,7 +25,18 @@ const withThemeProvider = (Story: any, context: StoryContext) => {
     })
   );
   return (
-    <Suspense fallback={<div>loading...</div>}>
+    <Suspense
+      fallback={
+        <CircularProgress
+          sx={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        />
+      }
+    >
       <StyledEngineProvider injectFirst>
         {context.kind.startsWith("Layout") ? (
           <Story {...context} setTheme={setTheme} />
