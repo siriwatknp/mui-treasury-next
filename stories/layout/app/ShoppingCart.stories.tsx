@@ -28,7 +28,7 @@ import {
 } from "@mui-treasury/mockup/brands/dailyShopping";
 
 export default {
-  title: "Layout/Demo App",
+  title: "Layout/App",
   parameters: {
     layout: "fullscreen",
   },

@@ -110,7 +110,7 @@ const theme = responsiveFontSizes(
 );
 
 export default {
-  title: "Layout/Demo App",
+  title: "Layout/App",
   parameters: {
     layout: "fullscreen",
   },

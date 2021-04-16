@@ -20,7 +20,7 @@ import {
 } from "@mui-treasury/layout";
 
 export default {
-  title: "Layout/Demo App",
+  title: "Layout/App",
   parameters: {
     layout: "fullscreen",
   },
