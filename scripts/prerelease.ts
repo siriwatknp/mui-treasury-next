@@ -36,7 +36,16 @@ async function run() {
   if (packageType === "layout") {
     await fsp.writeFile(`${PUBLISH_DIR}/package.json`, file);
   }
-  await cpy(["README.md", "CHANGELOG.md"], PUBLISH_DIR);
+  try {
+    await cpy("README.md", PUBLISH_DIR);
+  } catch (error) {
+    console.log("error", error);
+  }
+  try {
+    await cpy("CHANGELOG.md", PUBLISH_DIR);
+  } catch (error) {
+    console.log("error", error);
+  }
 }
 
 run().catch((error) => {

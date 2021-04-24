@@ -14,3 +14,4 @@ export * from "./presets/standard";
 export * from "./presets/contentBased";
 export * from "./presets/cozy";
 export * from "./presets/fixed";
+export * from "./WindowContext";
