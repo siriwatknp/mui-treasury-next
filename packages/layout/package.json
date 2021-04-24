@@ -19,7 +19,7 @@
     "test": "jest --verbose",
     "clean": "rimraf dist",
     "build": "yarn clean && tsc -p tsconfig.build.json",
-    "prepare-dist": "ts-node ../../scripts/prerelease.ts component",
+    "prepare-dist": "ts-node ../../scripts/prerelease.ts layout",
     "prepublishOnly": "yarn build && yarn prepare-dist"
   },
   "bugs": {

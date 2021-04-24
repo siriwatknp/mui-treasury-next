@@ -1,7 +1,7 @@
 {
   "name": "@mui-treasury/component-combobox",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.0-alpha.0",
   "description": "mui-treasury | component-comboBox",
   "author": "siriwatknp <siriwatkunaporn@gmail.com>",
   "homepage": "https://github.com/siriwatknp/mui-treasury-next#readme",
@@ -27,5 +27,8 @@
   },
   "bugs": {
     "url": "https://github.com/siriwatknp/mui-treasury-next/issues"
+  },
+  "peerDependencies": {
+    "@material-ui/core": "^5.0.0"
   }
 }

@@ -26,5 +26,8 @@
   },
   "bugs": {
     "url": "https://github.com/siriwatknp/mui-treasury-next/issues"
+  },
+  "peerDependencies": {
+    "@material-ui/core": "^5.0.0"
   }
 }

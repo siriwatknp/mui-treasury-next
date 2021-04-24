@@ -1,19 +1,6 @@
-import { Overrides } from "@material-ui/core/styles/overrides";
-import { ComponentsProps } from "@material-ui/core/styles/props";
 import { ThemeOptions, Theme } from "@material-ui/core/styles";
 
 import { treasuryPalette } from "./treasuryPalette";
-
-export type ExtendThemeOverrides<T> = Overrides & T;
-export type ExtendThemeProps<T> = ComponentsProps & T;
-
-export type ExtendThemeOptions<
-  ComponentThemeOverrides,
-  ComponentThemeProps
-> = Omit<ThemeOptions, "overrides" | "props"> & {
-  overrides?: ExtendThemeOverrides<ComponentThemeOverrides>;
-  props?: ExtendThemeProps<ComponentThemeProps>;
-};
 
 export type TreasuryPalette = typeof treasuryPalette;
 
