@@ -10,15 +10,11 @@ import {
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 import {
-  Fullscreen,
   Root,
   Header,
   EdgeSidebar,
   SidebarContent,
   Content,
-  InsetContainer,
-  InsetSidebar,
-  InsetAvoidingView,
   Footer,
 } from "@mui-treasury/layout";
 
