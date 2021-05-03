@@ -2574,11 +2574,6 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@mui-treasury/component-shape@^0.2.0-alpha.7":
-  version "0.2.0-alpha.7"
-  resolved "https://registry.yarnpkg.com/@mui-treasury/component-shape/-/component-shape-0.2.0-alpha.7.tgz#b3cb8ea1106a49b7112b4ed3b1e497de0bc0efb3"
-  integrity sha512-Tssnwsb5wjuOs97cUlbyOIruWC1N3LXE5UZn3uQXrpABCSLF16Qfg9itZnMHkm1OnhmzRYyCFj4SScnG7kz8Tg==
-
 "@mui-treasury/components@^1.10.1":
   version "1.10.1"
   resolved "https://registry.yarnpkg.com/@mui-treasury/components/-/components-1.10.1.tgz#9626d4156f097bfc9d19d261d4d0d91352a8186e"

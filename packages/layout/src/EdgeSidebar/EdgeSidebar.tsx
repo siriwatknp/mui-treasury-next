@@ -82,7 +82,7 @@ export const EdgeSidebar = ({
     hasAutoExpanded(config) &&
     (config.autoExpanded || config.uncollapsedOnHover);
 
-  const onMouseEnter = (event: React.MouseEvent<HTMLElement>) => {
+  const onMouseEnter = (event: React.MouseEvent<HTMLDivElement>) => {
     props.PaperProps?.onMouseEnter?.(event);
     if (sidebarState?.collapsed && isAutoExpanded) {
       isMouseOverSidebar.current = true;
@@ -93,7 +93,7 @@ export const EdgeSidebar = ({
       }, EDGE_SIDEBAR_EXPAND_DELAY);
     }
   };
-  const onMouseLeave = (event: React.MouseEvent<HTMLElement>) => {
+  const onMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
     props.PaperProps?.onMouseLeave?.(event);
     isMouseOverSidebar.current = false;
     setExpanded(false);

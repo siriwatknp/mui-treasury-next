@@ -26,13 +26,13 @@
     "build:esm": "cross-env NODE_ENV=production BABEL_ENV=esm babel --config-file ../../babel-config.js --extensions \".js,.ts,.tsx\" ./src --out-dir ./dist/esm --ignore \"**/*.test.ts,**/*.test.tsx\"",
     "build:types": "tsc -p tsconfig.build.json",
     "prepare-dist": "ts-node ../../scripts/prerelease.ts style",
-    "prepublishOnly": "yarn build && yarn prepare-dist"
+    "prepublishOnly": "yarn prepare-dist"
   },
   "bugs": {
     "url": "https://github.com/siriwatknp/mui-treasury-next/issues"
   },
   "dependencies": {
-    "@mui-treasury/component-shape": "^0.2.0-alpha.7",
+    "@mui-treasury/component-square": "^0.1.0-alpha.0",
     "@mui-treasury/theme-treasury": "^0.3.0-alpha.5"
   }
 }

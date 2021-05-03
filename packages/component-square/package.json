@@ -26,8 +26,7 @@
     "build:esm": "cross-env NODE_ENV=production BABEL_ENV=esm babel --config-file ../../babel-config.js --extensions \".js,.ts,.tsx\" ./src --out-dir ./dist/esm --ignore \"**/*.test.ts,**/*.test.tsx\"",
     "build:types": "tsc -p tsconfig.build.json",
     "prepare-dist": "ts-node ../../scripts/prerelease.ts component",
-    "prepare-deps": "yarn build",
-    "prepublishOnly": "yarn build && yarn prepare-dist"
+    "prepublishOnly": "yarn prepare-dist"
   },
   "bugs": {
     "url": "https://github.com/siriwatknp/mui-treasury-next/issues"

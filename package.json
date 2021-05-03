@@ -49,16 +49,17 @@
   },
   "scripts": {
     "start": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
     "test": "jest",
     "test:watch": "jest --watch",
-    "build": "lerna run build",
     "prettier-js": "prettier --write \"**/javascript/**/*\"",
-    "compile-js": "lerna run prepare-deps && lerna run compile-js && yarn prettier-js && yarn clean",
+    "compile-js": "lerna run compile-js && yarn prettier-js && yarn clean",
     "clean": "lerna run clean",
     "init:component": "hygen package component",
     "init:style": "hygen package style",
     "dev:cli": "yarn workspace mui-treasury run dev",
-    "create-layout-storybook": "npx hygen layout storybook"
+    "create-layout-storybook": "npx hygen layout storybook",
+    "build:packages": "lerna run build",
+    "build:storybook": "build-storybook",
+    "publish-packages": "lerna publish prerelease --no-commit-hooks --yes --no-verify-access --contents dist"
   }
 }
