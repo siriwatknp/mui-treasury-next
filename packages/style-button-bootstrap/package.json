@@ -25,7 +25,7 @@
     "build:cjs": "cross-env NODE_ENV=production BABEL_ENV=cjs babel --config-file ../../babel-config.js --extensions \".js,.ts,.tsx\" ./src --out-dir ./dist --ignore \"**/*.test.ts,**/*.test.tsx\"",
     "build:esm": "cross-env NODE_ENV=production BABEL_ENV=esm babel --config-file ../../babel-config.js --extensions \".js,.ts,.tsx\" ./src --out-dir ./dist/esm --ignore \"**/*.test.ts,**/*.test.tsx\"",
     "build:types": "tsc -p tsconfig.build.json",
-    "prepare-dist": "ts-node ../../scripts/prerelease.ts component",
+    "prepare-dist": "ts-node ../../scripts/prerelease.ts style",
     "prepublishOnly": "yarn prepare-dist"
   },
   "bugs": {
