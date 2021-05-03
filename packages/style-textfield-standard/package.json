@@ -1,11 +1,7 @@
----
-to: packages/<%=name%>/package.json
-unless_exists: true
----
 {
-  "name": "@mui-treasury/<%=name%>",
+  "name": "@mui-treasury/style-textfield-standard",
   "version": "0.1.0-alpha.0",
-  "description": "mui-treasury | <%=name%>",
+  "description": "mui-treasury | style-textfield-standard",
   "author": "siriwatknp <siriwatkunaporn@gmail.com>",
   "homepage": "https://github.com/siriwatknp/mui-treasury-next#readme",
   "license": "MIT",
