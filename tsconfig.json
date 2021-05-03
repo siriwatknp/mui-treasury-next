@@ -20,12 +20,12 @@
     "baseUrl": "./",
     "paths": {
       "@mui-treasury/theme-treasury": ["packages/theme-treasury/src/"],
-      "@mui-treasury/component-shape": ["packages/component-shape/src/"],
-      "@mui-treasury/style-shape-sticker": [
-        "packages/style-shape-sticker/src/"
+      "@mui-treasury/component-square": ["packages/component-square/src"],
+      "@mui-treasury/style-square-sticker": [
+        "packages/style-square-sticker/src/"
       ],
       "@mui-treasury/style-button-bootstrap": [
-        "packages/style-shape-sticker/src/"
+        "packages/style-button-bootstrap/src/"
       ],
       "@mui-treasury/layout": ["packages/layout/src"]
     }

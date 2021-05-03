@@ -1,4 +1,4 @@
-import { createStyles, makeStyles, fade } from "@material-ui/core/styles";
+import { createStyles, makeStyles, alpha } from "@material-ui/core/styles";
 export const ButtonBootstrapStyles = ({ palette }) =>
   createStyles({
     root: {
@@ -40,7 +40,7 @@ export const ButtonBootstrapStyles = ({ palette }) =>
         backgroundColor: palette.secondary.dark,
       },
       "&:focus": {
-        boxShadow: `0 0 0 0.25rem ${fade(palette.secondary.light, 0.6)}`,
+        boxShadow: `0 0 0 0.25rem ${alpha(palette.secondary.light, 0.6)}`,
       },
       "&.Mui-disabled": {
         color: "#fff",
@@ -74,7 +74,7 @@ export const ButtonBootstrapStyles = ({ palette }) =>
         color: "#fff",
       },
       "&:focus": {
-        boxShadow: `0 0 0 0.25rem ${fade(palette.secondary.light, 0.6)}`,
+        boxShadow: `0 0 0 0.25rem ${alpha(palette.secondary.light, 0.6)}`,
       },
       "&.Mui-disabled": {
         color: palette.secondary.main,

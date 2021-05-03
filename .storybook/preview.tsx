@@ -14,14 +14,6 @@ const withThemeProvider = (Story: any, context: StoryContext) => {
       palette: {
         mode: prefersDarkMode ? "dark" : "light",
       },
-      components: {
-        TyShape: {
-          defaultProps: {
-            // it works!
-            "aria-label": "Yeah!",
-          },
-        },
-      },
     })
   );
   return (

@@ -1,7 +1,7 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "jsx": "preserve",
+    "jsx": "react-native",
     "module": "es2020",
     "target": "es2020",
     "lib": ["dom", "esnext"],
