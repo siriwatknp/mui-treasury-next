@@ -4,11 +4,11 @@ import { Components } from "@material-ui/core/styles/components";
 type Output = Required<
   Pick<
     Components,
-    // | "MuiFormControl"
+    | "MuiFormControl"
     | "MuiInputLabel"
     | "MuiInput"
-    // | "MuiInputAdornment"
-    // | "MuiSelect"
+    | "MuiInputAdornment"
+    | "MuiSelect"
     | "MuiFormHelperText"
   >
 >;
@@ -114,7 +114,54 @@ export const createTextfieldBootstrapStyles = (theme: Theme): Output => {
         },
       },
     },
+    MuiInputAdornment: {
+      styleOverrides: {},
+    },
+    MuiSelect: {
+      styleOverrides: {},
+    },
   };
 };
 
-export const useTextfieldBootstrapStyles = () => ({});
+const useFormControlStyles = makeStyles(
+  // @ts-expect-error
+  (theme) => createTextfieldBootstrapStyles(theme).MuiFormControl.styleOverrides
+);
+
+const useInputLabelStyles = makeStyles(
+  // @ts-expect-error
+  (theme) => createTextfieldBootstrapStyles(theme).MuiInputLabel.styleOverrides
+);
+
+const useInputStyles = makeStyles(
+  // @ts-expect-error
+  (theme) => createTextfieldBootstrapStyles(theme).MuiInput.styleOverrides
+);
+
+const useInputAdornmentStyles = makeStyles(
+  // @ts-expect-error
+  (theme) =>
+    createTextfieldBootstrapStyles(theme).MuiInputAdornment.styleOverrides
+);
+
+const useSelectStyles = makeStyles(
+  // @ts-expect-error
+  (theme) => createTextfieldBootstrapStyles(theme).MuiSelect.styleOverrides
+);
+
+const useFormHelperTextStyles = makeStyles(
+  // @ts-expect-error
+  (theme) =>
+    createTextfieldBootstrapStyles(theme).MuiFormHelperText.styleOverrides
+);
+
+export const useTextfieldBootstrapStyles = () => {
+  return {
+    FormControl: useFormControlStyles(),
+    InputLabel: useInputLabelStyles(),
+    Input: useInputStyles(),
+    InputAdornment: useInputAdornmentStyles(),
+    Select: useSelectStyles(),
+    FormHelperText: useFormHelperTextStyles(),
+  };
+};
