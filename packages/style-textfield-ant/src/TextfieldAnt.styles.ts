@@ -54,7 +54,7 @@ export const createTextfieldAntStyles = (theme: Theme): Output => {
           "label + &": {
             marginTop: 24,
           },
-          "&:hover": {
+          "&:hover:not(.Mui-disabled)": {
             borderColor: "#40a9ff",
           },
           "&.Mui-focused": {
