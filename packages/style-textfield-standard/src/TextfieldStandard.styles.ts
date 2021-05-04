@@ -42,7 +42,7 @@ export const createTextfieldStandardStyles = (theme: Theme) => {
           lineHeight: "24px",
           color: theme.palette.text.primary,
           "&.Mui-focused": {
-            color: theme.palette.primary.main,
+            color: theme.palette.primary.dark,
           },
           "&.MuiInputLabel-sizeSmall": {
             fontSize: "0.875rem",
@@ -79,6 +79,9 @@ export const createTextfieldStandardStyles = (theme: Theme) => {
           },
           "&.MuiInputBase-sizeSmall": {
             height: 36,
+          },
+          "&.Mui-disabled": {
+            backgroundColor: theme.palette.grey[50],
           },
         },
         input: {
