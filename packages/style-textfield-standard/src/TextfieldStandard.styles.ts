@@ -121,9 +121,6 @@ export const createTextfieldStandardStyles = (theme: Theme): Output => {
         },
         positionEnd: {
           right: 8,
-          "&.MuiInputAdornment-standard": {
-            right: 32,
-          },
         },
       },
     },
@@ -154,6 +151,9 @@ export const createTextfieldStandardStyles = (theme: Theme): Output => {
         // @ts-ignore
         iconStandard: {
           right: 6,
+          "& + .MuiInputAdornment-standard": {
+            right: 32,
+          },
         },
         nativeInput: {
           padding: 0,

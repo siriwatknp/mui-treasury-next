@@ -98,6 +98,18 @@ export const createTextfieldBootstrapStyles = (theme: Theme): Output => {
           padding: ".375rem .75rem",
           height: "auto",
           letterSpacing: 0,
+          "&.MuiInputBase-inputAdornedStart": {
+            paddingLeft: 40,
+            "&.MuiInputBase-inputSizeSmall": {
+              paddingLeft: 40,
+            },
+          },
+          "&.MuiInputBase-inputAdornedEnd": {
+            paddingRight: 40,
+            "&.MuiInputBase-inputSizeSmall": {
+              paddingRight: 40,
+            },
+          },
           "&.MuiInputBase-inputSizeSmall": {
             padding: ".25rem .5rem",
           },
@@ -115,10 +127,57 @@ export const createTextfieldBootstrapStyles = (theme: Theme): Output => {
       },
     },
     MuiInputAdornment: {
-      styleOverrides: {},
+      styleOverrides: {
+        root: {
+          "&.MuiInputAdornment-standard": {
+            position: "absolute",
+            color: theme.palette.action.disabled,
+          },
+        },
+        positionStart: {
+          left: 8,
+        },
+        positionEnd: {
+          right: 8,
+        },
+      },
     },
     MuiSelect: {
-      styleOverrides: {},
+      styleOverrides: {
+        root: {
+          "&.MuiInput-input": {
+            height: "100%",
+            "&:focus": {
+              borderRadius: "0.25rem",
+            },
+          },
+          "&.MuiSelect-standard": {
+            paddingRight: 32,
+          },
+        },
+        // @ts-ignore
+        standard: {
+          display: "flex",
+          alignItems: "center",
+          "&.MuiInputBase-inputAdornedEnd": {
+            paddingRight: 64,
+            "&.MuiInputBase-inputSizeSmall": {
+              paddingRight: 64,
+            },
+          },
+        },
+        // @ts-ignore
+        iconStandard: {
+          right: 6,
+          "& + .MuiInputAdornment-standard": {
+            right: 32,
+          },
+        },
+        nativeInput: {
+          padding: 0,
+          border: "none",
+        },
+      },
     },
   };
 };
