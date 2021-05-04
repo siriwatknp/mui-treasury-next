@@ -4,7 +4,6 @@ import { Components } from "@material-ui/core/styles/components";
 type Output = Required<
   Pick<
     Components,
-    | "MuiFormControl"
     | "MuiInputLabel"
     | "MuiInput"
     | "MuiInputAdornment"
@@ -21,18 +20,6 @@ const getPlaceholderVisible = (theme: Theme) => {
 export const createTextfieldStandardStyles = (theme: Theme): Output => {
   const placeholderVisible = getPlaceholderVisible(theme);
   return {
-    MuiFormControl: {
-      styleOverrides: {
-        root: {
-          "& .MuiInput-root": {
-            marginTop: 32,
-            "&.MuiInputBase-sizeSmall": {
-              marginTop: 24,
-            },
-          },
-        },
-      },
-    },
     MuiInputLabel: {
       styleOverrides: {
         // @ts-ignore
@@ -62,6 +49,9 @@ export const createTextfieldStandardStyles = (theme: Theme): Output => {
           borderColor: theme.palette.grey[300],
           borderRadius: theme.shape.borderRadius,
           transition: "all 0.2s ease 0s",
+          "label + &": {
+            marginTop: 32,
+          },
           "&.Mui-focused": {
             borderColor: theme.palette.primary.main,
             boxShadow: `${theme.palette.primary.main} 0px 0px 0px 1px`,
@@ -77,11 +67,14 @@ export const createTextfieldStandardStyles = (theme: Theme): Output => {
             "&:-ms-input-placeholder": placeholderVisible, // IE11
             "&::-ms-input-placeholder": placeholderVisible, // Edge
           },
-          "&.MuiInputBase-sizeSmall": {
-            height: 36,
-          },
           "&.Mui-disabled": {
             backgroundColor: theme.palette.grey[50],
+          },
+          "&.MuiInputBase-sizeSmall": {
+            height: 36,
+            "label + &": {
+              marginTop: 24,
+            },
           },
         },
         input: {
@@ -171,11 +164,6 @@ export const createTextfieldStandardStyles = (theme: Theme): Output => {
   };
 };
 
-const useFormControlStyles = makeStyles(
-  // @ts-expect-error
-  (theme) => createTextfieldStandardStyles(theme).MuiFormControl.styleOverrides
-);
-
 const useInputLabelStyles = makeStyles(
   // @ts-expect-error
   (theme) => createTextfieldStandardStyles(theme).MuiInputLabel.styleOverrides
@@ -205,7 +193,6 @@ const useFormHelperTextStyles = makeStyles(
 
 export const useTextfieldStandardStyles = () => {
   return {
-    FormControl: useFormControlStyles(),
     InputLabel: useInputLabelStyles(),
     Input: useInputStyles(),
     InputAdornment: useInputAdornmentStyles(),

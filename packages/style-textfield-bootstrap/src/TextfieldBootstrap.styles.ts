@@ -4,7 +4,6 @@ import { Components } from "@material-ui/core/styles/components";
 type Output = Required<
   Pick<
     Components,
-    | "MuiFormControl"
     | "MuiInputLabel"
     | "MuiInput"
     | "MuiInputAdornment"
@@ -22,18 +21,6 @@ const getPlaceholderVisible = (theme: Theme) => {
 export const createTextfieldBootstrapStyles = (theme: Theme): Output => {
   const placeholderVisible = getPlaceholderVisible(theme);
   return {
-    MuiFormControl: {
-      styleOverrides: {
-        root: {
-          "& .MuiInput-root": {
-            marginTop: 32,
-            "&.MuiInputBase-sizeSmall": {
-              marginTop: 24,
-            },
-          },
-        },
-      },
-    },
     MuiInputLabel: {
       styleOverrides: {
         // @ts-ignore
@@ -68,6 +55,9 @@ export const createTextfieldBootstrapStyles = (theme: Theme): Output => {
           backgroundColor: "#fff",
           lineHeight: "1.5",
           fontSize: "1rem",
+          "label + &": {
+            marginTop: 32,
+          },
           "&.Mui-focused": {
             borderColor: "#86b7fe",
             boxShadow: "0 0 0 0.25rem rgb(13 110 253 / 25%)",
@@ -92,6 +82,9 @@ export const createTextfieldBootstrapStyles = (theme: Theme): Output => {
             fontSize: ".875rem",
             borderRadius: "0.2rem",
             minHeight: "calc(1.5em + .5rem + 2px)",
+            "label + &": {
+              marginTop: 24,
+            },
           },
         },
         input: {
@@ -182,11 +175,6 @@ export const createTextfieldBootstrapStyles = (theme: Theme): Output => {
   };
 };
 
-const useFormControlStyles = makeStyles(
-  // @ts-expect-error
-  (theme) => createTextfieldBootstrapStyles(theme).MuiFormControl.styleOverrides
-);
-
 const useInputLabelStyles = makeStyles(
   // @ts-expect-error
   (theme) => createTextfieldBootstrapStyles(theme).MuiInputLabel.styleOverrides
@@ -216,7 +204,6 @@ const useFormHelperTextStyles = makeStyles(
 
 export const useTextfieldBootstrapStyles = () => {
   return {
-    FormControl: useFormControlStyles(),
     InputLabel: useInputLabelStyles(),
     Input: useInputStyles(),
     InputAdornment: useInputAdornmentStyles(),

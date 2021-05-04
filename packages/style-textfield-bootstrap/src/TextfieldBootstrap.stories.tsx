@@ -302,7 +302,6 @@ export const OutsideTheme: Story<TextFieldProps> = (args) => {
       {/* @ts-ignore */}
       <TextField
         {...args}
-        classes={styles.FormControl}
         InputLabelProps={{ classes: styles.InputLabel }}
         InputProps={{
           classes: styles.Input,
@@ -323,7 +322,6 @@ export const OutsideTheme: Story<TextFieldProps> = (args) => {
       {/* @ts-ignore */}
       <TextField
         {...args}
-        classes={styles.FormControl}
         select
         SelectProps={{ displayEmpty: true, classes: styles.Select }}
         InputLabelProps={{ classes: styles.InputLabel }}
