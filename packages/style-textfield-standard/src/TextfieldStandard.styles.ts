@@ -18,7 +18,7 @@ const getPlaceholderVisible = (theme: Theme) => {
     opacity: `${light ? 0.42 : 0.5} !important`,
   };
 };
-export const createTextfieldStandardStyles = (theme: Theme) => {
+export const createTextfieldStandardStyles = (theme: Theme): Output => {
   const placeholderVisible = getPlaceholderVisible(theme);
   return {
     MuiFormControl: {
@@ -168,7 +168,7 @@ export const createTextfieldStandardStyles = (theme: Theme) => {
         },
       },
     },
-  } as Output;
+  };
 };
 
 const useFormControlStyles = makeStyles(

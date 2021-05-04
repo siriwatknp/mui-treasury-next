@@ -6,6 +6,7 @@ import Box from "@material-ui/core/Box";
 import TextField, { TextFieldProps } from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl, { FormControlProps } from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 
@@ -136,7 +137,7 @@ FieldIcon.args = {
   helperText: "This is a helper text",
 };
 
-export const Select: Story<TextFieldProps> = (args) => {
+export const SelectField: Story<TextFieldProps> = (args) => {
   const [value, setValue] = useState("");
   return (
     <TextField
@@ -155,7 +156,7 @@ export const Select: Story<TextFieldProps> = (args) => {
     </TextField>
   );
 };
-Select.args = {
+SelectField.args = {
   fullWidth: true,
   size: "medium",
   helperText: "This is a helper text",
@@ -246,17 +247,38 @@ SelectIcon.args = {
 };
 
 export const ManuallyCompose: Story<FormControlProps> = (args) => {
+  const [value, setValue] = useState("");
   return (
-    <FormControl {...args}>
-      <InputLabel>Manual Label</InputLabel>
-      <Input placeholder="Placeholder" />
-      <FormHelperText>Hey! need help</FormHelperText>
-    </FormControl>
+    <>
+      <FormControl {...args}>
+        <InputLabel>Manual Label</InputLabel>
+        <Input placeholder="Placeholder" />
+        <FormHelperText>Hey! need help</FormHelperText>
+      </FormControl>
+      <br />
+      <FormControl {...args}>
+        <InputLabel>Manual Label</InputLabel>
+        <Select
+          displayEmpty
+          value={value}
+          onChange={(event) => setValue(event.target.value)}
+        >
+          <MenuItem value="">
+            <em>Select Option</em>
+          </MenuItem>
+          <MenuItem value={1}>Option 1</MenuItem>
+          <MenuItem value={2}>Option 2</MenuItem>
+          <MenuItem value={3}>Option 3</MenuItem>
+        </Select>
+        <FormHelperText>Hey! need help</FormHelperText>
+      </FormControl>
+    </>
   );
 };
 ManuallyCompose.args = {
   error: false,
   size: "medium",
+  margin: "normal",
 };
 
 function withBaseTheme(Story: any, context: StoryContext) {
@@ -275,10 +297,7 @@ export const OutsideTheme: Story<TextFieldProps> = (args) => {
       <TextField
         {...args}
         classes={styles.FormControl}
-        InputLabelProps={{
-          // @ts-ignore
-          classes: styles.InputLabel,
-        }}
+        InputLabelProps={{ classes: styles.InputLabel }}
         InputProps={{
           classes: styles.Input,
           disableUnderline: true,
@@ -301,10 +320,7 @@ export const OutsideTheme: Story<TextFieldProps> = (args) => {
         classes={styles.FormControl}
         select
         SelectProps={{ displayEmpty: true, classes: styles.Select }}
-        InputLabelProps={{
-          // @ts-ignore
-          classes: styles.InputLabel,
-        }}
+        InputLabelProps={{ classes: styles.InputLabel }}
         InputProps={{
           classes: styles.Input,
           disableUnderline: true,
