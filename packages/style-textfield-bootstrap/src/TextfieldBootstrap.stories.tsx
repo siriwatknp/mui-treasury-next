@@ -27,14 +27,20 @@ function withContainer(Story: any, context: StoryContext) {
   );
 }
 
-const baseTheme = createMuiTheme();
+const baseTheme = createMuiTheme({
+  typography: {
+    fontFamily:
+      'system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"',
+  },
+});
 const textfieldStandardStyles = createTextfieldBootstrapStyles(baseTheme);
 function withTheme(Story: any, context: StoryContext) {
   return (
     <ThemeProvider
-      theme={createMuiTheme({
+      theme={{
+        ...baseTheme,
         components: textfieldStandardStyles,
-      })}
+      }}
     >
       <Story {...context} />
     </ThemeProvider>
