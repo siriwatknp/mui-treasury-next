@@ -1,0 +1,97 @@
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import { Components } from "@material-ui/core/styles/components";
+
+type Output = Required<
+  Pick<
+    Components,
+    // | "MuiFormControl"
+    | "MuiInputLabel"
+    | "MuiInput"
+    // | "MuiInputAdornment"
+    // | "MuiSelect"
+    | "MuiFormHelperText"
+  >
+>;
+const getPlaceholderVisible = (theme: Theme) => {
+  const light = theme.palette.mode === "light";
+  return {
+    opacity: `${light ? 1 : 0.5} !important`,
+    color: "rgb(108, 117, 125)",
+  };
+};
+export const createTextfieldBootstrapStyles = (theme: Theme): Output => {
+  const placeholderVisible = getPlaceholderVisible(theme);
+  return {
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          "& .MuiInput-root": {
+            marginTop: 32,
+            // "&.MuiInputBase-sizeSmall": {
+            //   marginTop: 24,
+            // },
+          },
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        // @ts-ignore
+        standard: {
+          transform: "none",
+          lineHeight: "1.5",
+          color: "#212529",
+          "&.Mui-focused": {
+            color: "#212529",
+          },
+          // "&.MuiInputLabel-sizeSmall": {
+          //   fontSize: "0.875rem",
+          //   lineHeight: "1.25rem",
+          // },
+        },
+      },
+    },
+    MuiInput: {
+      defaultProps: {
+        disableUnderline: true,
+      },
+      styleOverrides: {
+        root: {
+          border: "1px solid",
+          borderColor: "#ced4da",
+          borderRadius: "0.25rem",
+          transition:
+            "border-color .15s ease-in-out,box-shadow .15s ease-in-out",
+          backgroundColor: "#fff",
+          lineHeight: "1.5",
+          fontSize: "1rem",
+          "&.Mui-focused": {
+            borderColor: "#86b7fe",
+            boxShadow: "0 0 0 0.25rem rgb(13 110 253 / 25%)",
+          },
+          "&&& .MuiInput-input": {
+            // tripple '&' to override default behaviour
+            "&::-webkit-input-placeholder": placeholderVisible,
+            "&::-moz-placeholder": placeholderVisible,
+            "&:-ms-input-placeholder": placeholderVisible,
+            "&::-ms-input-placeholder": placeholderVisible, // Edge
+          },
+        },
+        input: {
+          padding: ".375rem .75rem",
+          height: "auto",
+          letterSpacing: 0,
+        },
+      },
+    },
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          marginTop: 4,
+        },
+      },
+    },
+  };
+};
+
+export const useTextfieldBootstrapStyles = () => ({});
