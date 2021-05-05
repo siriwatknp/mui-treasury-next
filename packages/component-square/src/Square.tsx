@@ -1,4 +1,4 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import cx from "clsx";
 import { experimentalStyled as styled, Theme } from "@material-ui/core/styles";
 import { Palette } from "@mui-treasury/theme-treasury";
@@ -11,6 +11,7 @@ export type SquareClassKey = keyof typeof squareClasses;
 export type SquareClasses = Partial<typeof squareClasses>;
 
 export type SquareProps = {
+  className?: string;
   /**
    * variant of the square, default to `none`
    */
@@ -27,11 +28,6 @@ export type SquareProps = {
   palette?: Palette;
 
   /**
-   * Dynamic size of the element (number is px). Ex. 100 | "2rem"
-   */
-  dynamicSize?: number | string;
-
-  /**
    * Override or extend the styles applied to the component.
    */
   classes?: SquareClasses;
@@ -40,7 +36,7 @@ export type SquareProps = {
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */
   sx?: SxProps<Theme>;
-} & Omit<JSX.IntrinsicElements["div"], "ref">;
+};
 
 const overridesResolver = (props: any, styles: Record<string, object>) => {
   const { styleProps } = props;
@@ -89,10 +85,6 @@ const SquareRoot = styled(
     flexShrink: 0,
     position: "relative",
     borderRadius: theme.shape.borderRadius,
-    ...(styleProps.dynamicSize && {
-      minWidth: styleProps.dynamicSize,
-      minHeight: styleProps.dynamicSize,
-    }),
     ...(styleProps.round && {
       borderRadius: 100,
     }),
@@ -127,15 +119,27 @@ const SquareRoot = styled(
   })
 );
 
-export const Square = React.forwardRef<any, SquareProps>(function Square(
-  { children, ...inProps },
-  ref
-) {
+interface SquareComponent {
+  <P extends { as?: React.ElementType }>(
+    props: P extends { as: infer As }
+      ? As extends keyof JSX.IntrinsicElements
+        ? P & SquareProps & JSX.IntrinsicElements[As]
+        : As extends React.ComponentType<infer AsProps>
+        ? P & SquareProps & AsProps
+        : PropsWithChildren<P & SquareProps>
+      : PropsWithChildren<P & SquareProps>
+  ): JSX.Element | null;
+}
+
+export const Square: SquareComponent = React.forwardRef<
+  any,
+  PropsWithChildren<SquareProps>
+>(function Square({ children, ...inProps }, ref) {
   const props = useThemeProps<Theme, SquareProps, "JunSquare">({
     props: inProps,
     name: "JunSquare",
   });
-  const { variant = "none", palette, dynamicSize, round, ...other } = props;
+  const { variant = "none", palette, round, ...other } = props;
 
   const styleProps = {
     variant,

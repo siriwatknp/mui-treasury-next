@@ -1,9 +1,10 @@
 import React from "react";
 import { Story, Meta } from "@storybook/react/types-6-0";
 
-import { MuiThemeProvider, ThemeProvider } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Add from "@material-ui/icons/Add";
+import ButtonBase from "@material-ui/core/ButtonBase";
 
 import {
   treasuryPalette,
@@ -34,23 +35,16 @@ export default {
 } as Meta;
 
 export const Palette: Story<SquareProps> = (args) => {
-  const parsedSize = args.dynamicSize
-    ? Number(args.dynamicSize) || args.dynamicSize
-    : undefined;
-
   return (
-    <Square {...args} dynamicSize={parsedSize}>
+    <Square {...args}>
       <Add fontSize="large" />
     </Square>
   );
 };
 
 export const Solid: Story<SquareProps> = (args) => {
-  const parsedSize = args.dynamicSize
-    ? Number(args.dynamicSize) || args.dynamicSize
-    : undefined;
   return (
-    <Square {...args} dynamicSize={parsedSize}>
+    <Square {...args}>
       <Add fontSize="large" />
     </Square>
   );
@@ -60,11 +54,8 @@ Solid.args = {
 };
 
 export const Soft: Story<SquareProps> = (args) => {
-  const parsedSize = args.dynamicSize
-    ? Number(args.dynamicSize) || args.dynamicSize
-    : undefined;
   return (
-    <Square {...args} dynamicSize={parsedSize}>
+    <Square {...args}>
       <Add fontSize="large" />
     </Square>
   );
@@ -75,11 +66,8 @@ Soft.args = {
 };
 
 export const Outlined: Story<SquareProps> = (args) => {
-  const parsedSize = args.dynamicSize
-    ? Number(args.dynamicSize) || args.dynamicSize
-    : undefined;
   return (
-    <Square {...args} dynamicSize={parsedSize}>
+    <Square {...args}>
       <Add fontSize="large" />
     </Square>
   );
@@ -90,18 +78,15 @@ Outlined.args = {
 };
 
 export const Round: Story<SquareProps> = (args) => {
-  const parsedSize = args.dynamicSize
-    ? Number(args.dynamicSize) || args.dynamicSize
-    : undefined;
   return (
     <Box display="flex" alignItems="center" gap={2}>
-      <Square {...args} variant="outlined" dynamicSize={parsedSize}>
+      <Square {...args} variant="outlined">
         <Add fontSize="large" />
       </Square>
-      <Square {...args} variant="soft" dynamicSize={parsedSize}>
+      <Square {...args} variant="soft">
         <Add fontSize="large" />
       </Square>
-      <Square {...args} variant="solid" dynamicSize={parsedSize}>
+      <Square {...args} variant="solid">
         <Add fontSize="large" />
       </Square>
     </Box>
@@ -120,17 +105,9 @@ Round.argTypes = {
 
 export const Sizes: Story<SquareProps> = (args) => {
   return (
-    <Box display="flex" alignItems="center" gap={2}>
-      <Square {...args} dynamicSize={20}>
-        <Add fontSize="small" />
-      </Square>
-      <Square {...args}>
-        <Add />
-      </Square>
-      <Square {...args} dynamicSize={"3rem"}>
-        <Add fontSize="large" />
-      </Square>
-    </Box>
+    <Square {...args} sx={{ minWidth: 20, minHeight: 20 }}>
+      <Add fontSize="small" />
+    </Square>
   );
 };
 Sizes.args = {
@@ -144,10 +121,27 @@ Sizes.argTypes = {
   },
 };
 
+export const AsButton: Story<SquareProps> = (args) => {
+  return (
+    <Square
+      {...args}
+      as={ButtonBase}
+      disabled
+      round
+      sx={{
+        width: 72,
+      }}
+    >
+      <Add fontSize="large" />
+    </Square>
+  );
+};
+AsButton.args = {
+  variant: "outlined",
+  palette: "error",
+};
+
 export const Theme: Story<SquareProps> = (args) => {
-  const parsedSize = args.dynamicSize
-    ? Number(args.dynamicSize) || args.dynamicSize
-    : undefined;
   return (
     <ThemeProvider
       theme={createTreasuryTheme({
@@ -184,7 +178,7 @@ export const Theme: Story<SquareProps> = (args) => {
         },
       })}
     >
-      <Square {...args} dynamicSize={parsedSize}>
+      <Square {...args}>
         <Add fontSize="large" />
       </Square>
     </ThemeProvider>
