@@ -53,6 +53,9 @@ export const createTextfieldAntStyles = (theme: Theme): Output => {
           lineHeight: 1.5715,
           "label + &": {
             marginTop: 24,
+            "&.MuiInputBase-sizeSmall": {
+              marginTop: 22,
+            },
           },
           "&:hover:not(.Mui-disabled)": {
             borderColor: "#40a9ff",
@@ -84,14 +87,17 @@ export const createTextfieldAntStyles = (theme: Theme): Output => {
           "&.MuiInputBase-inputAdornedStart": {
             paddingLeft: 36,
             "&.MuiInputBase-inputSizeSmall": {
-              paddingLeft: 36,
+              paddingLeft: 32,
             },
           },
           "&.MuiInputBase-inputAdornedEnd": {
             paddingRight: 36,
             "&.MuiInputBase-inputSizeSmall": {
-              paddingRight: 36,
+              paddingRight: 32,
             },
+          },
+          "&.MuiInputBase-inputSizeSmall": {
+            padding: "0 7px",
           },
         },
       },
@@ -133,7 +139,7 @@ export const createTextfieldAntStyles = (theme: Theme): Output => {
         },
         // @ts-ignore
         iconStandard: {
-          right: 6,
+          right: 4,
           "& + .MuiInputAdornment-standard": {
             right: 32,
           },
@@ -143,11 +149,16 @@ export const createTextfieldAntStyles = (theme: Theme): Output => {
     MuiFormHelperText: {
       styleOverrides: {
         root: {
-          marginTop: 0,
-          lineHeight: 1.5715,
-          fontSize: 14,
-          "&.Mui-error": {
-            color: "#ff4d4f",
+          ".MuiInput-root + &": {
+            marginTop: 0,
+            lineHeight: 1.5715,
+            fontSize: 14,
+            "&.Mui-error": {
+              color: "#ff4d4f",
+            },
+            "&.MuiFormHelperText-sizeSmall": {
+              fontSize: 12,
+            },
           },
         },
       },
