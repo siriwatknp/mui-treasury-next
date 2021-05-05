@@ -157,7 +157,9 @@ export const createTextfieldStandardStyles = (theme: Theme): Output => {
     MuiFormHelperText: {
       styleOverrides: {
         root: {
-          marginTop: 4,
+          ".MuiInput-root + &": {
+            marginTop: 4,
+          },
         },
       },
     },
