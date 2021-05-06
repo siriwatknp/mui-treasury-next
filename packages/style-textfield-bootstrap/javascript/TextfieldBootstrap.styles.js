@@ -97,16 +97,6 @@ export const createTextfieldBootstrapStyles = (theme) => {
         },
       },
     },
-    MuiFormHelperText: {
-      styleOverrides: {
-        root: {
-          marginTop: 4,
-          "&.Mui-error": {
-            color: "#dc3545",
-          },
-        },
-      },
-    },
     MuiInputAdornment: {
       styleOverrides: {
         root: {
@@ -157,6 +147,18 @@ export const createTextfieldBootstrapStyles = (theme) => {
         nativeInput: {
           padding: 0,
           border: "none",
+        },
+      },
+    },
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          ".MuiInput-root + &": {
+            marginTop: 4,
+            "&.Mui-error": {
+              color: "#dc3545",
+            },
+          },
         },
       },
     },

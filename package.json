@@ -52,7 +52,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "prettier-js": "prettier --write \"**/javascript/**/*\"",
-    "compile-js": "lerna run compile-js; yarn prettier-js && yarn clean",
+    "compile-js": "lerna run compile-js; yarn clean && yarn prettier-js",
     "clean": "lerna run clean",
     "init:component": "hygen package component",
     "init:style": "hygen package style",
