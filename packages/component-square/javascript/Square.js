@@ -37,10 +37,6 @@ const SquareRoot = styled(
   flexShrink: 0,
   position: "relative",
   borderRadius: theme.shape.borderRadius,
-  ...(styleProps.dynamicSize && {
-    minWidth: styleProps.dynamicSize,
-    minHeight: styleProps.dynamicSize,
-  }),
   ...(styleProps.round && {
     borderRadius: 100,
   }),
@@ -81,7 +77,7 @@ export const Square = React.forwardRef(function Square(
     props: inProps,
     name: "JunSquare",
   });
-  const { variant = "none", palette, dynamicSize, round, ...other } = props;
+  const { variant = "none", palette, round, ...other } = props;
   const styleProps = {
     variant,
     ...props,

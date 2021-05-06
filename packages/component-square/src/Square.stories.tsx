@@ -105,9 +105,14 @@ Round.argTypes = {
 
 export const Sizes: Story<SquareProps> = (args) => {
   return (
-    <Square {...args} sx={{ minWidth: 20, minHeight: 20 }}>
-      <Add fontSize="small" />
-    </Square>
+    <Box display="flex" alignItems="center" gap={1}>
+      <Square {...args} sx={{ minWidth: 20, minHeight: 20 }}>
+        <Add fontSize="small" />
+      </Square>
+      <Square {...args} sx={{ minWidth: 40, minHeight: 40 }}>
+        <Add fontSize="large" />
+      </Square>
+    </Box>
   );
 };
 Sizes.args = {
@@ -127,7 +132,6 @@ export const AsButton: Story<SquareProps> = (args) => {
       {...args}
       as={ButtonBase}
       disabled
-      round
       sx={{
         width: 72,
       }}
@@ -139,6 +143,24 @@ export const AsButton: Story<SquareProps> = (args) => {
 AsButton.args = {
   variant: "outlined",
   palette: "error",
+};
+
+export const Text: Story<SquareProps> = (args) => {
+  return (
+    <Square
+      {...args}
+      as={ButtonBase}
+      sx={{
+        padding: "0 12px",
+      }}
+    >
+      Status
+    </Square>
+  );
+};
+Text.args = {
+  variant: "solid",
+  round: true,
 };
 
 export const Theme: Story<SquareProps> = (args) => {

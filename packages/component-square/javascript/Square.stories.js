@@ -2,6 +2,7 @@ import React from "react";
 import { ThemeProvider } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Add from "@material-ui/icons/Add";
+import ButtonBase from "@material-ui/core/ButtonBase";
 import {
   treasuryPalette,
   createTreasuryTheme,
@@ -28,21 +29,15 @@ export default {
   },
 };
 export const Palette = (args) => {
-  const parsedSize = args.dynamicSize
-    ? Number(args.dynamicSize) || args.dynamicSize
-    : undefined;
   return (
-    <Square {...args} dynamicSize={parsedSize}>
+    <Square {...args}>
       <Add fontSize="large" />
     </Square>
   );
 };
 export const Solid = (args) => {
-  const parsedSize = args.dynamicSize
-    ? Number(args.dynamicSize) || args.dynamicSize
-    : undefined;
   return (
-    <Square {...args} dynamicSize={parsedSize}>
+    <Square {...args}>
       <Add fontSize="large" />
     </Square>
   );
@@ -51,11 +46,8 @@ Solid.args = {
   variant: "solid",
 };
 export const Soft = (args) => {
-  const parsedSize = args.dynamicSize
-    ? Number(args.dynamicSize) || args.dynamicSize
-    : undefined;
   return (
-    <Square {...args} dynamicSize={parsedSize}>
+    <Square {...args}>
       <Add fontSize="large" />
     </Square>
   );
@@ -65,11 +57,8 @@ Soft.args = {
   palette: "error",
 };
 export const Outlined = (args) => {
-  const parsedSize = args.dynamicSize
-    ? Number(args.dynamicSize) || args.dynamicSize
-    : undefined;
   return (
-    <Square {...args} dynamicSize={parsedSize}>
+    <Square {...args}>
       <Add fontSize="large" />
     </Square>
   );
@@ -79,18 +68,15 @@ Outlined.args = {
   palette: "error",
 };
 export const Round = (args) => {
-  const parsedSize = args.dynamicSize
-    ? Number(args.dynamicSize) || args.dynamicSize
-    : undefined;
   return (
     <Box display="flex" alignItems="center" gap={2}>
-      <Square {...args} variant="outlined" dynamicSize={parsedSize}>
+      <Square {...args} variant="outlined">
         <Add fontSize="large" />
       </Square>
-      <Square {...args} variant="soft" dynamicSize={parsedSize}>
+      <Square {...args} variant="soft">
         <Add fontSize="large" />
       </Square>
-      <Square {...args} variant="solid" dynamicSize={parsedSize}>
+      <Square {...args} variant="solid">
         <Add fontSize="large" />
       </Square>
     </Box>
@@ -108,14 +94,11 @@ Round.argTypes = {
 };
 export const Sizes = (args) => {
   return (
-    <Box display="flex" alignItems="center" gap={2}>
-      <Square {...args} dynamicSize={20}>
+    <Box display="flex" alignItems="center" gap={1}>
+      <Square {...args} sx={{ minWidth: 20, minHeight: 20 }}>
         <Add fontSize="small" />
       </Square>
-      <Square {...args}>
-        <Add />
-      </Square>
-      <Square {...args} dynamicSize={"3rem"}>
+      <Square {...args} sx={{ minWidth: 40, minHeight: 40 }}>
         <Add fontSize="large" />
       </Square>
     </Box>
@@ -131,10 +114,42 @@ Sizes.argTypes = {
     },
   },
 };
+export const AsButton = (args) => {
+  return (
+    <Square
+      {...args}
+      as={ButtonBase}
+      disabled
+      sx={{
+        width: 72,
+      }}
+    >
+      <Add fontSize="large" />
+    </Square>
+  );
+};
+AsButton.args = {
+  variant: "outlined",
+  palette: "error",
+};
+export const Text = (args) => {
+  return (
+    <Square
+      {...args}
+      as={ButtonBase}
+      sx={{
+        padding: "0 12px",
+      }}
+    >
+      Status
+    </Square>
+  );
+};
+Text.args = {
+  variant: "solid",
+  round: true,
+};
 export const Theme = (args) => {
-  const parsedSize = args.dynamicSize
-    ? Number(args.dynamicSize) || args.dynamicSize
-    : undefined;
   return (
     <ThemeProvider
       theme={createTreasuryTheme({
@@ -171,7 +186,7 @@ export const Theme = (args) => {
         },
       })}
     >
-      <Square {...args} dynamicSize={parsedSize}>
+      <Square {...args}>
         <Add fontSize="large" />
       </Square>
     </ThemeProvider>
