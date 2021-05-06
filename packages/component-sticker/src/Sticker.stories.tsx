@@ -3,19 +3,22 @@ import { Story, Meta } from "@storybook/react/types-6-0";
 
 import { ThemeProvider } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
-import Add from "@material-ui/icons/Add";
+import Stack from "@material-ui/core/Stack";
 import ButtonBase from "@material-ui/core/ButtonBase";
+
+import DeleteForever from "@material-ui/icons/DeleteForever";
+import Add from "@material-ui/icons/Add";
 
 import {
   treasuryPalette,
   createTreasuryTheme,
 } from "@mui-treasury/theme-treasury";
 
-import { Square, SquareProps } from "./Square";
+import { Sticker, StickerProps } from "./Sticker";
 
 export default {
-  title: "Component/Square",
-  component: Square,
+  title: "Component/Sticker",
+  component: Sticker,
   argTypes: {
     palette: {
       control: {
@@ -28,36 +31,46 @@ export default {
         disable: true,
       },
     },
+    variant: {
+      control: {
+        type: "select",
+        options: ["none", "soft", "solid", "outlined"],
+      },
+    },
+  },
+  args: {
+    round: false,
+    hasText: false,
   },
   parameters: {
     layout: "centered",
   },
 } as Meta;
 
-export const Palette: Story<SquareProps> = (args) => {
+export const Palette: Story<StickerProps> = (args) => {
   return (
-    <Square {...args}>
+    <Sticker {...args}>
       <Add fontSize="large" />
-    </Square>
+    </Sticker>
   );
 };
 
-export const Solid: Story<SquareProps> = (args) => {
+export const Solid: Story<StickerProps> = (args) => {
   return (
-    <Square {...args}>
+    <Sticker {...args}>
       <Add fontSize="large" />
-    </Square>
+    </Sticker>
   );
 };
 Solid.args = {
   variant: "solid",
 };
 
-export const Soft: Story<SquareProps> = (args) => {
+export const Soft: Story<StickerProps> = (args) => {
   return (
-    <Square {...args}>
+    <Sticker {...args}>
       <Add fontSize="large" />
-    </Square>
+    </Sticker>
   );
 };
 Soft.args = {
@@ -65,11 +78,11 @@ Soft.args = {
   palette: "error",
 };
 
-export const Outlined: Story<SquareProps> = (args) => {
+export const Outlined: Story<StickerProps> = (args) => {
   return (
-    <Square {...args}>
+    <Sticker {...args}>
       <Add fontSize="large" />
-    </Square>
+    </Sticker>
   );
 };
 Outlined.args = {
@@ -77,18 +90,18 @@ Outlined.args = {
   palette: "error",
 };
 
-export const Round: Story<SquareProps> = (args) => {
+export const Round: Story<StickerProps> = (args) => {
   return (
     <Box display="flex" alignItems="center" gap={2}>
-      <Square {...args} variant="outlined">
+      <Sticker {...args} variant="outlined">
         <Add fontSize="large" />
-      </Square>
-      <Square {...args} variant="soft">
+      </Sticker>
+      <Sticker {...args} variant="soft">
         <Add fontSize="large" />
-      </Square>
-      <Square {...args} variant="solid">
+      </Sticker>
+      <Sticker {...args} variant="solid">
         <Add fontSize="large" />
-      </Square>
+      </Sticker>
     </Box>
   );
 };
@@ -103,41 +116,34 @@ Round.argTypes = {
   },
 };
 
-export const Sizes: Story<SquareProps> = (args) => {
+export const Sizes: Story<StickerProps> = (args) => {
   return (
     <Box display="flex" alignItems="center" gap={1}>
-      <Square {...args} sx={{ minWidth: 20, minHeight: 20 }}>
+      <Sticker {...args} sx={{ minWidth: 20, minHeight: 20 }}>
         <Add fontSize="small" />
-      </Square>
-      <Square {...args} sx={{ minWidth: 40, minHeight: 40 }}>
+      </Sticker>
+      <Sticker {...args} sx={{ minWidth: 40, minHeight: 40 }}>
         <Add fontSize="large" />
-      </Square>
+      </Sticker>
     </Box>
   );
 };
 Sizes.args = {
   variant: "solid",
 };
-Sizes.argTypes = {
-  size: {
-    table: {
-      disable: true,
-    },
-  },
-};
 
-export const AsButton: Story<SquareProps> = (args) => {
+export const AsButton: Story<StickerProps> = (args) => {
   return (
-    <Square
+    <Sticker
       {...args}
       as={ButtonBase}
-      disabled
+      centerRipple
       sx={{
         width: 72,
       }}
     >
       <Add fontSize="large" />
-    </Square>
+    </Sticker>
   );
 };
 AsButton.args = {
@@ -145,25 +151,28 @@ AsButton.args = {
   palette: "error",
 };
 
-export const Text: Story<SquareProps> = (args) => {
+export const Text: Story<StickerProps> = (args) => {
   return (
-    <Square
-      {...args}
-      as={ButtonBase}
-      sx={{
-        padding: "0 12px",
-      }}
-    >
-      Status
-    </Square>
+    <Stack spacing={2} alignItems="center" sx={{ fontSize: 14 }}>
+      <Sticker {...args}>Status</Sticker>
+      <Sticker {...args} as={ButtonBase}>
+        <Add fontSize="inherit" />
+        Status
+      </Sticker>
+      <Sticker {...args} as={ButtonBase}>
+        Status
+        <DeleteForever fontSize="inherit" />
+      </Sticker>
+    </Stack>
   );
 };
 Text.args = {
   variant: "solid",
   round: true,
+  hasText: true,
 };
 
-export const Theme: Story<SquareProps> = (args) => {
+export const Theme: Story<StickerProps> = (args) => {
   return (
     <ThemeProvider
       theme={createTreasuryTheme({
@@ -182,7 +191,7 @@ export const Theme: Story<SquareProps> = (args) => {
           },
         },
         components: {
-          JunSquare: {
+          JunSticker: {
             defaultProps: {
               variant: "soft",
               palette: "primary",
@@ -200,9 +209,9 @@ export const Theme: Story<SquareProps> = (args) => {
         },
       })}
     >
-      <Square {...args}>
+      <Sticker {...args}>
         <Add fontSize="large" />
-      </Square>
+      </Sticker>
     </ThemeProvider>
   );
 };

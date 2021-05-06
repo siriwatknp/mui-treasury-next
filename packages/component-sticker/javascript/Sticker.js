@@ -3,27 +3,28 @@ import cx from "clsx";
 import { experimentalStyled as styled } from "@material-ui/core/styles";
 import { unstable_composeClasses as composeClasses } from "@material-ui/unstyled";
 import useThemeProps from "@material-ui/core/styles/useThemeProps";
-import { getSquareUtilityClass } from "./squareClasses";
+import { getStickerUtilityClass } from "./stickerClasses";
 const overridesResolver = (props, styles) => {
   const { styleProps } = props;
   return {
     ...styles.root,
     ...styles[styleProps.variant],
+    ...(styleProps.hasText && styles.hasText),
     ...(styleProps.round && styles.round),
   };
 };
 const useUtilityClasses = (styleProps) => {
-  const { variant, round, palette, classes } = styleProps;
+  const { variant, round, palette, hasText, classes } = styleProps;
   const slots = {
-    root: ["root", round && "round", variant, palette],
+    root: ["root", round && "round", hasText && "hasText", variant, palette],
   };
-  return composeClasses(slots, getSquareUtilityClass, classes);
+  return composeClasses(slots, getStickerUtilityClass, classes);
 };
-const SquareRoot = styled(
+const StickerRoot = styled(
   "div",
   {},
   {
-    name: "JunSquare",
+    name: "JunSticker",
     slot: "Root",
     overridesResolver,
   }
@@ -33,12 +34,16 @@ const SquareRoot = styled(
   alignItems: "center",
   minWidth: 24,
   minHeight: 24,
+  gap: 2,
   verticalAlign: "middle",
   flexShrink: 0,
   position: "relative",
   borderRadius: theme.shape.borderRadius,
   ...(styleProps.round && {
     borderRadius: 100,
+  }),
+  ...(styleProps.hasText && {
+    padding: "0 0.5rem",
   }),
   color: treasury.getColor(styleProps.palette, "500"),
   ...(styleProps.variant === "outlined" && {
@@ -69,13 +74,13 @@ const SquareRoot = styled(
     backgroundColor: treasury.getColor(styleProps.palette ?? "grey", "100"),
   }),
 }));
-export const Square = React.forwardRef(function Square(
+export const Sticker = React.forwardRef(function Sticker(
   { children, ...inProps },
   ref
 ) {
   const props = useThemeProps({
     props: inProps,
-    name: "JunSquare",
+    name: "JunSticker",
   });
   const { variant = "none", palette, round, ...other } = props;
   const styleProps = {
@@ -84,13 +89,13 @@ export const Square = React.forwardRef(function Square(
   };
   const classes = useUtilityClasses(styleProps);
   return (
-    <SquareRoot
+    <StickerRoot
       ref={ref}
       {...other}
       styleProps={styleProps}
       className={cx(classes.root, props.className)}
     >
       {children}
-    </SquareRoot>
+    </StickerRoot>
   );
 });

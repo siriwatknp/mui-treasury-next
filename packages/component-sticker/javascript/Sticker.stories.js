@@ -1,16 +1,18 @@
 import React from "react";
 import { ThemeProvider } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
-import Add from "@material-ui/icons/Add";
+import Stack from "@material-ui/core/Stack";
 import ButtonBase from "@material-ui/core/ButtonBase";
+import DeleteForever from "@material-ui/icons/DeleteForever";
+import Add from "@material-ui/icons/Add";
 import {
   treasuryPalette,
   createTreasuryTheme,
 } from "@mui-treasury/theme-treasury";
-import { Square } from "./Square";
+import { Sticker } from "./Sticker";
 export default {
-  title: "Component/Square",
-  component: Square,
+  title: "Component/Sticker",
+  component: Sticker,
   argTypes: {
     palette: {
       control: {
@@ -23,6 +25,16 @@ export default {
         disable: true,
       },
     },
+    variant: {
+      control: {
+        type: "select",
+        options: ["none", "soft", "solid", "outlined"],
+      },
+    },
+  },
+  args: {
+    round: false,
+    hasText: false,
   },
   parameters: {
     layout: "centered",
@@ -30,16 +42,16 @@ export default {
 };
 export const Palette = (args) => {
   return (
-    <Square {...args}>
+    <Sticker {...args}>
       <Add fontSize="large" />
-    </Square>
+    </Sticker>
   );
 };
 export const Solid = (args) => {
   return (
-    <Square {...args}>
+    <Sticker {...args}>
       <Add fontSize="large" />
-    </Square>
+    </Sticker>
   );
 };
 Solid.args = {
@@ -47,9 +59,9 @@ Solid.args = {
 };
 export const Soft = (args) => {
   return (
-    <Square {...args}>
+    <Sticker {...args}>
       <Add fontSize="large" />
-    </Square>
+    </Sticker>
   );
 };
 Soft.args = {
@@ -58,9 +70,9 @@ Soft.args = {
 };
 export const Outlined = (args) => {
   return (
-    <Square {...args}>
+    <Sticker {...args}>
       <Add fontSize="large" />
-    </Square>
+    </Sticker>
   );
 };
 Outlined.args = {
@@ -70,15 +82,15 @@ Outlined.args = {
 export const Round = (args) => {
   return (
     <Box display="flex" alignItems="center" gap={2}>
-      <Square {...args} variant="outlined">
+      <Sticker {...args} variant="outlined">
         <Add fontSize="large" />
-      </Square>
-      <Square {...args} variant="soft">
+      </Sticker>
+      <Sticker {...args} variant="soft">
         <Add fontSize="large" />
-      </Square>
-      <Square {...args} variant="solid">
+      </Sticker>
+      <Sticker {...args} variant="solid">
         <Add fontSize="large" />
-      </Square>
+      </Sticker>
     </Box>
   );
 };
@@ -95,37 +107,30 @@ Round.argTypes = {
 export const Sizes = (args) => {
   return (
     <Box display="flex" alignItems="center" gap={1}>
-      <Square {...args} sx={{ minWidth: 20, minHeight: 20 }}>
+      <Sticker {...args} sx={{ minWidth: 20, minHeight: 20 }}>
         <Add fontSize="small" />
-      </Square>
-      <Square {...args} sx={{ minWidth: 40, minHeight: 40 }}>
+      </Sticker>
+      <Sticker {...args} sx={{ minWidth: 40, minHeight: 40 }}>
         <Add fontSize="large" />
-      </Square>
+      </Sticker>
     </Box>
   );
 };
 Sizes.args = {
   variant: "solid",
 };
-Sizes.argTypes = {
-  size: {
-    table: {
-      disable: true,
-    },
-  },
-};
 export const AsButton = (args) => {
   return (
-    <Square
+    <Sticker
       {...args}
       as={ButtonBase}
-      disabled
+      centerRipple
       sx={{
         width: 72,
       }}
     >
       <Add fontSize="large" />
-    </Square>
+    </Sticker>
   );
 };
 AsButton.args = {
@@ -134,20 +139,23 @@ AsButton.args = {
 };
 export const Text = (args) => {
   return (
-    <Square
-      {...args}
-      as={ButtonBase}
-      sx={{
-        padding: "0 12px",
-      }}
-    >
-      Status
-    </Square>
+    <Stack spacing={2} alignItems="center" sx={{ fontSize: 14 }}>
+      <Sticker {...args}>Status</Sticker>
+      <Sticker {...args} as={ButtonBase}>
+        <Add fontSize="inherit" />
+        Status
+      </Sticker>
+      <Sticker {...args} as={ButtonBase}>
+        Status
+        <DeleteForever fontSize="inherit" />
+      </Sticker>
+    </Stack>
   );
 };
 Text.args = {
   variant: "solid",
   round: true,
+  hasText: true,
 };
 export const Theme = (args) => {
   return (
@@ -168,7 +176,7 @@ export const Theme = (args) => {
           },
         },
         components: {
-          JunSquare: {
+          JunSticker: {
             defaultProps: {
               variant: "soft",
               palette: "primary",
@@ -186,9 +194,9 @@ export const Theme = (args) => {
         },
       })}
     >
-      <Square {...args}>
+      <Sticker {...args}>
         <Add fontSize="large" />
-      </Square>
+      </Sticker>
     </ThemeProvider>
   );
 };

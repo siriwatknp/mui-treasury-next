@@ -1,6 +1,6 @@
 {
-  "name": "@mui-treasury/component-square",
-  "version": "0.1.0-alpha.2",
+  "name": "@mui-treasury/style-sticker-glow",
+  "version": "0.1.0-alpha.0",
   "description": "> TODO: description",
   "author": "siriwatknp <siriwatkunaporn@gmail.com>",
   "homepage": "https://github.com/siriwatknp/mui-treasury-next#readme",
@@ -25,13 +25,14 @@
     "build:cjs": "cross-env NODE_ENV=production BABEL_ENV=cjs babel --config-file ../../babel-config.js --extensions \".js,.ts,.tsx\" ./src --out-dir ./dist --ignore \"**/*.test.ts,**/*.test.tsx\"",
     "build:esm": "cross-env NODE_ENV=production BABEL_ENV=esm babel --config-file ../../babel-config.js --extensions \".js,.ts,.tsx\" ./src --out-dir ./dist/esm --ignore \"**/*.test.ts,**/*.test.tsx\"",
     "build:types": "tsc -p tsconfig.build.json",
-    "prepare-dist": "ts-node ../../scripts/prerelease.ts component",
+    "prepare-dist": "ts-node ../../scripts/prerelease.ts style",
     "prepublishOnly": "yarn prepare-dist"
   },
   "bugs": {
     "url": "https://github.com/siriwatknp/mui-treasury-next/issues"
   },
   "dependencies": {
+    "@mui-treasury/component-sticker": "^0.1.0-alpha.0",
     "@mui-treasury/theme-treasury": "^0.3.0-alpha.6"
   }
 }

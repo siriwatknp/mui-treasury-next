@@ -4,18 +4,17 @@ import {
 } from "@material-ui/unstyled";
 import { treasuryPalette, TreasuryPalette } from "@mui-treasury/theme-treasury";
 
-export function getSquareUtilityClass(slot: string) {
-  return generateUtilityClass("JunSquare", slot);
+export function getStickerUtilityClass(slot: string) {
+  return generateUtilityClass("JunSticker", slot);
 }
 
-export const squareClasses = generateUtilityClasses("JunSquare", [
+export const stickerClasses = generateUtilityClasses("JunSticker", [
   "root",
   "none",
   "solid",
   "soft",
   "outlined",
   "round",
-  "roundSolid",
-  "roundSoft",
+  "hasText",
   ...(Object.keys(treasuryPalette) as Array<keyof TreasuryPalette>),
 ]);

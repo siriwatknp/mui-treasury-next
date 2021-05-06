@@ -1,6 +1,6 @@
 import { alpha } from "@material-ui/core/styles";
 import { makeStyles } from "@material-ui/core/styles";
-export const useSquareStickerStyles = makeStyles(
+export const useStickerGlowStyles = makeStyles(
   ({ treasury, ...theme }) => ({
     root: (props) => ({
       boxShadow: `0 2px 8px 0 ${

@@ -1,10 +1,10 @@
 import { alpha } from "@material-ui/core/styles";
 import { makeStyles } from "@material-ui/core/styles";
-import { SquareProps } from "@mui-treasury/component-square";
+import { StickerProps } from "@mui-treasury/component-sticker";
 
-type Props = Pick<SquareProps, "palette">;
+type Props = Pick<StickerProps, "palette">;
 
-export const useSquareStickerStyles = makeStyles(
+export const useStickerGlowStyles = makeStyles(
   ({ treasury, ...theme }) => ({
     root: (props: Props) => ({
       boxShadow: `0 2px 8px 0 ${
@@ -30,9 +30,5 @@ export const useSquareStickerStyles = makeStyles(
   }
 );
 
-export type SquareStickerClassKey = keyof ReturnType<
-  typeof useSquareStickerStyles
->;
-export type SquareStickerClasses = Partial<
-  Record<SquareStickerClassKey, string>
->;
+export type StickerGlowClassKey = keyof ReturnType<typeof useStickerGlowStyles>;
+export type StickerGlowClasses = Partial<Record<StickerGlowClassKey, string>>;

@@ -20,10 +20,8 @@
     "baseUrl": "./",
     "paths": {
       "@mui-treasury/theme-treasury": ["packages/theme-treasury/src/"],
-      "@mui-treasury/component-square": ["packages/component-square/src"],
-      "@mui-treasury/style-square-sticker": [
-        "packages/style-square-sticker/src/"
-      ],
+      "@mui-treasury/component-sticker": ["packages/component-sticker/src"],
+      "@mui-treasury/style-sticker-glow": ["packages/style-sticker-glow/src/"],
       "@mui-treasury/style-button-bootstrap": [
         "packages/style-button-bootstrap/src/"
       ],

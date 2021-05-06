@@ -5,12 +5,12 @@ import { Palette } from "@mui-treasury/theme-treasury";
 import { unstable_composeClasses as composeClasses } from "@material-ui/unstyled";
 import { SxProps } from "@material-ui/system";
 import useThemeProps from "@material-ui/core/styles/useThemeProps";
-import { getSquareUtilityClass, squareClasses } from "./squareClasses";
+import { getStickerUtilityClass, stickerClasses } from "./stickerClasses";
 
-export type SquareClassKey = keyof typeof squareClasses;
-export type SquareClasses = Partial<typeof squareClasses>;
+export type StickerClassKey = keyof typeof stickerClasses;
+export type StickerClasses = Partial<typeof stickerClasses>;
 
-export type SquareProps = {
+export type StickerProps = {
   className?: string;
   /**
    * variant of the square, default to `none`
@@ -23,6 +23,11 @@ export type SquareProps = {
   round?: boolean;
 
   /**
+   * If `true`, this element has base padding left & right (for containing text)
+   */
+  hasText?: boolean;
+
+  /**
    * The color of the element, rely on @mui-treasury/theme-treasury
    */
   palette?: Palette;
@@ -30,7 +35,7 @@ export type SquareProps = {
   /**
    * Override or extend the styles applied to the component.
    */
-  classes?: SquareClasses;
+  classes?: StickerClasses;
 
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
@@ -44,27 +49,28 @@ const overridesResolver = (props: any, styles: Record<string, object>) => {
   return {
     ...styles.root,
     ...styles[styleProps.variant],
+    ...(styleProps.hasText && styles.hasText),
     ...(styleProps.round && styles.round),
   };
 };
 
-const useUtilityClasses = (styleProps: SquareProps) => {
-  const { variant, round, palette, classes } = styleProps;
+const useUtilityClasses = (styleProps: StickerProps) => {
+  const { variant, round, palette, hasText, classes } = styleProps;
   const slots = {
-    root: ["root", round && "round", variant, palette],
+    root: ["root", round && "round", hasText && "hasText", variant, palette],
   };
   return composeClasses(
     slots,
-    getSquareUtilityClass,
-    classes as Required<SquareProps["classes"]>
+    getStickerUtilityClass,
+    classes as Required<StickerProps["classes"]>
   );
 };
 
-const SquareRoot = styled(
+const StickerRoot = styled(
   "div",
   {},
   {
-    name: "JunSquare",
+    name: "JunSticker",
     slot: "Root",
     overridesResolver,
   }
@@ -74,19 +80,23 @@ const SquareRoot = styled(
     styleProps,
   }: {
     theme: Theme;
-    styleProps: SquareProps;
+    styleProps: StickerProps;
   }) => ({
     display: "inline-flex",
     justifyContent: "center",
     alignItems: "center",
     minWidth: 24,
     minHeight: 24,
+    gap: 2,
     verticalAlign: "middle",
     flexShrink: 0,
     position: "relative",
     borderRadius: theme.shape.borderRadius,
     ...(styleProps.round && {
       borderRadius: 100,
+    }),
+    ...(styleProps.hasText && {
+      padding: "0 0.5rem",
     }),
     color: treasury.getColor(styleProps.palette, "500"),
     ...(styleProps.variant === "outlined" && {
@@ -119,25 +129,25 @@ const SquareRoot = styled(
   })
 );
 
-interface SquareComponent {
+interface StickerComponent {
   <P extends { as?: React.ElementType }>(
     props: P extends { as: infer As }
       ? As extends keyof JSX.IntrinsicElements
-        ? P & SquareProps & JSX.IntrinsicElements[As]
+        ? P & StickerProps & JSX.IntrinsicElements[As]
         : As extends React.ComponentType<infer AsProps>
-        ? P & SquareProps & AsProps
-        : PropsWithChildren<P & SquareProps>
-      : PropsWithChildren<P & SquareProps>
+        ? P & StickerProps & AsProps
+        : PropsWithChildren<P & StickerProps>
+      : PropsWithChildren<P & StickerProps>
   ): JSX.Element | null;
 }
 
-export const Square: SquareComponent = React.forwardRef<
+export const Sticker: StickerComponent = React.forwardRef<
   any,
-  PropsWithChildren<SquareProps>
->(function Square({ children, ...inProps }, ref) {
-  const props = useThemeProps<Theme, SquareProps, "JunSquare">({
+  PropsWithChildren<StickerProps>
+>(function Sticker({ children, ...inProps }, ref) {
+  const props = useThemeProps<Theme, StickerProps, "JunSticker">({
     props: inProps,
-    name: "JunSquare",
+    name: "JunSticker",
   });
   const { variant = "none", palette, round, ...other } = props;
 
@@ -149,13 +159,13 @@ export const Square: SquareComponent = React.forwardRef<
   const classes = useUtilityClasses(styleProps);
 
   return (
-    <SquareRoot
+    <StickerRoot
       ref={ref}
       {...other}
       styleProps={styleProps}
       className={cx(classes.root, props.className)}
     >
       {children}
-    </SquareRoot>
+    </StickerRoot>
   );
 });

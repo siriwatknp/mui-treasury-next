@@ -1,5 +1,5 @@
 import { ExtendedThemeOutput } from "@mui-treasury/theme-treasury";
-import { SquareStickerClassKey } from "./SquareSticker.styles";
+import { StickerGlowClassKey } from "./StickerGlow.styles";
 
 declare module "@material-ui/core/styles/createMuiTheme" {
   interface Theme extends ExtendedThemeOutput {}
@@ -7,6 +7,6 @@ declare module "@material-ui/core/styles/createMuiTheme" {
 
 declare module "@material-ui/core/styles/overrides" {
   interface ComponentNameToClassKey {
-    JunSquareSticker: SquareStickerClassKey;
+    JunStickerGlow: StickerGlowClassKey;
   }
 }

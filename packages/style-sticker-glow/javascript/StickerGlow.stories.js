@@ -1,11 +1,11 @@
 import React from "react";
 import { treasuryPalette } from "@mui-treasury/theme-treasury";
-import { Square } from "@mui-treasury/component-square";
-import { useSquareStickerStyles } from "./SquareSticker.styles";
+import { Sticker } from "@mui-treasury/component-sticker";
+import { useStickerGlowStyles } from "./StickerGlow.styles";
 import Add from "@material-ui/icons/Add";
 export default {
-  title: "Component/Square/Sticker",
-  component: Square,
+  title: "Component/Sticker/Glow",
+  component: Sticker,
   argTypes: {
     palette: {
       control: {
@@ -21,34 +21,38 @@ export default {
         disable: true,
       },
     },
+    variant: {
+      control: {
+        type: "select",
+        options: ["none", "solid", "soft", "outlined"],
+      },
+    },
+  },
+  args: {
+    round: false,
+    hasText: false,
   },
   parameters: {
     layout: "centered",
   },
 };
 export const Solid = (args) => {
-  const parsedSize = args.dynamicSize
-    ? Number(args.dynamicSize) || args.dynamicSize
-    : undefined;
-  const classes = useSquareStickerStyles({ palette: args.palette });
+  const classes = useStickerGlowStyles({ palette: args.palette });
   return (
-    <Square {...args} dynamicSize={parsedSize} classes={classes}>
+    <Sticker {...args} classes={classes}>
       <Add fontSize="large" />
-    </Square>
+    </Sticker>
   );
 };
 Solid.args = {
   variant: "solid",
 };
 export const Soft = (args) => {
-  const parsedSize = args.dynamicSize
-    ? Number(args.dynamicSize) || args.dynamicSize
-    : undefined;
-  const classes = useSquareStickerStyles({ palette: args.palette });
+  const classes = useStickerGlowStyles({ palette: args.palette });
   return (
-    <Square {...args} dynamicSize={parsedSize} classes={classes}>
+    <Sticker {...args} classes={classes}>
       <Add fontSize="large" />
-    </Square>
+    </Sticker>
   );
 };
 Soft.args = {
