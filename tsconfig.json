@@ -27,6 +27,18 @@
       "@mui-treasury/style-button-bootstrap": [
         "packages/style-button-bootstrap/src/"
       ],
+      "@mui-treasury/style-menu-bootstrap": [
+        "packages/style-menu-bootstrap/src/"
+      ],
+      "@mui-treasury/style-textfield-ant": [
+        "packages/style-textfield-ant/src/"
+      ],
+      "@mui-treasury/style-textfield-bootstrap": [
+        "packages/style-textfield-bootstrap/src/"
+      ],
+      "@mui-treasury/style-textfield-standard": [
+        "packages/style-textfield-standard/src/"
+      ],
       "@mui-treasury/layout": ["packages/layout/src"]
     }
   }
