@@ -8,6 +8,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Stack from "@material-ui/core/Stack";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
 import Search from "@material-ui/icons/Search";
 
@@ -132,5 +134,28 @@ export const Addons = () => {
         </Groupy>
       </FormControl>
     </Stack>
+  );
+};
+
+export const SelectAddon = () => {
+  return (
+    <Groupy>
+      <FormAddon>
+        <Select variant="standard" disableUnderline value="" displayEmpty>
+          <MenuItem value="">
+            <em>Pick one</em>
+          </MenuItem>
+          <MenuItem value="1">https://</MenuItem>
+          <MenuItem value="2">http://</MenuItem>
+        </Select>
+      </FormAddon>
+      <OutlinedInput placeholder="website" />
+      <FormAddon>
+        <Select native variant="standard" disableUnderline>
+          <option>.com</option>
+          <option>.co.th</option>
+        </Select>
+      </FormAddon>
+    </Groupy>
   );
 };
