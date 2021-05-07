@@ -11,7 +11,11 @@ export type StickerClassKey = keyof typeof stickerClasses;
 export type StickerClasses = Partial<typeof stickerClasses>;
 
 export type StickerProps = {
+  /**
+   * className append to the root element
+   */
   className?: string;
+
   /**
    * variant of the square, default to `none`
    */
