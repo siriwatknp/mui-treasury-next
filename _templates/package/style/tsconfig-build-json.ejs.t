@@ -1,5 +1,5 @@
 ---
-to: packages/<%=name%>/tsconfig.build.json
+to: packages/<%=h.toNamePath(name)%>/tsconfig.build.json
 unless_exists: true
 ---
 {

@@ -1,5 +1,5 @@
 ---
-to: packages/<%=name%>/src/<%= h.toName(name) %>.tsx
+to: packages/<%=h.toNamePath(name)%>/src/<%= h.toName(name) %>.tsx
 unless_exists: true
 ---
 import React, { PropsWithChildren } from "react";

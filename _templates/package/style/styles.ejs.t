@@ -1,5 +1,5 @@
 ---
-to: packages/<%=name%>/src/<%= h.toName(name) %>.styles.ts
+to: packages/<%=h.toNamePath(name)%>/src/<%= h.toName(name) %>.styles.ts
 unless_exists: true
 ---
 import { makeStyles } from "@material-ui/core/styles";

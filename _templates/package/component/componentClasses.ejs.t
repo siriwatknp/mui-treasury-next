@@ -1,5 +1,5 @@
 ---
-to: packages/<%=name%>/src/<%=h.toNameCamel(name)%>Classes.ts
+to: packages/<%=h.toNamePath(name)%>/src/<%=h.toNameCamel(name)%>Classes.ts
 unless_exists: true
 ---
 import {

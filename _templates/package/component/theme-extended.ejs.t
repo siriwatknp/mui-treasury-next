@@ -1,5 +1,5 @@
 ---
-to: packages/<%=name%>/src/theme-extended.ts
+to: packages/<%=h.toNamePath(name)%>/src/theme-extended.ts
 unless_exists: true
 ---
 import { StyleRules } from "@material-ui/core/styles";

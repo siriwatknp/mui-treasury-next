@@ -3,4 +3,4 @@ to: tsconfig.json
 inject: true
 before: hygen-component-target
 ---
-      "@mui-treasury/<%= name %>": ["packages/<%= name %>/src/"],
+      "@mui-treasury/<%= h.toNamePath(name) %>": ["packages/<%= h.toNamePath(name) %>/src/"],

@@ -1,5 +1,5 @@
 ---
-to: packages/<%=name%>/package.json
+to: packages/<%=h.toNamePath(name)%>/package.json
 unless_exists: true
 ---
 {
