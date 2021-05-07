@@ -21,6 +21,9 @@
     "paths": {
       "@mui-treasury/theme-treasury": ["packages/theme-treasury/src/"],
       "@mui-treasury/component-sticker": ["packages/component-sticker/src"],
+      "@mui-treasury/component-formaddon": ["packages/component-formaddon/src"],
+      "@mui-treasury/component-groupy": ["packages/component-groupy/src"],
+      // hygen-component-target
       "@mui-treasury/style-sticker-glow": ["packages/style-sticker-glow/src/"],
       "@mui-treasury/style-button-bootstrap": [
         "packages/style-button-bootstrap/src/"
@@ -37,6 +40,7 @@
       "@mui-treasury/style-textfield-standard": [
         "packages/style-textfield-standard/src/"
       ],
+      // hygen-style-target
       "@mui-treasury/layout": ["packages/layout/src"]
     }
   }
