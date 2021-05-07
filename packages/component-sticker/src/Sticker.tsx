@@ -116,10 +116,7 @@ const StickerRoot = styled(
         right: 0,
         bottom: 0,
         borderRadius: theme.shape.borderRadius,
-        boxShadow: `inset 0 0 0 1px ${treasury.getColor(
-          styleProps.palette,
-          "500"
-        )}`,
+        boxShadow: `inset 0 0 0 1px`,
         ...(styleProps.round && {
           borderRadius: 100,
         }),
