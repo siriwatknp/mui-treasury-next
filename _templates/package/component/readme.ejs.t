@@ -1,7 +1,7 @@
 ---
-to: packages/<%=name%>/README.md
+to: packages/<%=h.changeCase.param(name)%>/README.md
 unless_exists: true
 ---
-# `@mui-treasury/<%=name%>`
+# `@mui-treasury/<%=h.changeCase.param(name)%>`
 
 > TODO: description

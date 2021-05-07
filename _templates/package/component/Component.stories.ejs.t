@@ -16,11 +16,11 @@ export default {
   },
 } as Meta;
 
-// export const Demo: Story<<%=Name%>Props> = args => {
-//   return (
-//     <<%=Name%> {...args}>
-//       Children
-//     </<%=Name%>>
-//   );
-// };
+export const Demo: Story<<%=Name%>Props> = args => {
+  return (
+    <<%=Name%> {...args}>
+      Children
+    </<%=Name%>>
+  );
+};
 

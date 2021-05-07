@@ -2,23 +2,15 @@
 to: packages/<%=name%>/src/theme-extended.ts
 unless_exists: true
 ---
+import { StyleRules } from "@material-ui/core/styles";
 import { <%= Name=h.toName(name) %>ClassKey, <%= Name %>Props } from "./<%= Name %>";
-// uncomment these lines if this style has @mui-treasury/theme-treasury as dependency
-// import { ExtendedThemeOutput } from "@mui-treasury/theme-treasury";
 
-// declare module "@material-ui/core/styles/createMuiTheme" {
-//   interface Theme extends ExtendedThemeOutput {}
-// }
-
-declare module "@material-ui/core/styles/overrides" {
-  interface ComponentNameToClassKey {
-    Mui<%= Name %>: <%= Name %>ClassKey;
-  }
-}
-
-declare module "@material-ui/core/styles/props" {
-  interface ComponentsPropsList {
-    Mui<%= Name %>: <%= Name %>Props;
+declare module "@material-ui/core/styles/components" {
+  interface Components {
+    Jun<%= Name %>?: {
+      defaultProps?: Partial<<%= Name %>Props>;
+      styleOverrides?: Partial<StyleRules<<%= Name %>ClassKey>>;
+    };
   }
 }
 
