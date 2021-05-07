@@ -11,9 +11,9 @@ import {
 } from "@material-ui/core/styles";
 import { unstable_composeClasses as composeClasses } from "@material-ui/unstyled";
 import { SxProps } from "@material-ui/system";
-import { get<%= nameCamel=h.toNameCamel(name) %>UtilityClass, <%= nameCamel %>Classes } from "./<%= nameCamel %>Classes";
+import { get<%=Name = h.toName(name)%>UtilityClass, <%= nameCamel=h.toNameCamel(name) %>Classes } from "./<%= nameCamel %>Classes";
 
-export type <%=Name = h.toName(name)%>ClassKey = keyof typeof <%= nameCamel %>Classes;
+export type <%=Name%>ClassKey = keyof typeof <%= nameCamel %>Classes;
 export type <%=Name%>Classes = Partial<typeof <%= nameCamel %>Classes>;
 export type <%=Name%>Props = {
   className?: string;
@@ -27,7 +27,7 @@ const useUtilityClasses = (styleProps: <%=Name%>Props) => {
   };
   return composeClasses(
     slots,
-    get<%=nameCamel%>UtilityClass,
+    get<%=Name%>UtilityClass,
     classes as Required<<%=Name%>Props["classes"]>
   );
 };

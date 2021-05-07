@@ -7,7 +7,7 @@ import {
   generateUtilityClasses,
 } from "@material-ui/unstyled";
 
-export function get<%= h.toNameCamel(name) %>UtilityClass(slot: string) {
+export function get<%= h.toName(name) %>UtilityClass(slot: string) {
   return generateUtilityClass("Jun<%=h.toName(name)%>", slot);
 }
 
