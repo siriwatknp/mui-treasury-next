@@ -16,8 +16,20 @@ import { get<%=Name = h.toName(name)%>UtilityClass, <%= nameCamel=h.toNameCamel(
 export type <%=Name%>ClassKey = keyof typeof <%= nameCamel %>Classes;
 export type <%=Name%>Classes = Partial<typeof <%= nameCamel %>Classes>;
 export type <%=Name%>Props = {
+  /**
+   * className append to the root element
+   */
   className?: string;
-  classes?: <%=Name%>Classes;
+
+  /**
+   * Override or extend the styles applied to the component.
+   */
+  classes?: StickerClasses;
+
+  /**
+   * The system prop that allows defining system overrides as well as additional CSS styles.
+   */
+  sx?: SxProps<Theme>;
 };
 
 const useUtilityClasses = (styleProps: <%=Name%>Props) => {
