@@ -17,17 +17,20 @@ export type StickerProps = {
   className?: string;
 
   /**
-   * variant of the square, default to `none`
+   * variant of the square
+   * @default 'none'
    */
   variant?: "none" | "solid" | "soft" | "outlined";
 
   /**
    * If `true`, this element has round shape
+   * @default false
    */
   round?: boolean;
 
   /**
    * If `true`, this element has base padding left & right (for containing text)
+   * @default false
    */
   hasText?: boolean;
 
