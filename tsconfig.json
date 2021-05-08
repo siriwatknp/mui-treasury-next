@@ -23,6 +23,10 @@
       "@mui-treasury/component-sticker": ["packages/component-sticker/src"],
       "@mui-treasury/component-formaddon": ["packages/component-formaddon/src"],
       "@mui-treasury/component-groupy": ["packages/component-groupy/src"],
+      "@mui-treasury/style-slider-apollo": [
+        "packages/style-slider-apollo/src/"
+      ],
+
       // hygen-component-target
       "@mui-treasury/style-sticker-glow": ["packages/style-sticker-glow/src/"],
       "@mui-treasury/style-button-bootstrap": [
