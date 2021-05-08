@@ -27,6 +27,10 @@
         "packages/style-slider-apollo/src/"
       ],
 
+      "@mui-treasury/style-textfield-tailwind": [
+        "packages/style-textfield-tailwind/src/"
+      ],
+
       // hygen-component-target
       "@mui-treasury/style-sticker-glow": ["packages/style-sticker-glow/src/"],
       "@mui-treasury/style-button-bootstrap": [
