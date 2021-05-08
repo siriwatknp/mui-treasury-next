@@ -30,11 +30,20 @@ export const createTextfieldAntStyles = (theme: Theme): Output => {
           fontSize: 14,
           transform: "none",
           color: theme.palette.text.primary,
+          lineHeight: 1.5715,
           "&.Mui-focused": {
             color: theme.palette.text.primary,
           },
           "&.Mui-error": {
             color: theme.palette.text.primary,
+          },
+          "&.Mui-required": {
+            paddingLeft: 10,
+            "& .MuiFormLabel-asterisk": {
+              position: "absolute",
+              left: 0,
+              color: "#ff4d4f",
+            },
           },
         },
       },
@@ -52,12 +61,12 @@ export const createTextfieldAntStyles = (theme: Theme): Output => {
           fontSize: 14,
           lineHeight: 1.5715,
           "label + &": {
-            marginTop: 24,
+            marginTop: 28,
             "&.MuiInputBase-sizeSmall": {
-              marginTop: 22,
+              marginTop: 24,
             },
           },
-          "&:hover:not(.Mui-disabled)": {
+          "&:hover:not(.Mui-disabled):not(.Mui-error)": {
             borderColor: "#40a9ff",
           },
           "&.Mui-focused": {
@@ -150,14 +159,10 @@ export const createTextfieldAntStyles = (theme: Theme): Output => {
       styleOverrides: {
         root: {
           ".MuiInput-root + &": {
-            marginTop: 0,
             lineHeight: 1.5715,
-            fontSize: 14,
+            fontSize: 12,
             "&.Mui-error": {
               color: "#ff4d4f",
-            },
-            "&.MuiFormHelperText-sizeSmall": {
-              fontSize: 12,
             },
           },
         },
