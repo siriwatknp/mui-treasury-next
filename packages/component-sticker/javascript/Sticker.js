@@ -79,9 +79,17 @@ export const Sticker = React.forwardRef(function Sticker(
     props: inProps,
     name: "JunSticker",
   });
-  const { variant = "none", palette, round, ...other } = props;
+  const {
+    variant = "none",
+    palette,
+    round = false,
+    hasText = false,
+    ...other
+  } = props;
   const styleProps = {
     variant,
+    round,
+    hasText,
     ...props,
   };
   const classes = useUtilityClasses(styleProps);
