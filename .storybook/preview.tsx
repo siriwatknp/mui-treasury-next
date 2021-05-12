@@ -1,6 +1,6 @@
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { StoryContext } from "@storybook/react/types-6-0";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import StyledEngineProvider from "@material-ui/core/StyledEngineProvider";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -8,14 +8,23 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { createTreasuryTheme } from "@mui-treasury/theme-treasury";
 
 const withThemeProvider = (Story: any, context: StoryContext) => {
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  const mode = context.globals?.muiMode ?? "light";
   const [theme, setTheme] = useState(
     createTreasuryTheme({
       palette: {
-        mode: prefersDarkMode ? "dark" : "light",
+        mode,
       },
     })
   );
+  useEffect(() => {
+    setTheme(
+      createTreasuryTheme({
+        palette: {
+          mode,
+        },
+      })
+    );
+  }, [mode]);
   return (
     <Suspense
       fallback={

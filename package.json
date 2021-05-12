@@ -40,6 +40,7 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "rimraf": "3.0.2",
+    "storybook-addon-mui-mode": "0.0.2",
     "stylis": "4.0.10",
     "stylis-plugin-rtl": "2.0.2",
     "ts-jest": "26.5.1",
