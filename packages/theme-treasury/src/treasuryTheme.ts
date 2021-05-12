@@ -53,6 +53,7 @@ export const createTreasuryTheme = (
   ...args: object[]
 ) => {
   const themePalette = {
+    ...options?.palette,
     primary: {
       ...treasuryPalette.primary,
       ...options?.palette?.primary,
