@@ -69,6 +69,7 @@ export default {
     label: "Label",
     disabled: false,
     placeholder: "Basic usage",
+    required: false,
   },
   parameters: {
     layout: "centered",
