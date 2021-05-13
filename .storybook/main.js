@@ -10,8 +10,13 @@ module.exports = {
     "../stories/**/*.stories.@(js|jsx|ts|tsx)",
   ],
   addons: [
+    "@storybook/addon-docs",
+    "@storybook/addon-controls",
+    "@storybook/addon-actions",
+    "@storybook/addon-viewport",
+    "@storybook/addon-toolbars",
+    "@storybook/addon-storysource",
     "@storybook/addon-links",
-    "@storybook/addon-essentials",
     "storybook-addon-mui-mode",
   ],
   webpackFinal: async (config) => {
