@@ -1,6 +1,7 @@
 export * from "./NumberInput";
-export {
-  useNumberInput,
+export { useNumberInput } from "./useNumberInput";
+
+export type {
   UseNumberInputOptions,
   NumberInputEventType,
   NumberInputError,

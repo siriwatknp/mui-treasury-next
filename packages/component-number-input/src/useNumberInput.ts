@@ -65,10 +65,10 @@ export const numberToString = (value: number | undefined, precision = 0) => {
   return result;
 };
 
-export const getStepFactor = <
-  Event extends React.KeyboardEvent | React.WheelEvent
->(
-  event: Event
+export const getStepFactor = (
+  event: Partial<{ metaKey: boolean; ctrlKey: boolean; shiftKey: boolean }>,
+  step: number,
+  precision: number
 ) => {
   let ratio = 1;
   if (event.metaKey || event.ctrlKey) {
@@ -77,7 +77,11 @@ export const getStepFactor = <
   if (event.shiftKey) {
     ratio = 10;
   }
-  return ratio;
+  let stepFactor = ratio * step;
+  if (stepFactor < 1 / Math.pow(10, precision)) {
+    stepFactor = step;
+  }
+  return stepFactor;
 };
 
 const noop = <T>(value: T) => value;
@@ -262,7 +266,7 @@ function NumberInput() {
 
       event.preventDefault();
 
-      const stepFactor = getStepFactor(event as any) * step;
+      const stepFactor = getStepFactor(event as any, step, precision);
       const direction = Math.sign(event.deltaY);
 
       if (direction === -1) {
@@ -293,26 +297,23 @@ function NumberInput() {
 
   const spinUp = (event: React.MouseEvent | React.TouchEvent) => {
     event.preventDefault();
-    spinner.up();
+    spinner.up({ step: getStepFactor(event, step, precision) });
     if (focusInputOnChange) inputRef.current?.focus();
   };
 
   const spinDown = (event: React.MouseEvent | React.TouchEvent) => {
     event.preventDefault();
-    spinner.down();
+    spinner.down({ step: getStepFactor(event, step, precision) });
     if (focusInputOnChange) inputRef.current?.focus();
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    const eventKey = normalizeEventKey(event);
-    let stepFactor = getStepFactor(event) * step;
-    if (stepFactor < 1 / Math.pow(10, precision)) {
-      stepFactor = step;
-    }
+    const stepFactor = getStepFactor(event, step, precision);
     const keyMap: EventKeyMap = {
       ArrowUp: () => increment({ step: stepFactor }),
       ArrowDown: () => decrement({ step: stepFactor }),
     };
+    const eventKey = normalizeEventKey(event);
     const action = keyMap[eventKey];
     if (action) {
       event.preventDefault();

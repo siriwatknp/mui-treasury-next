@@ -84,7 +84,10 @@ type Action = "increment" | "decrement";
  * @param increment the function to increment
  * @param decrement the function to decrement
  */
-export function useSpinner(increment: Function, decrement: Function) {
+export function useSpinner<T>(
+  increment: (params?: T) => void,
+  decrement: (params?: T) => void
+) {
   /**
    * To keep incrementing/decrementing on press, we call that `spinning`
    */
@@ -95,6 +98,8 @@ export function useSpinner(increment: Function, decrement: Function) {
 
   // To increment the value the first time you mousedown, we call that `runOnce`
   const [runOnce, setRunOnce] = useState(true);
+
+  const paramsRef = useRef<T | undefined>();
 
   // Store the timeout instance id in a ref, so we can clear the timeout later
   const timeoutRef = useRef<any>(null);
@@ -108,48 +113,58 @@ export function useSpinner(increment: Function, decrement: Function) {
    */
   useInterval(
     () => {
+      console.log("paramsRef.current", paramsRef.current);
       if (action === "increment") {
-        increment();
+        increment(paramsRef.current);
       }
       if (action === "decrement") {
-        decrement();
+        decrement(paramsRef.current);
       }
     },
     isSpinning ? CONTINUOUS_CHANGE_INTERVAL : null
   );
 
   // Function to activate the spinning and increment the value
-  const up = useCallback(() => {
-    // increment the first fime
-    if (runOnce) {
-      increment();
-    }
+  const up = useCallback(
+    (params?: T) => {
+      paramsRef.current = params;
+      // increment the first fime
+      if (runOnce) {
+        increment(params);
+      }
 
-    // after a delay, keep incrementing at interval ("spinning up")
-    timeoutRef.current = setTimeout(() => {
-      setRunOnce(false);
-      setIsSpinning(true);
-      setAction("increment");
-    }, CONTINUOUS_CHANGE_DELAY);
-  }, [increment, runOnce]);
+      // after a delay, keep incrementing at interval ("spinning up")
+      timeoutRef.current = setTimeout(() => {
+        setRunOnce(false);
+        setIsSpinning(true);
+        setAction("increment");
+      }, CONTINUOUS_CHANGE_DELAY);
+    },
+    [increment, runOnce]
+  );
 
   // Function to activate the spinning and increment the value
-  const down = useCallback(() => {
-    // decrement the first fime
-    if (runOnce) {
-      decrement();
-    }
+  const down = useCallback(
+    (params?: T) => {
+      paramsRef.current = params;
+      // decrement the first fime
+      if (runOnce) {
+        decrement(paramsRef.current);
+      }
 
-    // after a delay, keep decrementing at interval ("spinning down")
-    timeoutRef.current = setTimeout(() => {
-      setRunOnce(false);
-      setIsSpinning(true);
-      setAction("decrement");
-    }, CONTINUOUS_CHANGE_DELAY);
-  }, [decrement, runOnce]);
+      // after a delay, keep decrementing at interval ("spinning down")
+      timeoutRef.current = setTimeout(() => {
+        setRunOnce(false);
+        setIsSpinning(true);
+        setAction("decrement");
+      }, CONTINUOUS_CHANGE_DELAY);
+    },
+    [decrement, runOnce]
+  );
 
   // Function to stop spinng (useful for mouseup, keyup handlers)
   const stop = useCallback(() => {
+    paramsRef.current = undefined;
     setRunOnce(true);
     setIsSpinning(false);
     removeTimeout();

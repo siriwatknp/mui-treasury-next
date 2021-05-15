@@ -254,6 +254,38 @@ describe("NumberInput", () => {
     });
   });
 
+  describe("modifer with metaKey, ctrlKey and shiftKey", () => {
+    it("holding shiftKey will increment/decrement in 10 times factor", () => {
+      render(<NumberInput defaultValue={1} precision={1} />);
+
+      const elms = getElements();
+      userEvent.click(elms.incrementBtn, { shiftKey: true });
+      expect(elms.input).toHaveValue("11.0");
+
+      userEvent.click(elms.decrementBtn, { shiftKey: true });
+      expect(elms.input).toHaveValue("1.0");
+    });
+
+    it("holding metaKey/ctrlKey will increment/decrement in 1/10 times factor", () => {
+      render(<NumberInput defaultValue={0} precision={1} />);
+
+      const elms = getElements();
+      fireEvent.keyDown(elms.input, {
+        key: "ArrowDown",
+        keyCode: 40,
+        metaKey: true,
+      });
+      expect(elms.input).toHaveValue("-0.1");
+
+      fireEvent.keyDown(elms.input, {
+        key: "ArrowUp",
+        keyCode: 38,
+        ctrlKey: true,
+      });
+      expect(elms.input).toHaveValue("0.0");
+    });
+  });
+
   describe("formatter & parser", () => {
     it("can format and parse", () => {
       render(
