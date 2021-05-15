@@ -5,7 +5,8 @@
     "types",
     "scripts",
     ".storybook/preview.tsx",
-    "stories"
+    "stories",
+    "./setupTests.ts"
   ],
   "exclude": ["node_modules", "**/*.test.*", "**/*.spec.*", "dist"],
   "compilerOptions": {
@@ -48,6 +49,10 @@
       "@mui-treasury/style-textfield-standard": [
         "packages/style-textfield-standard/src/"
       ],
+      "@mui-treasury/component-number-input": [
+        "packages/component-number-input/src/"
+      ],
+
       // hygen-style-target
       "@mui-treasury/layout": ["packages/layout/src"]
     }
