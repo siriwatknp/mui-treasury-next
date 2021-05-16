@@ -24,15 +24,14 @@
       "@mui-treasury/component-sticker": ["packages/component-sticker/src"],
       "@mui-treasury/component-formaddon": ["packages/component-formaddon/src"],
       "@mui-treasury/component-groupy": ["packages/component-groupy/src"],
-      "@mui-treasury/style-slider-apollo": [
-        "packages/style-slider-apollo/src/"
+      "@mui-treasury/component-number-input": [
+        "packages/component-number-input/src/"
       ],
-
-      "@mui-treasury/style-textfield-tailwind": [
-        "packages/style-textfield-tailwind/src/"
+      "@mui-treasury/component-number-spinner": [
+        "packages/component-number-spinner/src/"
       ],
-
       // hygen-component-target
+
       "@mui-treasury/style-sticker-glow": ["packages/style-sticker-glow/src/"],
       "@mui-treasury/style-button-bootstrap": [
         "packages/style-button-bootstrap/src/"
@@ -49,13 +48,16 @@
       "@mui-treasury/style-textfield-standard": [
         "packages/style-textfield-standard/src/"
       ],
-      "@mui-treasury/component-number-input": [
-        "packages/component-number-input/src/"
+      "@mui-treasury/style-textfield-tailwind": [
+        "packages/style-textfield-tailwind/src/"
       ],
+      "@mui-treasury/style-slider-apollo": [
+        "packages/style-slider-apollo/src/"
+      ],
+      // hygen-style-target
 
       "@mui-treasury/use-number-input": ["packages/use-number-input/src/"],
-
-      // hygen-style-target
+      // hygen-hook-target
       "@mui-treasury/layout": ["packages/layout/src"]
     }
   }

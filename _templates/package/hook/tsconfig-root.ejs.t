@@ -1,6 +1,6 @@
 ---
 to: tsconfig.json
 inject: true
-before: hygen-style-target
+before: hygen-hook-target
 ---
       "@mui-treasury/<%= h.toNamePath(name) %>": ["packages/<%= h.toNamePath(name) %>/src/"],
