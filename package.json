@@ -60,6 +60,7 @@
     "clean": "lerna run clean",
     "init:component": "hygen package component",
     "init:style": "hygen package style",
+    "init:hook": "hygen package hook",
     "dev:cli": "yarn workspace mui-treasury run dev",
     "create-layout-storybook": "npx hygen layout storybook",
     "print-package-stats": "ts-node scripts/print-package-stats",

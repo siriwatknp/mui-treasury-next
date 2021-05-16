@@ -27,13 +27,13 @@ unless_exists: true
     "build:cjs": "cross-env NODE_ENV=production BABEL_ENV=cjs babel --config-file ../../babel-config.js --extensions \".js,.ts,.tsx\" ./src --out-dir ./dist --ignore \"**/*.test.ts,**/*.test.tsx\"",
     "build:esm": "cross-env NODE_ENV=production BABEL_ENV=esm babel --config-file ../../babel-config.js --extensions \".js,.ts,.tsx\" ./src --out-dir ./dist/esm --ignore \"**/*.test.ts,**/*.test.tsx\"",
     "build:types": "tsc -p tsconfig.build.json",
-    "prepare-dist": "ts-node ../../scripts/prerelease.ts component",
+    "prepare-dist": "ts-node ../../scripts/prerelease.ts hook",
     "prepublishOnly": "yarn prepare-dist"
   },
   "bugs": {
     "url": "https://github.com/siriwatknp/mui-treasury-next/issues"
   },
   "peerDependencies": {
-    "@material-ui/core": "^5.0.0"
+    "react": ">=16.8.0"
   }
 }
