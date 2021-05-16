@@ -29,7 +29,13 @@
   "bugs": {
     "url": "https://github.com/siriwatknp/mui-treasury-next/issues"
   },
+  "peerDependencies": {
+    "@material-ui/core": "^5.0.0"
+  },
   "dependencies": {
+    "@mui-treasury/use-number-input": "^0.1.0-alpha.0"
+  },
+  "releasedDependencies": {
     "@mui-treasury/use-number-input": "^0.1.0-alpha.0"
   }
 }

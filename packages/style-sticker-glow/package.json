@@ -31,6 +31,10 @@
   "bugs": {
     "url": "https://github.com/siriwatknp/mui-treasury-next/issues"
   },
+  "peerDependencies": {
+    "@mui-treasury/component-sticker": "^0.1.0-alpha.3",
+    "@mui-treasury/theme-treasury": "^0.3.0-alpha.7"
+  },
   "dependencies": {
     "@mui-treasury/component-sticker": "^0.1.0-alpha.3",
     "@mui-treasury/theme-treasury": "^0.3.0-alpha.7"

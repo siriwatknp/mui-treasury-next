@@ -1,7 +1,7 @@
 import { promises as fsp } from "fs";
 import commander from "commander";
 import cpy from "cpy";
-import { set } from "edit-package-json";
+import { set, del } from "edit-package-json";
 
 const PUBLISH_DIR = "dist";
 
@@ -27,10 +27,13 @@ async function run() {
       set(file, "bin.mui-treasury", "index.js")
     ).then((result) => fsp.writeFile(`${PUBLISH_DIR}/package.json`, result));
   }
-  if (["component", "style", "theme"].includes(packageType)) {
+  if (["component", "style", "theme", "hook"].includes(packageType)) {
     await Promise.resolve(set(file, "main", "index.js"))
       .then((newFile) => set(newFile, "types", "index.d.ts"))
-      .then((newFile) => newFile.replace("dependencies", "peerDependencies"))
+      .then((newFile) => del(newFile, "dependencies"))
+      .then((newFile) =>
+        newFile.replace("releasedDependencies", "dependencies")
+      )
       .then((result) => fsp.writeFile(`${PUBLISH_DIR}/package.json`, result));
   }
   if (packageType === "layout") {
