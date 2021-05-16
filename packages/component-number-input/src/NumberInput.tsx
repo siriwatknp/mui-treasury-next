@@ -6,10 +6,7 @@ import {
   Theme,
 } from "@material-ui/core/styles";
 import { unstable_composeClasses as composeClasses } from "@material-ui/unstyled";
-import { SxProps } from "@material-ui/system";
 import SvgIcon from "@material-ui/core/SvgIcon";
-import Input, { InputProps } from "@material-ui/core/Input";
-import FilledInput, { FilledInputProps } from "@material-ui/core/FilledInput";
 import OutlinedInput, {
   OutlinedInputProps,
 } from "@material-ui/core/OutlinedInput";
@@ -22,40 +19,44 @@ import {
   numberInputClasses,
 } from "./numberInputClasses";
 import { useNumberInput, UseNumberInputOptions } from "./useNumberInput";
+import capitalize from "@material-ui/utils/capitalize";
 
 export type NumberInputClassKey = keyof typeof numberInputClasses;
 export type NumberInputClasses = Partial<typeof numberInputClasses>;
 
-interface StandardVariant extends InputProps {
-  variant?: "standard";
-}
-interface FilledVariant extends FilledInputProps {
-  variant?: "filled";
-}
-interface OutlinedVariant extends OutlinedInputProps {
-  variant?: "outlined";
-}
+type StepperClasses = {
+  stepper?: string;
+  stepperSmall?: string;
+  stepperMedium?: string;
+  button?: string;
+  increment?: string;
+  decrement?: string;
+};
 
 export type NumberInputProps = UseNumberInputOptions & {
-  sx?: SxProps<Theme>;
+  inputElement: React.ReactElement;
   incrementIcon?: React.ReactNode;
   decrementIcon?: React.ReactNode;
   DecrementProps?: ButtonBaseProps;
   IncrementProps?: ButtonBaseProps;
   InputAdornmentProps?: InputAdornmentProps;
-  StepperProps?: JSX.IntrinsicElements["div"];
-} & Omit<StandardVariant | FilledVariant | OutlinedVariant, "onChange">;
+  StepperProps?: JSX.IntrinsicElements["div"] & {
+    classes?: StepperClasses;
+  };
+} & Omit<OutlinedInputProps, "onChange">;
 
 const useUtilityClasses = (styleProps: NumberInputProps) => {
-  const { classes, type } = styleProps;
+  const { StepperProps, size } = styleProps;
   const slots = {
-    stepper: ["stepper"],
-    button: ["button", type],
+    stepper: ["stepper", size && `stepper${capitalize(size)}`],
+    button: ["button"],
+    increment: ["increment"],
+    decrement: ["decrement"],
   };
   return composeClasses(
     slots,
     getNumberInputUtilityClass,
-    classes as Required<NumberInputProps["classes"]>
+    StepperProps?.classes
   );
 };
 
@@ -65,7 +66,10 @@ const NumberInputStepper = styled(
   {
     name: "JunNumberInput",
     slot: "Stepper",
-    overridesResolver: (props, styles) => styles.stepper,
+    overridesResolver: (props, styles) => ({
+      ...styles.stepper,
+      ...(props.size && styles[`size${capitalize(props.size)}`]),
+    }),
   }
 )({
   display: "flex",
@@ -87,9 +91,9 @@ const NumberInputButton = styled(
       };
     },
   }
-)<{ styleProps: { type: "increment" | "decrement" } }>(({ theme }) => ({
-  width: 24,
-  height: 24,
+)<{
+  styleProps: { size: "small" | "medium" };
+}>(({ theme, styleProps }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -101,25 +105,12 @@ const NumberInputButton = styled(
     opacity: 0.5,
     cursor: "not-allowed",
   },
+  ...(styleProps.size === "small" && {
+    "& svg": {
+      fontSize: "1.25rem",
+    },
+  }),
 }));
-
-interface NumberInputComponent {
-  <P extends { as?: React.ElementType }>(
-    props: P extends { as: infer As }
-      ? As extends keyof JSX.IntrinsicElements
-        ? P & NumberInputProps & JSX.IntrinsicElements[As]
-        : As extends React.ComponentType<infer AsProps>
-        ? P & NumberInputProps & AsProps
-        : PropsWithChildren<P & NumberInputProps>
-      : PropsWithChildren<P & NumberInputProps>
-  ): JSX.Element | null;
-}
-
-const Variants = {
-  standard: Input,
-  filled: FilledInput,
-  outlined: OutlinedInput,
-};
 
 const defaultIncrementIcon = (
   <SvgIcon>
@@ -134,7 +125,7 @@ const defaultDecrementIcon = (
   </SvgIcon>
 );
 
-export const NumberInput: NumberInputComponent = React.forwardRef<
+export const NumberInput = React.forwardRef<
   any,
   PropsWithChildren<NumberInputProps>
 >(function NumberInput(inProps, ref) {
@@ -143,7 +134,7 @@ export const NumberInput: NumberInputComponent = React.forwardRef<
     name: "JunNumberInput",
   });
   const {
-    variant = "outlined",
+    inputElement = <OutlinedInput />,
     endAdornment = null,
     defaultValue,
     allowMouseWheel,
@@ -158,6 +149,7 @@ export const NumberInput: NumberInputComponent = React.forwardRef<
     StepperProps,
     formatter,
     parser,
+    size = "medium",
     ...other
   } = props;
 
@@ -166,7 +158,6 @@ export const NumberInput: NumberInputComponent = React.forwardRef<
   };
 
   const classes = useUtilityClasses(styleProps);
-  const InputComponent = Variants[variant];
 
   const {
     inputRef,
@@ -176,41 +167,48 @@ export const NumberInput: NumberInputComponent = React.forwardRef<
     getDecrementProps,
   } = useNumberInput(props);
 
-  return (
-    <InputComponent
-      ref={ref}
-      {...other}
-      {...getInputHandlerProps(props)}
-      inputRef={inputRef}
-      inputProps={getInputA11yProps()}
-      endAdornment={
-        <>
-          {endAdornment}
-          <InputAdornment {...InputAdornmentProps} position="end">
-            <NumberInputStepper
-              {...StepperProps}
-              className={cx(classes.stepper, StepperProps?.className)}
+  return React.cloneElement(inputElement, {
+    ref,
+    size,
+    ...other,
+    ...getInputHandlerProps(props),
+    inputRef,
+    inputProps: getInputA11yProps(),
+    endAdornment: (
+      <>
+        {endAdornment}
+        <InputAdornment {...InputAdornmentProps} position="end">
+          <NumberInputStepper
+            {...StepperProps}
+            className={cx(classes.stepper, StepperProps?.className)}
+          >
+            <NumberInputButton
+              {...IncrementProps}
+              {...getIncrementProps(IncrementProps)}
+              className={cx(
+                classes.button,
+                classes.increment,
+                IncrementProps?.className
+              )}
+              styleProps={{ size }}
             >
-              <NumberInputButton
-                {...IncrementProps}
-                {...getIncrementProps(IncrementProps)}
-                className={cx(classes.button, IncrementProps?.className)}
-                styleProps={{ type: "increment" }}
-              >
-                {incrementIcon}
-              </NumberInputButton>
-              <NumberInputButton
-                {...DecrementProps}
-                {...getDecrementProps(DecrementProps)}
-                className={cx(classes.button, DecrementProps?.className)}
-                styleProps={{ type: "decrement" }}
-              >
-                {decrementIcon}
-              </NumberInputButton>
-            </NumberInputStepper>
-          </InputAdornment>
-        </>
-      }
-    />
-  );
+              {incrementIcon}
+            </NumberInputButton>
+            <NumberInputButton
+              {...DecrementProps}
+              {...getDecrementProps(DecrementProps)}
+              className={cx(
+                classes.button,
+                classes.decrement,
+                DecrementProps?.className
+              )}
+              styleProps={{ size }}
+            >
+              {decrementIcon}
+            </NumberInputButton>
+          </NumberInputStepper>
+        </InputAdornment>
+      </>
+    ),
+  });
 });

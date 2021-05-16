@@ -3,6 +3,7 @@ import { Story, Meta } from "@storybook/react/types-6-0";
 
 import Box from "@material-ui/core/Box";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import FilledInput from "@material-ui/core/FilledInput";
 import {
   NumberInput,
   NumberInputProps,
@@ -12,9 +13,18 @@ import {
 export default {
   title: "Component/NumberInput",
   component: NumberInput,
-  argTypes: { onChange: { action: "changed" } },
+  argTypes: {
+    onChange: { action: "changed" },
+    size: {
+      control: {
+        type: "select",
+        options: ["medium", "small"],
+      },
+    },
+  },
   args: {
     placeholder: "enter number",
+    size: "medium",
   },
   parameters: {
     layout: "centered",
@@ -23,6 +33,16 @@ export default {
 
 export const Default: Story<NumberInputProps> = (args) => {
   return <NumberInput {...args} />;
+};
+
+export const Filled: Story<NumberInputProps> = (args) => {
+  return (
+    <NumberInput
+      {...args}
+      // @ts-expect-error hiddenLabel
+      inputElement={<FilledInput hiddenLabel disableUnderline />}
+    />
+  );
 };
 
 export const MinMax: Story<NumberInputProps> = (args) => {
