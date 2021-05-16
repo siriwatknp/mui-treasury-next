@@ -53,6 +53,8 @@
         "packages/component-number-input/src/"
       ],
 
+      "@mui-treasury/use-number-input": ["packages/use-number-input/src/"],
+
       // hygen-style-target
       "@mui-treasury/layout": ["packages/layout/src"]
     }

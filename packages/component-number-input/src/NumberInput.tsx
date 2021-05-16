@@ -18,7 +18,10 @@ import {
   getNumberInputUtilityClass,
   numberInputClasses,
 } from "./numberInputClasses";
-import { useNumberInput, UseNumberInputOptions } from "./useNumberInput";
+import {
+  useNumberInput,
+  UseNumberInputOptions,
+} from "@mui-treasury/use-number-input";
 import capitalize from "@material-ui/utils/capitalize";
 
 export type NumberInputClassKey = keyof typeof numberInputClasses;
