@@ -36,7 +36,7 @@ type StepperClasses = {
 };
 
 export type NumberSpinnerProps = UseNumberInputOptions & {
-  inputElement: React.ReactElement;
+  inputElement?: React.ReactElement;
   incrementIcon?: React.ReactNode;
   decrementIcon?: React.ReactNode;
   DecrementProps?: ButtonBaseProps;
@@ -58,7 +58,7 @@ const useUtilityClasses = (styleProps: NumberSpinnerProps) => {
   return composeClasses(
     slots,
     getNumberSpinnerUtilityClass,
-    StepperProps?.classes
+    StepperProps?.classes as Required<StepperClasses>
   );
 };
 

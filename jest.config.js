@@ -2,6 +2,7 @@ module.exports = {
   roots: ["<rootDir>"],
   preset: "ts-jest",
   setupFilesAfterEnv: ["<rootDir>/setupTests.ts", "jest-extended"],
+  modulePathIgnorePatterns: ["dist", "cli"],
   transform: {
     "^.+\\.(ts|tsx|js)$": "ts-jest",
   },
@@ -12,4 +13,7 @@ module.exports = {
     "**/__tests__/**/*.+(ts|tsx|js)",
     "**/?(*.)+(spec|test).+(ts|tsx|js)",
   ],
+  moduleNameMapper: {
+    "@mui-treasury/(.*)": ["<rootDir>/packages/$1/src/"],
+  },
 };
