@@ -28,14 +28,14 @@ import {
 } from "packages/layout/src";
 import { IconButton } from "@material-ui/core";
 
-export default {
-  title: "Layout",
-  argTypes: {},
-  args: {},
-  parameters: {
-    layout: "fullscreen",
-  },
-} as Meta;
+// export default {
+//   title: "Layout",
+//   argTypes: {},
+//   args: {},
+//   parameters: {
+//     layout: "fullscreen",
+//   },
+// } as Meta;
 
 // Create rtl cache
 const cacheRtl = createCache({
