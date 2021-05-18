@@ -52,8 +52,10 @@ const Fixed = () => {
             </Header>
             <EdgeSidebar anchor="left">
               <SidebarContent>
-                <NavHeaderMockUp collapsed={state.leftEdgeSidebar?.collapsed} />
-                <NavContentMockUp />
+                <NavHeaderMockUp
+                  collapsed={state.leftEdgeSidebar?.collapsed ?? false}
+                />
+                <NavContentMockUp onClickItem={() => {}} />
               </SidebarContent>
               <EdgeTrigger target={{ anchor: "left", field: "collapsed" }}>
                 {(collapsed, setCollapsed) => (
