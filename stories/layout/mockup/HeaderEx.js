@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import { isWidthUp } from "@material-ui/core/withWidth";
+import { withStyles, useTheme } from "@material-ui/core/styles";
 import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
@@ -74,54 +73,57 @@ const styles = ({
   },
 });
 
-const HeaderEx = ({ classes, screen }) => (
-  <>
-    <Typography noWrap color={"textSecondary"} className={classes.header}>
-      Layout v3.1
-    </Typography>
-    <div className={classes.grow} />
-    <div className={classes.search}>
-      <div className={classes.searchIcon}>
-        <Search />
+const HeaderEx = ({ classes, screen }) => {
+  const theme = useTheme();
+  return (
+    <>
+      <Typography noWrap color={"textSecondary"} className={classes.header}>
+        Layout v3.1
+      </Typography>
+      <div className={classes.grow} />
+      <div className={classes.search}>
+        <div className={classes.searchIcon}>
+          <Search />
+        </div>
+        <InputBase
+          placeholder="Search…"
+          classes={{
+            root: classes.inputRoot,
+            input: classes.inputInput,
+          }}
+        />
       </div>
-      <InputBase
-        placeholder="Search…"
-        classes={{
-          root: classes.inputRoot,
-          input: classes.inputInput,
-        }}
-      />
-    </div>
-    {screen === "xs" && (
-      <IconButton>
-        <MoreVert />
-      </IconButton>
-    )}
-    {screen === "sm" && (
-      <>
-        <IconButton>
-          <Favorite />
-        </IconButton>
+      {screen === "xs" && (
         <IconButton>
           <MoreVert />
         </IconButton>
-      </>
-    )}
-    {isWidthUp("md", screen) && (
-      <>
-        <IconButton>
-          <Favorite />
-        </IconButton>
-        <IconButton>
-          <Phone />
-        </IconButton>
-        <IconButton>
-          <Camera />
-        </IconButton>
-      </>
-    )}
-  </>
-);
+      )}
+      {screen === "sm" && (
+        <>
+          <IconButton>
+            <Favorite />
+          </IconButton>
+          <IconButton>
+            <MoreVert />
+          </IconButton>
+        </>
+      )}
+      {screen && screen !== "xs" && screen !== "sm" && (
+        <>
+          <IconButton>
+            <Favorite />
+          </IconButton>
+          <IconButton>
+            <Phone />
+          </IconButton>
+          <IconButton>
+            <Camera />
+          </IconButton>
+        </>
+      )}
+    </>
+  );
+};
 
 HeaderEx.propTypes = {
   screen: PropTypes.string,
