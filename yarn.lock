@@ -2592,6 +2592,31 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
+"@mui-treasury/components@1.10.1":
+  version "1.10.1"
+  resolved "https://registry.yarnpkg.com/@mui-treasury/components/-/components-1.10.1.tgz#9626d4156f097bfc9d19d261d4d0d91352a8186e"
+  integrity sha512-k2TYPopGscPcG112ZbEiZxw2ud0Umn2mWYG3+hXbAw6WXQyATpTzosXzReWHAlFoyuACezDZMv9CU6E4B8/s5A==
+  dependencies:
+    "@mui-treasury/styles" "^1.13.1"
+    "@mui-treasury/utils" "^0.4.1"
+    use-deep-compare-effect "^1.3.0"
+
+"@mui-treasury/styles@1.13.1", "@mui-treasury/styles@^1.13.1":
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/@mui-treasury/styles/-/styles-1.13.1.tgz#96c86f362056eaeb528740bf4cf128d3cd5c56b7"
+  integrity sha512-vfAx8RWFnEVBSTK2KbgU6n4EwYXzWSU3VRsUUbRkuPXgdc8PO6O9/HAht8s/qMOCCa+UZ/s+dfjvN9iXPmW5SA==
+  dependencies:
+    "@mui-treasury/utils" "^0.4.1"
+    color "^3.1.2"
+
+"@mui-treasury/utils@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@mui-treasury/utils/-/utils-0.4.1.tgz#075645cec98b2e976766e505d9ac8b52778438b3"
+  integrity sha512-XcJOUrQodx2VCouk6uvYw+MChVGXPy1abe7PxqpxIGEr6s1QwV8HhgA4q/+eq0//IQ6oDXGlym4PSDO3Yh/lHA==
+  dependencies:
+    lodash.get "^4.4.2"
+    lodash.isequal "^4.5.0"
+
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents":
   version "2.1.8-no-fsevents"
   resolved "https://registry.yarnpkg.com/@nicolo-ribaudo/chokidar-2/-/chokidar-2-2.1.8-no-fsevents.tgz#da7c3996b8e6e19ebd14d82eaced2313e7769f9b"
@@ -3975,6 +4000,15 @@
   version "17.0.3"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.3.tgz#ba6e215368501ac3826951eef2904574c262cc79"
   integrity sha512-wYOUxIgs2HZZ0ACNiIayItyluADNbONl7kt8lkLjVK8IitMH5QMyAh75Fwhmo37r1m7L2JaFj03sIfxBVDvRAg==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@^17.0.0":
+  version "17.0.5"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.5.tgz#3d887570c4489011f75a3fc8f965bf87d09a1bea"
+  integrity sha512-bj4biDB9ZJmGAYTWSKJly6bMr4BLUiBrx9ujiJEoP9XIDY9CTaPGxE5QWN/1WjpPLzYF7/jRNnV2nNxNe970sw==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -6322,7 +6356,7 @@ color-string@^1.5.4:
     color-name "^1.0.0"
     simple-swizzle "^0.2.2"
 
-color@^3.0.0:
+color@^3.0.0, color@^3.1.2:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/color/-/color-3.1.3.tgz#ca67fb4e7b97d611dcde39eceed422067d91596e"
   integrity sha512-xgXAcTHa2HeFCGLE9Xs/R82hujGtu9Jd9x4NW3T34+OMs7VoPsjwzRczKHvTAHeJwWFwX5j15+MgAppE8ztObQ==
@@ -7423,6 +7457,11 @@ deprecation@^2.0.0, deprecation@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/deprecation/-/deprecation-2.3.1.tgz#6368cbdb40abf3373b525ac87e4a260c3a700919"
   integrity sha512-xmHIy4F3scKVwMsQ4WnVaS8bHOx0DmVwRywosKhaILI0ywMDWPtBSku2HNxRvF7jtwDRsoEwYQSfbxj8b7RlJQ==
+
+dequal@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/dequal/-/dequal-2.0.2.tgz#85ca22025e3a87e65ef75a7a437b35284a7e319d"
+  integrity sha512-q9K8BlJVxK7hQYqa6XISGmBZbtQQWVXSrRrWreHC94rMt1QL/Impruc+7p2CYSYuVIUr+YCt6hjrs1kkdJRTug==
 
 des.js@^1.0.0:
   version "1.0.1"
@@ -12285,6 +12324,11 @@ mdurl@^1.0.0:
   resolved "https://registry.yarnpkg.com/mdurl/-/mdurl-1.0.1.tgz#fe85b2ec75a59037f2adfec100fd6c601761152e"
   integrity sha1-/oWy7HWlkDfyrf7BAP1sYBdhFS4=
 
+mdx-embed@0.0.19:
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/mdx-embed/-/mdx-embed-0.0.19.tgz#07220a7a7f3ab6aa9ced1e1c79de1c9896bef337"
+  integrity sha512-0HEXkQqP7GuNE3kOWoj4FPdOWbACNpObeoUpTQe1BXrqcTR0KBGckCs30K+ypRuutQPo0L3IZsCLBMQqLMYaug==
+
 media-typer@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
@@ -16596,6 +16640,11 @@ store2@^2.12.0, store2@^2.7.1:
   resolved "https://registry.yarnpkg.com/store2/-/store2-2.12.0.tgz#e1f1b7e1a59b6083b2596a8d067f6ee88fd4d3cf"
   integrity sha512-7t+/wpKLanLzSnQPX8WAcuLCCeuSHoWdQuh9SB3xD0kNOM38DNf+0Oa+wmvxmYueRzkmh6IcdKFtvTa+ecgPDw==
 
+storybook-addon-mdx-embed@0.0.19:
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/storybook-addon-mdx-embed/-/storybook-addon-mdx-embed-0.0.19.tgz#200307ffcf700b776ffb8146085f035ca3d883bd"
+  integrity sha512-xYvLALtxPl21rony/ODBs4RFhjMBEHKCBxYyALbzcM8vUwoM0HsvjhMFFfh1pqH+tKfp+as5Ool3fBF+mggSdw==
+
 storybook-addon-mui-mode@0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/storybook-addon-mui-mode/-/storybook-addon-mui-mode-0.0.2.tgz#91758a40dfdc97db855650dcb37255672daa0e15"
@@ -17966,6 +18015,15 @@ use-composed-ref@^1.0.0:
   integrity sha512-my1lNHGWsSDAhhVAT4MKs6IjBUtG6ZG11uUqexPH9PptiIZDQOzaF4f5tEbJ2+7qvNbtXNBbU3SfmN+fXlWDhg==
   dependencies:
     ts-essentials "^2.0.3"
+
+use-deep-compare-effect@^1.3.0:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/use-deep-compare-effect/-/use-deep-compare-effect-1.6.1.tgz#061a0ac5400aa0461e33dddfaa2a98bca873182a"
+  integrity sha512-VB3b+7tFI81dHm8buGyrpxi8yBhzYZdyMX9iBJra7SMFMZ4ci4FJ1vFc1nvChiB1iLv4GfjqaYfvbNEpTT1rFQ==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+    "@types/react" "^17.0.0"
+    dequal "^2.0.2"
 
 use-isomorphic-layout-effect@^1.0.0:
   version "1.1.1"
