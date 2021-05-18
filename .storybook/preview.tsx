@@ -7,6 +7,9 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { createTreasuryTheme } from "@mui-treasury/theme-treasury";
 
+import "./storybook-global.css";
+import "./prism-theme.css";
+
 const withThemeProvider = (Story: any, context: StoryContext) => {
   const mode = context.globals?.muiMode ?? "light";
   const [theme, setTheme] = useState(
