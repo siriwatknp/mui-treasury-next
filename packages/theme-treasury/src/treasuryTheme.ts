@@ -1,5 +1,5 @@
 import {
-  createMuiTheme,
+  createTheme,
   getContrastRatio,
   ThemeOptions,
 } from "@material-ui/core/styles";
@@ -112,5 +112,5 @@ export const createTreasuryTheme = (
     },
     palette: themePalette,
   };
-  return createMuiTheme(input, ...args) as TreasuryTheme;
+  return createTheme(input, ...args) as TreasuryTheme;
 };

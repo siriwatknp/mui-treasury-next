@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider, createTheme } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuList from "@material-ui/core/MenuList";
@@ -14,7 +14,7 @@ import {
   createMenuBootstrapStyles,
   useMenuBootstrapStyles,
 } from "./MenuBootstrap.styles";
-const baseTheme = createMuiTheme({
+const baseTheme = createTheme({
   typography: {
     fontFamily:
       'system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"',

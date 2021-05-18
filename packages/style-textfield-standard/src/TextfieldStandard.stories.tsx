@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Story, Meta, StoryContext } from "@storybook/react/types-6-0";
 
-import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider, createTheme } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import TextField, { TextFieldProps } from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -26,12 +26,12 @@ function withContainer(Story: any, context: StoryContext) {
   );
 }
 
-const baseTheme = createMuiTheme();
+const baseTheme = createTheme();
 const textfieldStandardStyles = createTextfieldStandardStyles(baseTheme);
 function withTheme(Story: any, context: StoryContext) {
   return (
     <ThemeProvider
-      theme={createMuiTheme({
+      theme={createTheme({
         components: textfieldStandardStyles,
       })}
     >

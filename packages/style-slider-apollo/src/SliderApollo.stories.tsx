@@ -1,13 +1,13 @@
 import React from "react";
 import { Story, Meta, StoryContext } from "@storybook/react/types-6-0";
 
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Slider, { SliderProps } from "@material-ui/core/Slider";
 
 import { createSliderApolloStyles } from "./SliderApollo.styles";
 
-const baseTheme = createMuiTheme({
+const baseTheme = createTheme({
   typography: {
     fontFamily:
       'system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"',

@@ -2,7 +2,7 @@ import React from "react";
 import cx from "clsx";
 import {
   makeStyles,
-  createMuiTheme,
+  createTheme,
   responsiveFontSizes,
   ThemeProvider,
 } from "@material-ui/core/styles";
@@ -77,7 +77,7 @@ const useStyles = makeStyles(({ breakpoints }) => ({
 }));
 
 const theme = responsiveFontSizes(
-  createMuiTheme({
+  createTheme({
     palette: {
       primary: {
         main: "#20232a",

@@ -1,7 +1,7 @@
 import React from "react";
 import {
   ThemeProvider,
-  createMuiTheme,
+  createTheme,
   makeStyles,
 } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -24,7 +24,7 @@ import {
   Content,
 } from "@mui-treasury/layout";
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     background: {
       default: "#fff",

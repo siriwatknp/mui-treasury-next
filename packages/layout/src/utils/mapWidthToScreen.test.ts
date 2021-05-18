@@ -1,7 +1,7 @@
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createTheme } from "@material-ui/core/styles";
 import { mapWidthToScreen } from "./mapWidthToScreen";
 
-const theme = createMuiTheme();
+const theme = createTheme();
 const { breakpoints } = theme;
 describe("mapWidthToScreen", () => {
   it("return correct screen", () => {

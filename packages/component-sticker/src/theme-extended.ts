@@ -2,7 +2,7 @@ import { StyleRules } from "@material-ui/core/styles";
 import { ExtendedThemeOutput } from "@mui-treasury/theme-treasury";
 import { StickerClassKey, StickerProps } from "./Sticker";
 
-declare module "@material-ui/core/styles/createMuiTheme" {
+declare module "@material-ui/core/styles/createTheme" {
   interface Theme extends ExtendedThemeOutput {}
 }
 

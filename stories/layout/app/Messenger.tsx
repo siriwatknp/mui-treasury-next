@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  createMuiTheme,
+  createTheme,
   makeStyles,
   responsiveFontSizes,
   ThemeProvider,
@@ -50,7 +50,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const theme = responsiveFontSizes(
-  createMuiTheme({
+  createTheme({
     palette: {
       primary: {
         main: "rgb(0, 153, 255)",

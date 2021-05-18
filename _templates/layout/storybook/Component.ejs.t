@@ -4,7 +4,7 @@ unless_exists: true
 ---
 import React from "react";
 import {
-  createMuiTheme,
+  createTheme,
   ThemeProvider,
 } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -18,7 +18,7 @@ import {
   Footer,
 } from "@mui-treasury/layout";
 
-const theme = createMuiTheme();
+const theme = createTheme();
 
 const <%= name %> = () => {
   return (

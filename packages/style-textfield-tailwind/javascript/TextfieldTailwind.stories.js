@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider, createTheme } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Stack from "@material-ui/core/Stack";
 import TextField from "@material-ui/core/TextField";
@@ -20,7 +20,7 @@ function withContainer(Story, context) {
     </Box>
   );
 }
-const baseTheme = createMuiTheme({
+const baseTheme = createTheme({
   shape: {
     borderRadius: "0.375rem",
   },

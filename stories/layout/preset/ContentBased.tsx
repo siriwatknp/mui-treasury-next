@@ -1,5 +1,5 @@
 import React from "react";
-import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider, createTheme } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
 
@@ -24,7 +24,7 @@ import {
 import Menu from "@material-ui/icons/Menu";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 
-const theme = createMuiTheme();
+const theme = createTheme();
 const standardScheme = getContentBasedScheme();
 
 const ContentBased = () => {

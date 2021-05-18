@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider, createTheme } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -21,12 +21,12 @@ function withContainer(Story, context) {
     </Box>
   );
 }
-const baseTheme = createMuiTheme();
+const baseTheme = createTheme();
 const textfieldStandardStyles = createTextfieldStandardStyles(baseTheme);
 function withTheme(Story, context) {
   return (
     <ThemeProvider
-      theme={createMuiTheme({
+      theme={createTheme({
         components: textfieldStandardStyles,
       })}
     >

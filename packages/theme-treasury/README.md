@@ -4,10 +4,10 @@ appends some utilities and more color swatches to the theme object with type saf
 
 ## Basic Usage
 
-replace `createMuiTheme` with `createTreasuryTheme` from the library
+replace `createTheme` with `createTreasuryTheme` from the library
 
 ```tsx
-// import { createMuiTheme } from "@material-ui/core/styles";
+// import { createTheme } from "@material-ui/core/styles";
 import { createTreasuryTheme } from "@mui-treasury/theme-treasury";
 
 const theme = createTreasuryTheme();
