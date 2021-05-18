@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  MuiThemeProvider,
+  ThemeProvider,
   createMuiTheme,
   makeStyles,
 } from "@material-ui/core/styles";
@@ -10,11 +10,11 @@ import IconButton from "@material-ui/core/IconButton";
 
 import Menu from "@material-ui/icons/Menu";
 
-import AppHeader from "../../mockup/gmail/AppHeader";
-import AppSidebar from "../../mockup/gmail/AppSidebar";
-import AppContent from "../../mockup/gmail/AppContent";
-import AppSubSidebar from "../../mockup/gmail/AppSubSidebar";
-import CustomTrigger from "../../mockup/gmail/CustomTrigger";
+import AppHeader from "./gmail-mockup/AppHeader";
+import AppSidebar from "./gmail-mockup/AppSidebar";
+import AppContent from "./gmail-mockup/AppContent";
+import AppSubSidebar from "./gmail-mockup/AppSubSidebar";
+import CustomTrigger from "./gmail-mockup/CustomTrigger";
 
 import {
   Root,
@@ -42,7 +42,7 @@ const useDrawerStyles = makeStyles(() => ({
 const Gmail = () => {
   const drawerStyles = useDrawerStyles();
   return (
-    <MuiThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <Root
         initialState={{
@@ -106,7 +106,7 @@ const Gmail = () => {
         </Content>
         <CustomTrigger />
       </Root>
-    </MuiThemeProvider>
+    </ThemeProvider>
   );
 };
 

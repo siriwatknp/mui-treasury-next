@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { StoryContext } from "@storybook/react/types-6-0";
 
-import { MuiThemeProvider } from "@material-ui/core/styles";
+import { ThemeProvider } from "@material-ui/core/styles";
 import StyledEngineProvider from "@material-ui/core/StyledEngineProvider";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -42,10 +42,10 @@ const withThemeProvider = (Story: any, context: StoryContext) => {
         {context.kind.startsWith("Layout") ? (
           <Story {...context} setTheme={setTheme} />
         ) : (
-          <MuiThemeProvider theme={theme}>
+          <ThemeProvider theme={theme}>
             <CssBaseline />
             <Story {...context} setTheme={setTheme} />
-          </MuiThemeProvider>
+          </ThemeProvider>
         )}
       </StyledEngineProvider>
     </Suspense>

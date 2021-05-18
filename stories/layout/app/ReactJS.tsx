@@ -4,7 +4,7 @@ import {
   makeStyles,
   createMuiTheme,
   responsiveFontSizes,
-  MuiThemeProvider,
+  ThemeProvider,
 } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
@@ -25,12 +25,7 @@ import {
   InsetAvoidingView,
   Footer,
 } from "@mui-treasury/layout";
-import {
-  ReactHeader,
-  ReactNextArticle,
-  ReactContent,
-  // @ts-ignore
-} from "@mui-treasury/mockup/brands";
+import { ReactHeader, ReactNextArticle, ReactContent } from "./reactjs-mockup";
 
 const useStyles = makeStyles(({ breakpoints }) => ({
   toolbar: {
@@ -140,7 +135,7 @@ const ReactJs = () => {
     </Box>
   );
   return (
-    <MuiThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <Root
         scheme={{
           header: {
@@ -233,7 +228,7 @@ const ReactJs = () => {
           </>
         )}
       </Root>
-    </MuiThemeProvider>
+    </ThemeProvider>
   );
 };
 

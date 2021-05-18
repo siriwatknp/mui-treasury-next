@@ -5,7 +5,7 @@ unless_exists: true
 import React from "react";
 import {
   createMuiTheme,
-  MuiThemeProvider,
+  ThemeProvider,
 } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
@@ -22,7 +22,7 @@ const theme = createMuiTheme();
 
 const <%= name %> = () => {
   return (
-    <MuiThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <Root
         scheme={{
           header: {
@@ -49,7 +49,7 @@ const <%= name %> = () => {
           Footer
         </Footer>
       </Root>
-    </MuiThemeProvider>
+    </ThemeProvider>
   );
 }
 

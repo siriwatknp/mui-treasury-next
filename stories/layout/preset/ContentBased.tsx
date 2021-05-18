@@ -1,5 +1,5 @@
 import React from "react";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import IconButton from "@material-ui/core/IconButton";
 
@@ -19,8 +19,7 @@ import {
   NavContentMockUp,
   ContentMockUp,
   FooterMockUp,
-  //@ts-ignore
-} from "@mui-treasury/mockup/layout";
+} from "../mockup";
 
 import Menu from "@material-ui/icons/Menu";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
@@ -30,7 +29,7 @@ const standardScheme = getContentBasedScheme();
 
 const ContentBased = () => {
   return (
-    <MuiThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <Root scheme={standardScheme}>
         {({ state }) => (
           <>
@@ -64,7 +63,7 @@ const ContentBased = () => {
           </>
         )}
       </Root>
-    </MuiThemeProvider>
+    </ThemeProvider>
   );
 };
 

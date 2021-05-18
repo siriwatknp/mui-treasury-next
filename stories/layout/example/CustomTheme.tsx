@@ -1,5 +1,5 @@
 import React from "react";
-import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 import {
@@ -50,7 +50,7 @@ const theme = createMuiTheme({
 
 const CustomTheme = () => {
   return (
-    <MuiThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <Root scheme={getStandardScheme()}>
         <CssBaseline />
         <Header>
@@ -62,7 +62,7 @@ const CustomTheme = () => {
         <Content>Content</Content>
         <Footer>Footer</Footer>
       </Root>
-    </MuiThemeProvider>
+    </ThemeProvider>
   );
 };
 

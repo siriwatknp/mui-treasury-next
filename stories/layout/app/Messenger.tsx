@@ -3,7 +3,7 @@ import {
   createMuiTheme,
   makeStyles,
   responsiveFontSizes,
-  MuiThemeProvider,
+  ThemeProvider,
 } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
@@ -21,8 +21,7 @@ import {
   ChatSettings,
   ChatBar,
   ChatDialog,
-  // @ts-ignore
-} from "@mui-treasury/mockup/brands/messenger";
+} from "./messenger-mockup";
 import {
   Fullscreen,
   Root,
@@ -82,7 +81,7 @@ const theme = responsiveFontSizes(
 const Messenger = () => {
   const styles = useStyles();
   return (
-    <MuiThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <Fullscreen>
         <Root
           scheme={{
@@ -161,7 +160,7 @@ const Messenger = () => {
           )}
         </Root>
       </Fullscreen>
-    </MuiThemeProvider>
+    </ThemeProvider>
   );
 };
 

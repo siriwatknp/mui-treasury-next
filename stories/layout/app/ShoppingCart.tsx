@@ -1,6 +1,6 @@
 import React from "react";
 import cx from "clsx";
-import { makeStyles, MuiThemeProvider } from "@material-ui/core/styles";
+import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
@@ -24,8 +24,7 @@ import {
   DailyCart,
   DailyCheckout,
   DailySummary,
-  // @ts-ignore
-} from "@mui-treasury/mockup/brands/dailyShopping";
+} from "./shoppingCart-mockup";
 
 const useStyles = makeStyles(({ breakpoints }) => ({
   header: {
@@ -105,7 +104,7 @@ const useStyles = makeStyles(({ breakpoints }) => ({
 const ShoppingCart = () => {
   const styles = useStyles();
   return (
-    <MuiThemeProvider theme={dailyShoppingTheme}>
+    <ThemeProvider theme={dailyShoppingTheme}>
       <Fullscreen>
         <Root
           scheme={{
@@ -182,7 +181,7 @@ const ShoppingCart = () => {
           }}
         </Root>
       </Fullscreen>
-    </MuiThemeProvider>
+    </ThemeProvider>
   );
 };
 
