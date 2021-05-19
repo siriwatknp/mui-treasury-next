@@ -8,10 +8,21 @@
  * @version 1.0
  */
 
+.sb-show-main .docblock-source {
+  border: 1px solid #1a1a1a;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+.sb-show-main.sb-show-main .sbdocs .prismjs code {
+  background-color: unset;
+}
+.sb-show-main.sb-show-main .sbdocs .prismjs span {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
+}
+
 .sb-show-main.sb-show-main code[class*="language-"],
 .sb-show-main.sb-show-main pre[class*="language-"] {
   color: #d3dde7;
-  font-family: Consolas, Monaco, "Andale Mono", monospace;
   font-size: 14px;
   direction: ltr;
   text-align: left;
@@ -70,6 +81,13 @@
   color: #808080;
 }
 
+.sb-show-main.sb-show-main .token.tag,
+.sb-show-main.sb-show-main .token.tag .punctuation,
+.sb-show-main.sb-show-main .token.doctype,
+.sb-show-main.sb-show-main .token.builtin {
+  color: #e8bf6a;
+}
+
 .sb-show-main.sb-show-main .token.delimiter,
 .sb-show-main.sb-show-main .token.boolean,
 .sb-show-main.sb-show-main .token.keyword,
@@ -78,18 +96,17 @@
 .sb-show-main.sb-show-main .token.atrule {
   color: #e2863b;
 }
+.sb-show-main.sb-show-main .token.keyword + span {
+  color: #b4c1cf;
+}
 
 .sb-show-main.sb-show-main .token.operator,
 .sb-show-main.sb-show-main .token.punctuation,
-.sb-show-main.sb-show-main .token.attr-name {
-  color: #a9b7c6;
+.sb-show-main.sb-show-main .token.punctuation + .token.script {
+  color: #b4c1cf;
 }
-
-.sb-show-main.sb-show-main .token.tag,
-.sb-show-main.sb-show-main .token.tag .punctuation,
-.sb-show-main.sb-show-main .token.doctype,
-.sb-show-main.sb-show-main .token.builtin {
-  color: #e8bf6a;
+.sb-show-main.sb-show-main .token.attr-name {
+  color: #d3dde7;
 }
 
 .sb-show-main.sb-show-main .token.entity,
@@ -115,7 +132,7 @@
 }
 
 .sb-show-main.sb-show-main .token.attr-value .punctuation:first-child {
-  color: #a9b7c6;
+  color: #b4c1cf;
 }
 
 .sb-show-main.sb-show-main .token.url {
@@ -147,14 +164,6 @@
   background: #484a4a;
 }
 
-.sb-show-main.sb-show-main code.language-css .token.property,
-.sb-show-main.sb-show-main
-  code.language-css
-  .token.property
-  + .token.punctuation {
-  color: #fff;
-}
-
 .sb-show-main.sb-show-main code.language-css .token.id {
   color: #ffc66d;
 }
@@ -170,4 +179,9 @@
   .token.selector
   > .token.pseudo-element {
   color: #ffc66d;
+}
+
+.sb-show-main .sbdocs code.language-css .token.property,
+.sb-show-main .sbdocs code.language-css .token.property + .token.punctuation {
+  color: #fff;
 }
