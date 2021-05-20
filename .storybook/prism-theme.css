@@ -84,7 +84,8 @@
 .sb-show-main.sb-show-main .token.tag,
 .sb-show-main.sb-show-main .token.tag .punctuation,
 .sb-show-main.sb-show-main .token.doctype,
-.sb-show-main.sb-show-main .token.builtin {
+.sb-show-main.sb-show-main .token.builtin,
+.sb-show-main.sb-show-main .token.maybe-class-name:not(.imports) {
   color: #e8bf6a;
 }
 
