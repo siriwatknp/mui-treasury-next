@@ -32,3 +32,8 @@
   border-top-right-radius: 0;
   border: none;
 }
+
+.sbdocs.sbdocs-p + .sbdocs-pre {
+  margin-top: -10px;
+  margin-bottom: 16px;
+}

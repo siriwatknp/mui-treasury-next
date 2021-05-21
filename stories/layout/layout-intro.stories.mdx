@@ -2,16 +2,72 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 <Meta title="Layout/Introduction" />
 
+<style>{`
+  .sbdocs.sbdocs-content {
+    max-width: 720px;
+  }
+`}</style>
+
 # Layout V5
 
 Built for `material-ui v5`. This library exposes a group of enhanced Material-UI components to build modern-web layout instantly.
-
-### What's new
 
 We leverage high quality components from [Material-UI](https://material-ui.com) and great interface
 library from [React](https://reactjs.org/) to let you turn your idea into product.
 From dashboard, to blog, to social webapp until mailbox layout. This library has proved to be compatible
 with these convoluted layout.
+
+### What's new in v5
+
+- leverage `@material-ui v5` built-in styling engine, emotion (default) or styled-components (the choice is your).
+- restructure the codebase which makes the setup simpler (no more builders, just plain object as scheme)
+
+  ```jsx
+  import { Root, Header } from "@mui-treasury/layout";
+
+  function App() {
+    return (
+      <Root
+        scheme={{
+          header: {
+            config: {
+              xs: {},
+              md: {},
+            },
+          },
+        }}
+      >
+        <Header>...</Header>
+      </Root>
+    );
+  }
+  ```
+
+- replace multiple sidebars concept with left/right sidebar, so no need to provide id anymore. (also provide better DX in typescript)
+
+  ```tsx
+  import {
+    Root,
+    Header,
+    EdgeSidebar,
+    SidebarContent,
+  } from "@mui-treasurt/layout";
+
+  function App() {
+    return (
+      <Root scheme={scheme}>
+        <EdgeSidebar anchor="left">
+          <SidebarContent>Hello</SidebarContent>
+        </EdgeSidebar>
+      </Root>
+    );
+  }
+  ```
+
+- Maximum headers are three, `Header`, `TopHeader` and `Subheader`
+- EdgeSidebar is render only one at a time (in v4, three variants are rendered and two are hidden by CSS)
+
+### v4 summary highlight
 
 A little bit from v3.
 We had lessons learn from previous version (v3.3.4) that it has a lot of spaces to be improved.

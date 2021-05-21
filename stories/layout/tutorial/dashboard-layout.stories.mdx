@@ -8,7 +8,7 @@ import { Meta } from "@storybook/addon-docs/blocks";
   }
 `}</style>
 
-# Dashboard Layout Tutorial (REVISE)
+# Dashboard Layout Tutorial
 
 This tutorial will take you through basic installation and configuration of @mui-treasury/layout for creating standard dashboard application.
 
@@ -22,53 +22,42 @@ when the process is done, install packages
 
 ```bash
 cd my-layout
-yarn add @material-ui/core @material-ui/icons @mui-treasury/layout @mui-treasury/mockup
-
-// note: this tutorial is based on @mui-treasury/layout v4 (not alpha),
-// please recheck package.json after installation
+yarn add @material-ui/core @material-ui/icons @emotion/styled @emotion/react @mui-treasury/layout @mui-treasury/mockup
 ```
+
+> note: this tutorial is based on @mui-treasury/layout v5 (alpha),
+> please recheck package.json after installation
 
 Now, when you run `yarn start`, you will see react logo in the browser.
 
 ![image](https://user-images.githubusercontent.com/18292247/72663709-0f6b1400-3a28-11ea-828e-85355b16524a.png)
 
-We will start by setting up config for our layout first. Open file `/src/App.js`, then add this code below last import line
+Let's think about Header for a sec. In this tutorial, we want to have Header that stick to
+the top of the page when user scroll. Open file `/src/App.js` and add the code below
 
 ```jsx
-import React from "react";
-// ...
-// highlight-start
-import Layout from "@mui-treasury/layout";
+import { Root } from "@mui-treasury/layout";
 
-const scheme = Layout();
-// highlight-end
-
-const App = () => {
-  // ...
-};
-```
-
-Let think about Header for a sec. In this tutorial, we want to have Header that stick to
-the top of the page when user scroll. `scheme` that return from calling `Layout` expose a function
-called `configureHeader` to let us specifically add config to `Header` part. This function accept a callback
-that provide you a builder. `Builder` is used to setup responsive config. Let's take how it looks like.
-
-```jsx
-import Layout from "@mui-treasury/layout";
-
-const scheme = Layout();
-
-scheme.configureHeader((builder) => {
-  builder.registerConfig("xs", {
-    position: "sticky",
-  });
-});
+function App() {
+  return (
+    <Root
+      scheme={{
+        header: {
+          config: {
+            xs: {
+              position: "sticky",
+              height: 56,
+            },
+          },
+        },
+      }}
+    ></Root>
+  );
+}
 ```
 
 Let me translate it to human language. By doing this, we can say that we want to create a `Header`
 that has `position: sticky` from breakpoint `xs` **up**.
-
-> Note: by default Header is created with `id: 'header'` but you can choose your own id by `builder.create('your_id').registerConfig(...)`
 
 I want to pause here for a moment and emphasize the word **up**. This is quite important for you to
 know that this library follow mobile first responsive design which means the config you define
@@ -82,119 +71,100 @@ screen width  |--------|--------|--------|--------|-------->
 range         |   xs   |   sm   |   md   |   lg   |   xl
 ```
 
-Ex. I want my Header to not stick to top when scroll at laptop screen
+This is an example where you don't want Header to stick at the top when scroll the page on laptop screen
 
 ```jsx
-import Layout from "@mui-treasury/layout";
+import { Root } from "@mui-treasury/layout";
 
-const scheme = Layout();
-
-scheme.configureHeader((builder) => {
-  builder
-    .registerConfig("xs", {
-      position: "sticky",
-    })
-    // highlight-start
-    .registerConfig("md", {
-      position: "relative", // won't stick to top when scroll down
-    });
-  // highlight-end
-});
+function App() {
+  return (
+    <Root
+      scheme={{
+        header: {
+          config: {
+            xs: {
+              position: "sticky",
+              height: 56,
+            },
+            md: {
+              position: "relative",
+              height: 64,
+            },
+          },
+        },
+      }}
+    ></Root>
+  );
+}
 ```
 
-Next, let's move on to Sidebar configuration.
+Next, let's move on to EdgeSidebar configuration.
 
 ```jsx
-// scheme.configureHeader(...)
-
-// highlight-start
-scheme.configureEdgeSidebar((builder) => {
-  builder
-    .create("unique_id", { anchor: "left" })
-    .registerTemporaryConfig("xs", {
-      anchor: "left",
-      width: "auto", // 'auto' is only valid for temporary variant
-    });
-});
-// highlight-end
+<Root
+  scheme={{
+    header: {
+      // ...
+    },
+    leftEdgeSidebar: {
+      config: {
+        xs: {
+          variant: "temporary",
+          width: "auto",
+        },
+      },
+    },
+  }}
+></Root>
 ```
-
-The api is similar to `Header`. One thing worth mentioning here is that the order of calling `scheme.configure...`
-is not important. You can also configure sidebar before header if you are more comfortable with.
-For the code above, we want to create `EdgeSidebar` on the left of browser with temporary variant for all breakpoints (same as saying `xs` **up**)
-
-> Since layout can have multiple sidebars, you need to specify `id` by using `builder.create('some_id')` first.
 
 > see what each variant looks like real quick [here](https://material-ui.com/components/drawers/#drawer)
 
-At this point, let's render these components on the page so that you don't get surprise at the end.
-But before we can use components, we need to install css-in-js library first. pick one from `styled-components`, `@emotion/styled` or `glamorous`.
-
-styled-components is recommended because [Material-UI v5](https://github.com/mui-org/material-ui/issues/20012) will adopt this lib
-
-```
-yarn add styled-components
-```
+At this point, let's render these components on the page so that you don't get surprise at the end. This tutorial use default style engine (emotion) of `material-ui@v5`. For styled-components, take a look at [material-ui docs - how to switch to styled-components](https://next.material-ui.com/guides/styled-engine/#heading-how-to-switch-to-styled-component)
 
 ```jsx
 import React from "react";
-// highlight-start
-import styled from "styled-components";
-import Layout, {
-  Root,
-  getHeader,
-  getDrawerSidebar,
-} from "@mui-treasury/layout";
-import Toolbar from "@material-ui/core/Toolbar";
+
+import Layout, { Root, Header, EdgeSidebar } from "@mui-treasury/layout";
 import CssBaseline from "@material-ui/core/CssBaseline";
-// highlight-end
-
-// highlight-start
-const Header = getHeader(styled);
-const DrawerSidebar = getDrawerSidebar(styled);
-// highlight-end
-
-const scheme = Layout();
-
-scheme.configureHeader((builder) => {
-  builder
-    .registerConfig("xs", {
-      position: "sticky",
-    })
-    .registerConfig("md", {
-      position: "relative", // won't stick to top when scroll down
-    });
-});
-
-scheme.configureEdgeSidebar((builder) => {
-  builder
-    .create("unique_id", { anchor: "left" })
-    .registerTemporaryConfig("xs", {
-      width: "auto", // 'auto' is only valid for temporary variant
-    });
-});
 
 const App = () => {
   return (
-    // highlight-start
-    <Root scheme={scheme}>
+    <Root
+      scheme={{
+        header: {
+          config: {
+            xs: {
+              position: "sticky",
+              height: 56,
+            },
+            md: {
+              position: "relative",
+              height: 64,
+            },
+          },
+        },
+        leftEdgeSidebar: {
+          config: {
+            xs: {
+              variant: "temporary",
+              width: "auto",
+            },
+          },
+        },
+      }}
+    >
       <CssBaseline />
-      <Header>
-        <Toolbar>Header</Toolbar>
-      </Header>
-      <DrawerSidebar sidebarId={"unique_id"}>
-        sidebar id is required sidebar content
-      </DrawerSidebar>
+      <Header>Header</Header>
+      <EdgeSidebar anchor="left">Sidebar content</EdgeSidebar>
     </Root>
-    // highlight-end
   );
 };
 
 export default App;
 ```
 
-> Note: sidebarId is required on any Sidebar because you can have multiple sidebars in your app, so
-> it is necessary to tell the component which sidebar config are you referring to
+> Note: `anchor="left"` is important to tell the component which config to pick up.
 
 Save, and run `yarn start`. You should see something like this on your screen.
 
@@ -205,26 +175,38 @@ Mui-layout store this state inside `Root` and provide a component to trigger `op
 let's update the code to be like this.
 
 ```jsx
-// other import
-// highlight-next-line
-const { getSidebarTrigger } from '@mui-treasury/layout';
+// ...other import
+import {
+  // ...previous import
+  EdgeTrigger,
+} from "@mui-treasury/layout";
 
-// highlight-next-line
-const SidebarTrigger = getSidebarTrigger(styled)
+import Menu from "@material-ui/icons/Menu";
+import ArrowLeft from "@material-ui/icons/ArrowLeft";
+import ArrowRight from "@material-ui/icons/ArrowRight";
 
 const App = () => {
   return (
-    <Root scheme={scheme}>
+    <Root
+      scheme={
+        {
+          // ...the config
+        }
+      }
+    >
       <CssBaseline />
       <Header>
-        <Toolbar>
-          // highlight-next-line
-          <SidebarTrigger sidebarId="unique_id" />
-          Header
-        </Toolbar>
+        <EdgeTrigger target={{ anchor: "left", field: "open" }}>
+          {(open, setOpen) => (
+            <IconButton onClick={() => setOpen(!open)}>
+              {open ? <ArrowLeft /> : <Menu />}
+            </IconButton>
+          )}
+        </EdgeTrigger>
+        Header
       </Header>
       <DrawerSidebar sidebarId="unique_id">
-        {' '}
+        {" "}
         // sidebar id is required sidebar content
       </DrawerSidebar>
     </Root>
@@ -232,66 +214,77 @@ const App = () => {
 };
 ```
 
-> Note: you also need to add sidebarId to SidebarTrigger, otherwise you will get error
+> EdgeSidebar: `anchor: "left"` means this trigger control the leftEdgeSidebar
+> There are 2 fields in EdgeSidebar state, `open` and `collapsed`. The `field: "open"` will provide the state (open, setOpen) as a function to the children to render dynamic UI. Moreover, it will take care of appear/hidden based on the scheme config of the layout, so you don't need to do all of that details yourself.
 
 ![gif](https://media.giphy.com/media/LPg1nlDmhU4M2Pp6iU/giphy.gif)
 
-Next, let's permanently display our Sidebar in laptop screen up by adding the following code
+Next, let's permanently display our EdgeSidebar in laptop screen up by adding the following code
 
-```js
-scheme.configureEdgeSidebar((builder) => {
-  builder
-    .create("unique_id", { anchor: "left" })
-    .registerTemporaryConfig("xs", {
-      anchor: "left",
-      width: "auto", // 'auto' is only valid for temporary variant
-    })
-    // highlight-start
-    .registerPermanentConfig("md", {
-      width: 256, // px, (%, rem, em is compatible)
-      collapsible: true,
-      collapsedWidth: 64,
-    });
-  // highlight-end
-});
+```jsx
+<Root
+  scheme={{
+    // ...header
+    leftEdgeSidebar: {
+      config: {
+        xs: {
+          variant: "temporary",
+          width: "auto",
+        },
+        md: {
+          variant: "permanent",
+          width: 256,
+          collapsible: true,
+          collapsedWidth: 64,
+        },
+      },
+    },
+  }}
+>
+  ...components
+</Root>
 ```
 
 To achieve collapsible mode, we need to add `CollapseBtn` at the bottom of the sidebar.
 
 ```jsx
-// highlight-start
-const { getSidebarContent, getCollapseBtn } = getLayoutComponents(styled);
-
-const SidebarContent = getSidebarContent(styled);
-const CollapseBtn = getCollapseBtn(styled);
-// highlight-end
+// ...imports
+import {
+  // ..imports
+  SidebarContent,
+} from "@mui-treasury/layout";
 
 const App = () => {
   return (
-    <Root scheme={scheme}>
+    <Root
+      scheme={
+        {
+          // ...the config
+        }
+      }
+    >
       <CssBaseline />
-      <Header>
-        <Toolbar>
-          // highlight-next-line
-          <SidebarTrigger sidebarId="unique_id" />
-          Header
-        </Toolbar>
-      </Header>
-      <DrawerSidebar sidebarId="unique_id">
-        // highlight-start
+      <Header>...</Header>
+      <EdgeSidebar anchor="left">
         <SidebarContent>Sidebar content</SidebarContent>
-        <CollapseBtn />
-        // highlight-end
-      </DrawerSidebar>
+        <EdgeTrigger target={{ anchor: "left", field: "collapsed" }}>
+          {(collapsed, setCollapsed) => (
+            <ButtonBase
+              onClick={() => setCollapsed(!collapsed)}
+              sx={{ minHeight: 40, width: "100%" }}
+            >
+              {collapsed ? <ArrowRight /> : <ArrowLeft />}
+            </ButtonBase>
+          )}
+        </EdgeTrigger>
+      </EdgeSidebar>
     </Root>
   );
 };
 ```
 
 `SidebarContent` that added does not have any functionality accept styling. It stretch the content
-and push `CollapseBtn` to the bottom (see it in devtool). One key here is that you don't need to
-specify sidebarId to `CollapseBtn` because it is render inside the Sidebar so it use the same sidebarId
-(you can point to other sidebar if you want)
+and push `ButtonBase` to the bottom (see it in devtool).
 
 ![image](https://user-images.githubusercontent.com/18292247/80664273-851f5b00-8ac0-11ea-9a45-4d8739927116.png)
 
@@ -301,32 +294,21 @@ Last step, let's add `Content` and `Footer` to the page. Both of the components 
 so you don't need to configure explicitly (actually it is already configured with default for you)
 
 ```jsx
-// highlight-start
-const { getContent, getFooter } = getLayoutComponents(styled);
-
-const Content = getContent(styled);
-const Footer = getFooter(styled);
-// highlight-end
+// ...imports
+import {
+  // other import
+  Content,
+  Footer,
+} from "@mui-treasury/layout";
 
 const App = () => {
   return (
     <Root scheme={scheme}>
       <CssBaseline />
-      <Header>
-        <Toolbar>
-          // highlight-next-line
-          <SidebarTrigger sidebarId="unique_id" />
-          Header
-        </Toolbar>
-      </Header>
-      <DrawerSidebar sidebarId="unique_id">
-        <SidebarContent>Sidebar content</SidebarContent>
-        <CollapseBtn />
-      </DrawerSidebar>
-      // highlight-start
+      <Header>...</Header>
+      <EdgeSidebar anchor="left">...</EdgeSidebar>
       <Content>Content</Content>
       <Footer>Footer</Footer>
-      // highlight-end
     </Root>
   );
 };
@@ -336,72 +318,75 @@ const App = () => {
 
 <details>
 <summary>See Full Code</summary>
-<br />
 
 ```jsx
 import React from "react";
-import styled from "styled-components"; // or import styled from '@emotion/styled'
-import Layout, {
-  getHeader,
-  getDrawerSidebar,
-  getSidebarTrigger,
-  getSidebarContent,
-  getCollapseBtn,
-  getContent,
-  getFooter,
+import {
+  Header,
+  EdgeSidebar,
+  EdgeTriggger,
+  SidebarContent,
+  Content,
+  Footer,
 } from "@mui-treasury/layout";
-import Toolbar from "@material-ui/core/Toolbar";
 import CssBaseline from "@material-ui/core/CssBaseline";
-
-const Header = getHeader(styled);
-const DrawerSidebar = getDrawerSidebar(styled);
-const SidebarTrigger = getSidebarTrigger(styled);
-const SidebarContent = getSidebarContent(styled);
-const CollapseBtn = getCollapseBtn(styled);
-const Content = getContent(styled);
-const Footer = getFooter(styled);
-
-const scheme = Layout();
-
-scheme.configureHeader((builder) => {
-  builder
-    .create("whatever_id")
-    .registerConfig("xs", {
-      position: "sticky",
-    })
-    .registerConfig("md", {
-      position: "relative", // won't stick to top when scroll down
-    });
-});
-
-scheme.configureEdgeSidebar((builder) => {
-  builder
-    .create("unique_id", { anchor: "left" })
-    .registerTemporaryConfig("xs", {
-      anchor: "left",
-      width: "auto", // 'auto' is only valid for temporary variant
-    })
-    .registerPermanentConfig("md", {
-      width: 256, // px, (%, rem, em is compatible)
-      collapsible: true,
-      collapsedWidth: 64,
-    });
-});
 
 const App = () => {
   return (
-    <Root scheme={scheme}>
+    <Root
+      scheme={{
+        header: {
+          config: {
+            xs: {
+              position: "sticky",
+              height: 56,
+            },
+            md: {
+              position: "relative",
+              height: 64,
+            },
+          },
+        },
+        leftEdgeSidebar: {
+          config: {
+            xs: {
+              variant: "temporary",
+              width: "auto",
+            },
+          },
+        },
+        md: {
+          variant: "permanent",
+          width: 256,
+          collapsible: true,
+          collapsedWidth: 64,
+        },
+      }}
+    >
       <CssBaseline />
       <Header>
-        <Toolbar>
-          <SidebarTrigger sidebarId="unique_id" />
-          Header
-        </Toolbar>
+        <EdgeTrigger target={{ anchor: "left", field: "open" }}>
+          {(open, setOpen) => (
+            <IconButton onClick={() => setOpen(!open)}>
+              {open ? <ArrowLeft /> : <Menu />}
+            </IconButton>
+          )}
+        </EdgeTrigger>
+        Header
       </Header>
-      <DrawerSidebar sidebarId="unique_id">
-        <SidebarContent>sidebar content</SidebarContent>
-        <CollapseBtn />
-      </DrawerSidebar>
+      <EdgeSidebar anchor="left">
+        <SidebarContent>Sidebar content</SidebarContent>
+        <EdgeTrigger target={{ anchor: "left", field: "collapsed" }}>
+          {(collapsed, setCollapsed) => (
+            <ButtonBase
+              onClick={() => setCollapsed(!collapsed)}
+              sx={{ minHeight: 40, width: "100%" }}
+            >
+              {collapsed ? <ArrowRight /> : <ArrowLeft />}
+            </ButtonBase>
+          )}
+        </EdgeTrigger>
+      </EdgeSidebar>
       <Content>Content</Content>
       <Footer>Footer</Footer>
     </Root>
@@ -417,54 +402,13 @@ export default App;
 
 You can look at clone examples to see advance layout like documentation site, e-commerce site or even chat site.
 
-### Optional
+### Other Tutorial
 
-You can add mockup from `@mui-treasury/mockup` to make it more realistic.
+- Blog layout
 
-```
-yarn add @mui-treasury/mockup
-```
+### Application inspiration
 
-```jsx
-// ... other import
-import {
-  HeaderMockUp,
-  NavHeaderMockUp,
-  NavContentMockUp,
-  ContentMockUp,
-  FooterMockUp,
-} from "@mui-treasury/mockup/layout";
-
-// ... scheme setup
-
-const App = () => {
-  return (
-    <Root scheme={scheme}>
-      {({ state: { sidebar } }) => (
-        <>
-          <CssBaseline />
-          <Header>
-            <Toolbar>
-              <SidebarTrigger sidebarId="unique_id" />
-              <HeaderMockUp />
-            </Toolbar>
-          </Header>
-          <DrawerSidebar sidebarId="unique_id">
-            <SidebarContent>
-              <NavHeaderMockUp collapsed={sidebar.unique_id.collapsed} />
-              <NavContentMockUp />
-            </SidebarContent>
-            <CollapseBtn />
-          </DrawerSidebar>
-          <Content>
-            <ContentMockUp />
-          </Content>
-          <Footer>
-            <FooterMockUp />
-          </Footer>
-        </>
-      )}
-    </Root>
-  );
-};
-```
+- Gmail
+- Facebook Messenger
+- ReactJS Docs
+- Shopping Cart
