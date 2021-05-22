@@ -69,8 +69,6 @@ describe("InsetSidebarBuilder", () => {
         position: "absolute",
         top: 0,
         width: "100%",
-        padding: "unset",
-        margin: "unset",
         overflow: "auto",
         height: {
           xs: "calc(100vh - 56px)",
@@ -147,8 +145,6 @@ describe("InsetSidebarBuilder", () => {
           xs: 56,
           md: 64,
         },
-        margin: "unset",
-        padding: "unset",
         height: "auto",
       });
     });

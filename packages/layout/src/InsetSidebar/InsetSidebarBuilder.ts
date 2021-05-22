@@ -56,8 +56,6 @@ export class InsetSidebarBuilder {
         position: "absolute" as const,
         top: top,
         width: "100%",
-        padding: "unset",
-        margin: "unset",
         overflow: "auto",
         height: this.effectedBy.header
           ? this.effectedBy.header.generateSxWithHidden({
@@ -93,8 +91,6 @@ export class InsetSidebarBuilder {
       bodySx = {
         position: "sticky",
         top: top,
-        margin: "unset",
-        padding: "unset",
         height: "auto",
       };
     }

@@ -49,7 +49,7 @@ export type PropsWithFunctionChildren<
   Props = any,
   Params = ContextValue
 > = Omit<Props, "children"> & {
-  children: React.ReactNode | ((ctx: Params) => React.ReactNode);
+  children?: React.ReactNode | ((ctx: Params) => React.ReactNode);
 };
 
 const LayoutContext = React.createContext<ContextValue | undefined>(undefined);
