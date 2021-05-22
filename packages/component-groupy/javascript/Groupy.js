@@ -32,18 +32,18 @@ const GroupyRoot = styled(
   ...(styleProps.orientation === "horizontal" && {
     flexDirection: "row",
     // separate MuiInputBase into another scope
-    "& > :not(:first-child):not(label + *):not(.MuiInputBase-root)": {
+    "& > :not(:first-of-type):not(label + *):not(.MuiInputBase-root)": {
       marginLeft: -1,
       borderTopLeftRadius: 0,
       borderBottomLeftRadius: 0,
     },
     // MuiInputBase
-    "& > :first-child:not(label) + .MuiInputBase-root": {
+    "& > :first-of-type:not(label) + .MuiInputBase-root": {
       marginLeft: -1,
       borderTopLeftRadius: 0,
       borderBottomLeftRadius: 0,
     },
-    "& > *:not(:first-child)": {
+    "& > *:not(:first-of-type)": {
       "& label + .MuiInputBase-root": {
         borderTopLeftRadius: 0,
         borderBottomLeftRadius: 0,
