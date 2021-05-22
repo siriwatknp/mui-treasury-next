@@ -491,5 +491,23 @@ describe("EdgeSidebarBuilder", () => {
         xs: "none",
       });
     });
+
+    it("provide display if for collapsible config", () => {
+      const sidebar = new EdgeSidebarBuilder({
+        config: {
+          sm: {
+            variant: "permanent",
+            width: 256,
+            collapsible: true,
+            collapsedWidth: 64,
+          },
+        },
+      });
+
+      expect(sidebar.getEdgeTriggerSxDisplay({ field: "collapsed" })).toEqual({
+        xs: "none",
+        sm: "inline-flex",
+      });
+    });
   });
 });

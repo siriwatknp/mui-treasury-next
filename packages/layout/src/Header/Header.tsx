@@ -6,7 +6,7 @@ import { experimentalStyled } from "@material-ui/core/styles";
 import { useLayoutCtx, PropsWithFunctionChildren } from "../Root/Root";
 import { CSS_TRANSITION } from "../utils/constant";
 
-const Div = experimentalStyled("div")();
+const Div = experimentalStyled("div")({ zIndex: 1 });
 const OffsetRoot = experimentalStyled(
   "div",
   {},
