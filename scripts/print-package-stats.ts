@@ -2,11 +2,21 @@ import { getPackageStats } from "package-build-stats";
 
 const folders = [
   "cli",
-  "component-square",
+  "component-formaddon",
+  "component-groupy",
+  "component-number-input",
+  "component-number-spinner",
+  "component-sticker",
   "layout",
   "style-button-bootstrap",
-  "style-square-sticker",
+  "style-menu-bootstrap",
+  "style-slider-apollo",
+  "style-textfield-ant",
+  "style-textfield-bootstrap",
+  "style-textfield-standard",
+  "style-textfield-tailwind",
   "theme-treasury",
+  "use-number-input",
 ];
 
 async function resolvePackageStats(name: string) {

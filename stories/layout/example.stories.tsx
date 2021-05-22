@@ -36,4 +36,7 @@ const createStory = (name: keyof typeof Pages) => {
   };
   return StoryComponent;
 };
-export const CustomTheme = createStory("CustomTheme");
+export const ControlEdgeSidebar = createStory("ControlEdgeSidebar");
+export const RightEdgeSidebar = createStory("RightEdgeSidebar");
+export const InsetSidebarPosition = createStory("InsetSidebarPosition");
+export const RightToLeft = createStory("RTL");
