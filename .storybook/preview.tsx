@@ -59,6 +59,25 @@ export const decorators = [withThemeProvider];
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
+  options: {
+    storySort: {
+      order: [
+        "Layout",
+        [
+          "Introduction",
+          "Core Concept",
+          "Starter Templates",
+          "Migration to v5",
+          "Tutorials",
+          ["Dashboard", "Blog"],
+          "Feature",
+          "Preset",
+          "Example",
+          "App",
+        ],
+      ],
+    },
+  },
   controls: { expanded: true },
   backgrounds: {
     grid: {
@@ -96,22 +115,22 @@ export const parameters = {
       laptop: {
         name: "Laptop - md",
         styles: {
-          width: "calc(100vh - 80px)",
-          height: "1024px",
+          width: "1024px",
+          height: "calc(100vh - 80px)",
         },
       },
       laptopL: {
         name: "Laptop L - lg",
         styles: {
-          width: "calc(100vh - 80px)",
-          height: "1440px",
+          width: "1440px",
+          height: "calc(100vh - 80px)",
         },
       },
       monitor: {
         name: "Monitor - xl",
         styles: {
-          width: "calc(100vh - 80px)",
-          height: "1920px",
+          width: "1920px",
+          height: "calc(100vh - 80px)",
         },
       },
     },

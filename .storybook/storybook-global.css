@@ -37,3 +37,11 @@
   margin-top: -10px;
   margin-bottom: 16px;
 }
+
+.sbdocs-pre + .sbdocs-p {
+  margin-top: -16px;
+}
+
+.sbdocs.sbdocs-wrapper {
+  padding: 2rem 1rem;
+}
