@@ -114,7 +114,6 @@ export const EdgeSidebar = ({
       setExpanded(false);
     }
   }, [sidebarState?.collapsed]);
-  // auto-expanded feature
 
   if (!screen) return null;
   if (!edgeSidebar || !edgeSidebar.id) return null;
@@ -159,7 +158,9 @@ export const EdgeSidebar = ({
           onMouseLeave,
           sx: {
             ...props.PaperProps?.sx,
-            ...((entered || variant === "permanent") && {
+            ...((entered ||
+              variant === "permanent" ||
+              variant === "persistent") && {
               transition: theme.transitions.create(["all"], {
                 easing: theme.transitions.easing.easeOut,
                 duration: theme.transitions.duration.leavingScreen,

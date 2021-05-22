@@ -89,6 +89,7 @@ export const Header = ({
         {...props}
         className={cx("Header", props.className)}
         sx={{
+          flexDirection: "row",
           transition: CSS_TRANSITION,
           ...props.sx,
           ...builder.header?.getSxProps(),
