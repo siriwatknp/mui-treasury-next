@@ -40,3 +40,4 @@ export const ControlEdgeSidebar = createStory("ControlEdgeSidebar");
 export const RightEdgeSidebar = createStory("RightEdgeSidebar");
 export const InsetSidebarPosition = createStory("InsetSidebarPosition");
 export const RightToLeft = createStory("RTL");
+export const MultipleHeaders = createStory("MultipleHeaders");
