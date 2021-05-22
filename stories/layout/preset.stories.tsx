@@ -11,6 +11,7 @@ export default {
       page: () => <Source />,
     },
     layout: "fullscreen",
+    controls: { hideNoControlsWarning: true },
   },
 } as Meta;
 
