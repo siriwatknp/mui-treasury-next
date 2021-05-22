@@ -45,9 +45,12 @@ export type ContextValue = {
   toggleRightSidebarCollapsed: () => void;
 };
 
-type FunctionChildren =
-  | React.ReactNode
-  | ((ctx: ContextValue) => React.ReactNode);
+export type PropsWithFunctionChildren<
+  Props = any,
+  Params = ContextValue
+> = Omit<Props, "children"> & {
+  children: React.ReactNode | ((ctx: Params) => React.ReactNode);
+};
 
 const LayoutContext = React.createContext<ContextValue | undefined>(undefined);
 LayoutContext.displayName = "LayoutContext";
@@ -108,7 +111,7 @@ export const Root = ({
   initialState: controlledInitialState,
   scheme,
   children,
-}: RootProps & { children?: ReactNode | FunctionChildren }) => {
+}: PropsWithFunctionChildren<RootProps>) => {
   if (!scheme) {
     throw new Error(
       "Missing scheme! fixed by passing `scheme` to <Root scheme={scheme} />"

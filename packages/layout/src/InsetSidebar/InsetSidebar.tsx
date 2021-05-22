@@ -1,7 +1,7 @@
-import React, { PropsWithChildren } from "react";
+import React from "react";
 import cx from "clsx";
 import { experimentalStyled } from "@material-ui/core/styles";
-import { useLayoutCtx } from "../Root/Root";
+import { useLayoutCtx, PropsWithFunctionChildren } from "../Root/Root";
 import { DrawerAnchor } from "./InsetSidebarBuilder";
 import { InsetOffset } from "./InsetOffset";
 
@@ -23,8 +23,9 @@ export const InsetSidebar = ({
   classes,
   BodyProps,
   ...props
-}: PropsWithChildren<InsetSidebarProps>) => {
-  const { builder } = useLayoutCtx();
+}: PropsWithFunctionChildren<InsetSidebarProps>) => {
+  const ctx = useLayoutCtx();
+  const { builder } = ctx;
 
   // anchor should be injected via InsetContainer
   const sidebar = builder[`${anchor!}InsetSidebar` as const];
@@ -57,7 +58,7 @@ export const InsetSidebar = ({
             headerMagnetEnabled={sidebar.config.headerMagnetEnabled}
           />
         )}
-        {children}
+        {typeof children === "function" ? children(ctx) : children}
       </InsetSidebarBody>
     </InsetSidebarRoot>
   );

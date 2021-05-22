@@ -3,7 +3,7 @@ import cx from "clsx";
 import { useTheme } from "@material-ui/core/styles";
 import Drawer, { DrawerProps } from "@material-ui/core/Drawer";
 import { ModalProps } from "@material-ui/core/Modal";
-import { useLayoutCtx } from "../Root/Root";
+import { useLayoutCtx, PropsWithFunctionChildren } from "../Root/Root";
 import { useScreen } from "../hooks/useScreen";
 import { pickNearestBreakpoint } from "../utils/pickNearestBreakpoint";
 import { useSidebarAutoCollapse } from "../hooks/useSidebarAutoCollapse";
@@ -16,10 +16,9 @@ import { EDGE_SIDEBAR_EXPAND_DELAY, EDGE_SIDEBAR_ID } from "../utils/constant";
 import { EdgeOffset } from "./EdgeOffset";
 import { useWindowCtx } from "../WindowContext";
 
-export type EdgeSidebarProps = { anchor: "left" | "right" } & Omit<
-  DrawerProps,
-  "anchor" | "variant"
->;
+export type EdgeSidebarProps = {
+  anchor: "left" | "right";
+} & Omit<DrawerProps, "anchor" | "variant">;
 
 export const SidebarContext = React.createContext<
   | undefined
@@ -59,14 +58,15 @@ export const EdgeSidebar = ({
   anchor,
   children,
   ...props
-}: EdgeSidebarProps) => {
+}: PropsWithFunctionChildren<EdgeSidebarProps>) => {
   if (!anchor) {
     throw new Error('Missing prop "anchor" on EdgeSidebar component');
   }
   const theme = useTheme();
   const screen = useScreen();
   const { iDocument } = useWindowCtx();
-  const { builder, state: layoutState, setOpen } = useLayoutCtx();
+  const ctx = useLayoutCtx();
+  const { builder, state: layoutState, setOpen } = ctx;
   const sidebarId = `${anchor}EdgeSidebar` as const;
   const edgeSidebar = builder[sidebarId];
   const sidebarState = layoutState[sidebarId];
@@ -173,7 +173,7 @@ export const EdgeSidebar = ({
         {variant && variant !== "temporary" && (
           <EdgeOffset sidebarId={sidebarId} />
         )}
-        {children}
+        {typeof children === "function" ? children(ctx) : children}
       </Drawer>
     </SidebarContext.Provider>
   );

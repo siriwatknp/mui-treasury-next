@@ -3,7 +3,7 @@ import cx from "clsx";
 import AppBar, { AppBarProps } from "@material-ui/core/AppBar";
 import { experimentalStyled } from "@material-ui/core/styles";
 
-import { useLayoutCtx } from "../Root/Root";
+import { useLayoutCtx, PropsWithFunctionChildren } from "../Root/Root";
 import { CSS_TRANSITION } from "../utils/constant";
 
 const Div = experimentalStyled("div")();
@@ -27,8 +27,12 @@ const Offset = ({
   );
 };
 
-export const TopHeader = (props: Parameters<typeof Div>[0]) => {
-  const { builder } = useLayoutCtx();
+export const TopHeader = ({
+  children,
+  ...props
+}: PropsWithFunctionChildren<Parameters<typeof Div>[0]>) => {
+  const ctx = useLayoutCtx();
+  const { builder } = ctx;
   return (
     <>
       <Div
@@ -39,14 +43,20 @@ export const TopHeader = (props: Parameters<typeof Div>[0]) => {
           ...props.sx,
           ...builder.topHeader?.getSxProps(),
         }}
-      />
+      >
+        {typeof children === "function" ? children(ctx) : children}
+      </Div>
       <Offset element="topHeader" />
     </>
   );
 };
 
-export const Subheader = (props: Parameters<typeof Div>[0]) => {
-  const { builder } = useLayoutCtx();
+export const Subheader = ({
+  children,
+  ...props
+}: PropsWithFunctionChildren<Parameters<typeof Div>[0]>) => {
+  const ctx = useLayoutCtx();
+  const { builder } = ctx;
   return (
     <>
       <Div
@@ -57,14 +67,20 @@ export const Subheader = (props: Parameters<typeof Div>[0]) => {
           ...props.sx,
           ...builder.subheader?.getSxProps(),
         }}
-      />
+      >
+        {typeof children === "function" ? children(ctx) : children}
+      </Div>
       <Offset element="subheader" />
     </>
   );
 };
 
-export const Header = (props: AppBarProps) => {
-  const { builder } = useLayoutCtx();
+export const Header = ({
+  children,
+  ...props
+}: PropsWithFunctionChildren<AppBarProps>) => {
+  const ctx = useLayoutCtx();
+  const { builder } = ctx;
   return (
     <>
       <AppBar
@@ -77,7 +93,9 @@ export const Header = (props: AppBarProps) => {
           ...props.sx,
           ...builder.header?.getSxProps(),
         }}
-      />
+      >
+        {typeof children === "function" ? children(ctx) : children}
+      </AppBar>
       <Offset element="header" />
     </>
   );
