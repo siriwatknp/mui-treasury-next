@@ -2,10 +2,16 @@ import React from "react";
 import { Meta } from "@storybook/react/types-6-0";
 import { Source } from "@storybook/addon-docs/blocks";
 
-import Pages from "./preset";
+const Pages = {
+  MultipleHeaders: React.lazy(() => import("./MultipleHeaders")),
+  RTL: React.lazy(() => import("./RTL")),
+  InsetSidebarPosition: React.lazy(() => import("./InsetSidebarPosition")),
+  ControlEdgeSidebar: React.lazy(() => import("./ControlEdgeSidebar")),
+  RightEdgeSidebar: React.lazy(() => import("./RightEdgeSidebar")),
+};
 
 export default {
-  title: "Layout/Preset",
+  title: "Layout/Example",
   parameters: {
     docs: {
       page: () => <Source />,
@@ -16,7 +22,7 @@ export default {
 } as Meta;
 
 const fileMapping: { [k: string]: string } = {};
-const context = require.context("!raw-loader!./preset", false, /\.tsx$/);
+const context = require.context("!raw-loader!./", false, /(?<!stories)\.tsx/);
 context.keys().forEach((filename) => {
   fileMapping[filename] = context(filename).default;
 });
@@ -36,10 +42,8 @@ const createStory = (name: keyof typeof Pages) => {
   };
   return StoryComponent;
 };
-export const ContentBased = createStory("ContentBased");
-
-export const Cozy = createStory("Cozy");
-
-export const Fixed = createStory("Fixed");
-
-export const Standard = createStory("Standard");
+export const ControlEdgeSidebar = createStory("ControlEdgeSidebar");
+export const RightEdgeSidebar = createStory("RightEdgeSidebar");
+export const InsetSidebarPosition = createStory("InsetSidebarPosition");
+export const RightToLeft = createStory("RTL");
+export const MultipleHeaders = createStory("MultipleHeaders");

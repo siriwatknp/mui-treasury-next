@@ -2,7 +2,12 @@ import React from "react";
 import { Meta } from "@storybook/react/types-6-0";
 import { Source } from "@storybook/addon-docs/blocks";
 
-import Pages from "./app";
+const Pages = {
+  ShoppingCart: React.lazy(() => import("./ShoppingCart")),
+  ReactJS: React.lazy(() => import("./ReactJS")),
+  Messenger: React.lazy(() => import("./Messenger")),
+  Gmail: React.lazy(() => import("./Gmail")),
+};
 
 export default {
   title: "Layout/App",
@@ -16,7 +21,7 @@ export default {
 } as Meta;
 
 const fileMapping: { [k: string]: string } = {};
-const context = require.context("!raw-loader!./app", false, /\.tsx$/);
+const context = require.context("!raw-loader!./", false, /(?<!stories)\.tsx/);
 context.keys().forEach((filename) => {
   fileMapping[filename] = context(filename).default;
 });
@@ -37,9 +42,6 @@ const createStory = (name: keyof typeof Pages) => {
   return StoryComponent;
 };
 export const Gmail = createStory("Gmail");
-
 export const Messenger = createStory("Messenger");
-
 export const ReactJS = createStory("ReactJS");
-
 export const ShoppingCart = createStory("ShoppingCart");

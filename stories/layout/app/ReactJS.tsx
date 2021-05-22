@@ -29,7 +29,7 @@ import { ReactHeader, ReactNextArticle, ReactContent } from "./reactjs-mockup";
 
 const useStyles = makeStyles(({ breakpoints }) => ({
   toolbar: {
-    minHeight: 50,
+    minHeight: 60,
     [breakpoints.up("md")]: {
       minHeight: 60,
     },
@@ -96,6 +96,7 @@ const theme = responsiveFontSizes(
     components: {
       MuiCssBaseline: {
         styleOverrides: {
+          // @ts-expect-error
           "strong, b": {
             fontWeight: "bold",
           },

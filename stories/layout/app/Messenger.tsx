@@ -90,7 +90,7 @@ const Messenger = () => {
               config: {
                 xs: {
                   position: "relative",
-                  height: 60,
+                  height: 64,
                 },
               },
             },

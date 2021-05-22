@@ -78,7 +78,7 @@ const HeaderEx = ({ classes, screen }) => {
   return (
     <>
       <Typography noWrap color={"textSecondary"} className={classes.header}>
-        Layout v3.1
+        @mui-treasury/layout
       </Typography>
       <div className={classes.grow} />
       <div className={classes.search}>

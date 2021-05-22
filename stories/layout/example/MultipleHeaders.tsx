@@ -18,13 +18,10 @@ import {
   EdgeTrigger,
   SidebarContent,
   Content,
-  Footer,
   InsetContainer,
   InsetSidebar,
-  InsetAvoidingView,
 } from "@mui-treasury/layout";
 
-import Menu from "@material-ui/icons/Menu";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import Close from "@material-ui/icons/Close";
@@ -61,8 +58,8 @@ const MultipleHeaders = () => {
         subheader: {
           config: {
             md: {
-              position: "sticky",
-              top: 64,
+              position: "relative",
+              // top: 64,
               height: 48,
             },
           },
