@@ -1,8 +1,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { StoryContext } from "@storybook/react/types-6-0";
 
-import { ThemeProvider } from "@material-ui/core/styles";
-import StyledEngineProvider from "@material-ui/core/StyledEngineProvider";
+import { ThemeProvider, StyledEngineProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { createTreasuryTheme } from "@mui-treasury/theme-treasury";

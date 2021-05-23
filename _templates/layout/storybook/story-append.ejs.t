@@ -1,5 +1,5 @@
 ---
-to: stories/layout/<%=category%>.stories.tsx
+to: stories/layout/<%=category%>/<%=category%>.stories.tsx
 inject: true
 append: true
 skip_if: export const <%=name%>

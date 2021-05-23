@@ -1,5 +1,5 @@
 ---
-to: stories/layout/<%=category%>.stories.tsx
+to: stories/layout/<%=category%>/<%=category%>.stories.tsx
 unless_exists: true
 ---
 import React from "react";
