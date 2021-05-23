@@ -120,8 +120,8 @@ const MultipleHeaders = () => {
       <Subheader
         sx={{
           borderBottom: "1px solid",
-          borderColor: "grey.300",
-          bgcolor: "common.white",
+          borderColor: "divider",
+          bgcolor: "background.paper",
         }}
       >
         <Tabs value={0}>
@@ -137,7 +137,7 @@ const MultipleHeaders = () => {
         <InsetContainer
           maxWidth={"md"}
           rightSidebar={
-            <InsetSidebar BodyProps={{ sx: { bgcolor: "grey.50" } }}>
+            <InsetSidebar BodyProps={{ sx: { bgcolor: "background.paper" } }}>
               <Box p={2}>Hello test</Box>
             </InsetSidebar>
           }

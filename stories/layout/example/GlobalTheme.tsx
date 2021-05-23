@@ -116,6 +116,14 @@ const GlobalTheme = () => {
                 [`&.${inputBaseClasses.hiddenLabel}`]: {
                   borderRadius: 40,
                 },
+                backgroundColor: coolGray[100],
+                "&:hover": {
+                  backgroundColor: coolGray[200],
+                },
+                "&.Mui-focused": {
+                  boxShadow: `0 0 0 1px ${coolGray[500]}`,
+                  backgroundColor: "#fff",
+                },
               },
             },
           },
@@ -207,8 +215,6 @@ const GlobalTheme = () => {
           <EdgeSidebar anchor="left">
             <SidebarContent
               sx={{
-                display: "flex",
-                flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
                 gap: 3,
@@ -231,8 +237,6 @@ const GlobalTheme = () => {
           <EdgeSidebar anchor="right">
             <SidebarContent
               sx={{
-                display: "flex",
-                flexDirection: "column",
                 pr: 2,
                 mt: 3,
               }}
