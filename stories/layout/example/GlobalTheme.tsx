@@ -58,6 +58,11 @@ const GlobalTheme = () => {
       theme={createTheme({
         palette: {
           primary: { main: coolGray[800] },
+          text: {
+            primary: coolGray[900],
+            secondary: coolGray[600],
+            disabled: coolGray[300],
+          },
           background: {
             default: coolGray[100],
             paper: "#fff",
@@ -130,6 +135,13 @@ const GlobalTheme = () => {
           MuiPaper: {
             defaultProps: {
               elevation: 0,
+            },
+          },
+          MuiSkeleton: {
+            styleOverrides: {
+              root: {
+                backgroundColor: coolGray[200],
+              },
             },
           },
         },
