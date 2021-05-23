@@ -70,7 +70,6 @@ export class InsetSidebarBuilder {
       bodySx = {
         position: "fixed" as const,
         top: top,
-        width: "auto",
         height: "100%",
         overflowY: "auto",
         ...(anchor === "left" && {
@@ -91,7 +90,6 @@ export class InsetSidebarBuilder {
       bodySx = {
         position: "sticky",
         top: top,
-        height: "auto",
       };
     }
     bodySx = {

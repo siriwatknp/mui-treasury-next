@@ -103,7 +103,6 @@ describe("InsetSidebarBuilder", () => {
         flexDirection: "column",
         position: "fixed",
         top: 0,
-        width: "auto",
         height: "100%",
         overflowY: "auto",
         marginLeft: "-9999px",
@@ -145,7 +144,6 @@ describe("InsetSidebarBuilder", () => {
           xs: 56,
           md: 64,
         },
-        height: "auto",
       });
     });
   });

@@ -1,18 +1,28 @@
 import React from "react";
-import cx from "clsx";
-import { experimentalStyled } from "@material-ui/core/styles";
+import { experimentalStyled, Theme } from "@material-ui/core/styles";
+import { SxProps } from "@material-ui/system";
+
 import { useLayoutCtx, PropsWithFunctionChildren } from "../Root/Root";
 import { getContentSxProps } from "../Content/getContentSxProps";
-import { FOOTER_ID } from "../utils/constant";
+import { CSS_TRANSITION, FOOTER_ID } from "../utils/constant";
 
 const FooterRoot = experimentalStyled(
   "footer",
   {},
-  { name: "Footer", slot: "Root" }
-)();
+  {
+    name: "AppFooter",
+    slot: "Root",
+    overridesResolver: (props, styles) => styles.root,
+  }
+)({
+  transition: CSS_TRANSITION,
+});
 
-type FooterProps = Parameters<typeof FooterRoot>[0];
-
+type Props = JSX.IntrinsicElements["footer"];
+export type FooterClassKey = "root";
+export interface FooterProps extends Props {
+  sx?: SxProps<Theme>;
+}
 export const Footer = ({
   children,
   ...props
@@ -21,11 +31,7 @@ export const Footer = ({
   const { builder } = ctx;
   const sxProps = getContentSxProps(builder, FOOTER_ID);
   return (
-    <FooterRoot
-      {...props}
-      className={cx("Footer", props.className)}
-      sx={{ transition: "all 225ms", ...props.sx, ...sxProps }}
-    >
+    <FooterRoot {...props} sx={{ ...props.sx, ...sxProps }}>
       {typeof children === "function" ? children(ctx) : children}
     </FooterRoot>
   );

@@ -1,18 +1,18 @@
 import React from "react";
-import cx from "clsx";
 import AppBar, { AppBarProps } from "@material-ui/core/AppBar";
-import { experimentalStyled } from "@material-ui/core/styles";
+import {
+  experimentalStyled,
+  Theme,
+  unstable_useThemeProps as useThemeProps,
+} from "@material-ui/core/styles";
+import { SxProps } from "@material-ui/system";
 
 import { useLayoutCtx, PropsWithFunctionChildren } from "../Root/Root";
 import { CSS_TRANSITION } from "../utils/constant";
 
-const Div = experimentalStyled("div")({ zIndex: 1 });
-const OffsetRoot = experimentalStyled(
-  "div",
-  {},
-  { name: "HeaderOffset", slot: "Root" }
-)();
+type DivProps = JSX.IntrinsicElements["div"];
 
+const OffsetRoot = experimentalStyled("div")({ flexShrink: 0 });
 const Offset = ({
   element,
 }: {
@@ -22,80 +22,129 @@ const Offset = ({
   return (
     <OffsetRoot
       className="HeaderOffset"
-      sx={{ height: builder[element]?.getOffsetHeight(), flexShrink: 0 }}
+      sx={{ height: builder[element]?.getOffsetHeight() }}
     />
   );
 };
 
+export interface TopHeaderProps extends DivProps {
+  sx?: SxProps<Theme>;
+}
+export type TopHeaderClassKey = "root";
+const TopHeaderRoot = experimentalStyled(
+  "div",
+  {},
+  {
+    name: "AppTopHeader",
+    slot: "Root",
+    overridesResolver: (props, styles) => styles.root,
+  }
+)({
+  zIndex: 1,
+  transition: CSS_TRANSITION,
+});
 export const TopHeader = ({
   children,
-  ...props
-}: PropsWithFunctionChildren<Parameters<typeof Div>[0]>) => {
+  ...inProps
+}: PropsWithFunctionChildren<TopHeaderProps>) => {
+  const props = useThemeProps<Theme, TopHeaderProps, "AppTopHeader">({
+    props: inProps,
+    name: "AppTopHeader",
+  });
   const ctx = useLayoutCtx();
   const { builder } = ctx;
   return (
     <>
-      <Div
+      <TopHeaderRoot
         {...props}
-        className={cx("TopHeader", props.className)}
         sx={{
-          transition: CSS_TRANSITION,
           ...props.sx,
           ...builder.topHeader?.getSxProps(),
         }}
       >
         {typeof children === "function" ? children(ctx) : children}
-      </Div>
+      </TopHeaderRoot>
       <Offset element="topHeader" />
     </>
   );
 };
 
+export interface SubheaderProps extends DivProps {
+  sx?: SxProps<Theme>;
+}
+export type SubheaderClassKey = "root";
+const SubheaderRoot = experimentalStyled(
+  "div",
+  {},
+  {
+    name: "AppSubheader",
+    slot: "Root",
+    overridesResolver: (props, styles) => styles.root,
+  }
+)({
+  zIndex: 1,
+  transition: CSS_TRANSITION,
+});
 export const Subheader = ({
   children,
-  ...props
-}: PropsWithFunctionChildren<Parameters<typeof Div>[0]>) => {
+  ...inProps
+}: PropsWithFunctionChildren<SubheaderProps>) => {
+  const props = useThemeProps<Theme, SubheaderProps, "AppSubheader">({
+    props: inProps,
+    name: "AppSubheader",
+  });
   const ctx = useLayoutCtx();
   const { builder } = ctx;
   return (
     <>
-      <Div
+      <SubheaderRoot
         {...props}
-        className={cx("Subheader", props.className)}
         sx={{
-          transition: CSS_TRANSITION,
           ...props.sx,
           ...builder.subheader?.getSxProps(),
         }}
       >
         {typeof children === "function" ? children(ctx) : children}
-      </Div>
+      </SubheaderRoot>
       <Offset element="subheader" />
     </>
   );
 };
 
+export interface HeaderProps extends AppBarProps {}
+export type HeaderClassKey = "root";
+const HeaderRoot = experimentalStyled(
+  AppBar,
+  {},
+  {
+    name: "AppHeader",
+    slot: "Root",
+    overridesResolver: (props, styles) => styles.root,
+  }
+)({ transition: CSS_TRANSITION });
 export const Header = ({
   children,
-  ...props
-}: PropsWithFunctionChildren<AppBarProps>) => {
+  ...inProps
+}: PropsWithFunctionChildren<HeaderProps>) => {
+  const props = useThemeProps<Theme, HeaderProps, "AppHeader">({
+    props: inProps,
+    name: "AppHeader",
+  });
   const ctx = useLayoutCtx();
   const { builder } = ctx;
   return (
     <>
-      <AppBar
+      <HeaderRoot
         color="default"
         elevation={0}
         {...props}
-        className={cx("Header", props.className)}
         sx={{
-          transition: CSS_TRANSITION,
           ...props.sx,
           ...builder.header?.getSxProps(),
         }}
       >
         {typeof children === "function" ? children(ctx) : children}
-      </AppBar>
+      </HeaderRoot>
       <Offset element="header" />
     </>
   );

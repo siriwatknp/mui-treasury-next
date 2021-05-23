@@ -1,7 +1,10 @@
 import React, { useContext } from "react";
-import cx from "clsx";
-import { useTheme } from "@material-ui/core/styles";
-import Drawer, { DrawerProps } from "@material-ui/core/Drawer";
+import {
+  experimentalStyled,
+  unstable_useThemeProps as useThemeProps,
+  Theme,
+} from "@material-ui/core/styles";
+import Drawer, { DrawerProps, drawerClasses } from "@material-ui/core/Drawer";
 import { ModalProps } from "@material-ui/core/Modal";
 import { useLayoutCtx, PropsWithFunctionChildren } from "../Root/Root";
 import { useScreen } from "../hooks/useScreen";
@@ -12,13 +15,19 @@ import {
   DrawerAnchor,
   EdgeSidebarConfig,
 } from "./EdgeSidebarBuilder";
-import { EDGE_SIDEBAR_EXPAND_DELAY, EDGE_SIDEBAR_ID } from "../utils/constant";
+import {
+  EDGE_SIDEBAR_EXPAND_DELAY,
+  EDGE_SIDEBAR_ID,
+  CSS_TRANSITION,
+} from "../utils/constant";
 import { EdgeOffset } from "./EdgeOffset";
 import { useWindowCtx } from "../WindowContext";
 
-export type EdgeSidebarProps = {
+export type EdgeSidebarClassKey = "root";
+export interface EdgeSidebarProps
+  extends Omit<DrawerProps, "anchor" | "variant"> {
   anchor: "left" | "right";
-} & Omit<DrawerProps, "anchor" | "variant">;
+}
 
 export const SidebarContext = React.createContext<
   | undefined
@@ -54,15 +63,40 @@ const hasAutoExpanded = (
   );
 };
 
+const EdgeSidebarRoot = experimentalStyled(
+  Drawer,
+  {},
+  {
+    name: "AppEdgeSidebar",
+    slot: "Root",
+    overridesResolver: (props, styles) => styles.root,
+  }
+)<{ styleProps: EdgeSidebarProps & { entered: boolean } }>(
+  ({ styleProps }) => ({
+    ...((styleProps.entered ||
+      styleProps.variant === "permanent" ||
+      styleProps.variant === "persistent") && {
+      [`& .${drawerClasses.paper}`]: {
+        transition: `${CSS_TRANSITION} !important`,
+        transitionProperty: "all !important",
+      },
+    }),
+  })
+);
+
 export const EdgeSidebar = ({
-  anchor,
   children,
-  ...props
+  ...inProps
 }: PropsWithFunctionChildren<EdgeSidebarProps>) => {
+  const { theme, ...props } = useThemeProps<
+    Theme,
+    EdgeSidebarProps,
+    "AppEdgeSidebar"
+  >({ props: inProps, name: "AppEdgeSidebar" });
+  const { anchor } = props;
   if (!anchor) {
     throw new Error('Missing prop "anchor" on EdgeSidebar component');
   }
-  const theme = useTheme();
   const screen = useScreen();
   const { iDocument } = useWindowCtx();
   const ctx = useLayoutCtx();
@@ -127,13 +161,16 @@ export const EdgeSidebar = ({
     [sidebarId, anchor, expanded, setExpanded]
   );
 
+  const styleProps = { ...props, entered, variant };
+
   return (
     <SidebarContext.Provider value={sidebarValue}>
-      <Drawer
+      <EdgeSidebarRoot
         {...props}
         open={layoutState[sidebarId]?.open}
         anchor={anchor}
         variant={variant}
+        styleProps={styleProps}
         onClose={(...args: Parameters<NonNullable<ModalProps["onClose"]>>) => {
           props.onClose?.(...args);
           setOpen(sidebarId, false);
@@ -149,7 +186,6 @@ export const EdgeSidebar = ({
         }}
         PaperProps={{
           ...props.PaperProps,
-          className: cx("EdgeSidebar-paper", props.PaperProps?.className),
           style: {
             ...props.PaperProps?.style,
             ...(expanded && { width: config?.width }),
@@ -158,15 +194,6 @@ export const EdgeSidebar = ({
           onMouseLeave,
           sx: {
             ...props.PaperProps?.sx,
-            ...((entered ||
-              variant === "permanent" ||
-              variant === "persistent") && {
-              transition: theme.transitions.create(["all"], {
-                easing: theme.transitions.easing.easeOut,
-                duration: theme.transitions.duration.leavingScreen,
-              }),
-              transitionProperty: "all !important",
-            }),
             ...builder[sidebarId]?.getSxProps(),
           },
         }}
@@ -175,7 +202,7 @@ export const EdgeSidebar = ({
           <EdgeOffset sidebarId={sidebarId} />
         )}
         {typeof children === "function" ? children(ctx) : children}
-      </Drawer>
+      </EdgeSidebarRoot>
     </SidebarContext.Provider>
   );
 };

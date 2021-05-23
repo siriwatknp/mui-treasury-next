@@ -1,26 +1,29 @@
 import React from "react";
 import Container, { ContainerProps } from "@material-ui/core/Container";
+import { experimentalStyled, Theme } from "@material-ui/core/styles";
+import { SxProps } from "@material-ui/system";
 import { useFullscreenCtx } from "../Fullscreen/FullscreenContext";
-import { experimentalStyled } from "@material-ui/core";
 
-const Div = experimentalStyled("div")({
+const FullscreenWrapperRoot = experimentalStyled("div")({
   overflow: "auto",
   flexGrow: 1,
 });
 
-export type DivProps = Parameters<typeof Div>[0];
+export type DivProps = JSX.IntrinsicElements["div"];
 
 export type InsetContainerProps = {
   leftSidebar?: React.ReactElement;
   rightSidebar?: React.ReactElement;
   FullscreenWrapper?: React.ElementType;
+  FullscreenWrapperProps?: DivProps & { sx?: SxProps<Theme> };
 } & ContainerProps;
 
 export const InsetContainer = ({
   children,
   leftSidebar,
   rightSidebar,
-  FullscreenWrapper = Div,
+  FullscreenWrapper = FullscreenWrapperRoot,
+  FullscreenWrapperProps,
   ...props
 }: InsetContainerProps) => {
   const isFullscreen = useFullscreenCtx();
@@ -31,11 +34,14 @@ export const InsetContainer = ({
         display: "flex",
         flexFlow: "row nowrap",
         flexGrow: 1,
+        ...props.sx,
       }}
     >
       {leftSidebar && React.cloneElement(leftSidebar, { anchor: "left" })}
       {isFullscreen ? (
-        <FullscreenWrapper>{children}</FullscreenWrapper>
+        <FullscreenWrapper {...FullscreenWrapperProps}>
+          {children}
+        </FullscreenWrapper>
       ) : (
         children
       )}

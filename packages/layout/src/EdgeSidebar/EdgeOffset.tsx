@@ -13,7 +13,7 @@ const OffsetRoot = experimentalStyled(
   "div",
   {},
   { name: "EdgeSidebarOffset", slot: "Root" }
-)();
+)({});
 
 export const EdgeOffset = ({ sidebarId }: { sidebarId: ClippableElement }) => {
   const { builder } = useLayoutCtx();

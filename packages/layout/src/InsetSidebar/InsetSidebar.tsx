@@ -1,21 +1,44 @@
 import React from "react";
 import cx from "clsx";
-import { experimentalStyled } from "@material-ui/core/styles";
+import { experimentalStyled, Theme } from "@material-ui/core/styles";
+import { SxProps } from "@material-ui/system";
 import { useLayoutCtx, PropsWithFunctionChildren } from "../Root/Root";
 import { DrawerAnchor } from "./InsetSidebarBuilder";
 import { InsetOffset } from "./InsetOffset";
 
-const InsetSidebarRoot = experimentalStyled("div")();
-const InsetSidebarBody = experimentalStyled("div")();
+const InsetSidebarRoot = experimentalStyled(
+  "div",
+  {},
+  {
+    name: "AppInsetSidebar",
+    slot: "Root",
+    overridesResolver: (props, styles) => styles.root,
+  }
+)({
+  position: "relative",
+  flexShrink: 0,
+});
+const InsetSidebarBody = experimentalStyled(
+  "div",
+  {},
+  {
+    name: "AppInsetSidebar",
+    slot: "Body",
+    overridesResolver: (props, styles) => styles.body,
+  }
+)();
 
-export type InsetSidebarProps = {
+type DivProps = JSX.IntrinsicElements["div"];
+export type InsetSidebarClassKey = "root" | "body";
+export interface InsetSidebarProps extends DivProps {
   anchor?: DrawerAnchor;
-  BodyProps?: Parameters<typeof InsetSidebarBody>[0];
+  BodyProps?: DivProps & { sx?: SxProps<Theme> };
   classes?: {
     root?: string;
     paper?: string;
   };
-} & Parameters<typeof InsetSidebarRoot>[0];
+  sx?: SxProps<Theme>;
+}
 
 export const InsetSidebar = ({
   anchor,
@@ -32,23 +55,16 @@ export const InsetSidebar = ({
   return (
     <InsetSidebarRoot
       {...props}
-      className={cx("InsetSidebar-root", props?.className, classes?.root)}
+      className={cx(props?.className, classes?.root)}
       sx={{
-        position: "relative",
-        flexShrink: 0,
         ...props?.sx,
         ...sidebar?.getSxRoot(),
       }}
     >
       <InsetSidebarBody
         {...BodyProps}
-        className={cx(
-          "InsetSidebar-body",
-          BodyProps?.className,
-          classes?.paper
-        )}
+        className={cx(BodyProps?.className, classes?.paper)}
         sx={{
-          backgroundColor: "background.paper",
           ...BodyProps?.sx,
           ...sidebar?.getSxBody(),
         }}
