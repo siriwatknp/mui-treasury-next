@@ -18,6 +18,8 @@ import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Paper from "@material-ui/core/Paper";
 import Skeleton from "@material-ui/core/Skeleton";
+import TextField from "@material-ui/core/TextField";
+import Divider from "@material-ui/core/Divider";
 
 import Home from "@material-ui/icons/Home";
 import Person from "@material-ui/icons/Person";
@@ -265,8 +267,20 @@ const GlobalTheme = () => {
               maxWidth={false}
               disableGutters
               rightSidebar={
-                <InsetSidebar sx={{ minWidth: "256px" }}>
-                  <Box></Box>
+                <InsetSidebar
+                  sx={{ minWidth: "256px" }}
+                  BodyProps={{ sx: { p: 2 } }}
+                >
+                  <Avatar sx={{ width: 100, height: 100, mx: "auto" }} />
+                  <TextField label="First Name" margin="normal" fullWidth />
+                  <TextField label="Last Name" margin="normal" fullWidth />
+                  <TextField
+                    label="Address"
+                    multiline
+                    minRows={3}
+                    margin="normal"
+                    fullWidth
+                  />
                 </InsetSidebar>
               }
               sx={{

@@ -92,11 +92,6 @@ export class InsetSidebarBuilder {
         top: top,
       };
     }
-    bodySx = {
-      ...bodySx,
-      display: "flex",
-      flexDirection: "column",
-    };
     return bodySx;
   }
 
