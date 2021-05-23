@@ -69,7 +69,6 @@ const theme = responsiveFontSizes(
     components: {
       MuiCssBaseline: {
         styleOverrides: {
-          // @ts-expect-error
           "strong, b": {
             fontWeight: "bold",
           },
