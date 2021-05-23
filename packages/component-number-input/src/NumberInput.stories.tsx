@@ -39,7 +39,6 @@ export const Filled: Story<NumberInputProps> = (args) => {
   return (
     <NumberInput
       {...args}
-      // @ts-expect-error hiddenLabel
       inputElement={<FilledInput hiddenLabel disableUnderline />}
     />
   );

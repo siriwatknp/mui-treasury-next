@@ -35,7 +35,6 @@ export const Filled: Story<NumberSpinnerProps> = (args) => {
   return (
     <NumberSpinner
       {...args}
-      // @ts-expect-error hiddenLabel
       inputElement={<FilledInput disableUnderline hiddenLabel />}
     />
   );
