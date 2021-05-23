@@ -1,8 +1,10 @@
 import React from "react";
 import { Meta } from "@storybook/react/types-6-0";
 import { Source } from "@storybook/addon-docs/blocks";
+import { withMuiThemeProvider } from "stories/_internal/decorators";
 
 const Pages = {
+  GlobalTheme: React.lazy(() => import("./GlobalTheme")),
   MultipleHeaders: React.lazy(() => import("./MultipleHeaders")),
   RTL: React.lazy(() => import("./RTL")),
   InsetSidebarPosition: React.lazy(() => import("./InsetSidebarPosition")),
@@ -29,8 +31,8 @@ context.keys().forEach((filename) => {
 
 const createStory = (name: keyof typeof Pages) => {
   const Component = Pages[name];
-  function StoryComponent() {
-    return <Component />;
+  function StoryComponent(props: any, context: any) {
+    return <Component {...props} {...context} />;
   }
   StoryComponent.parameters = {
     docs: {
@@ -40,6 +42,7 @@ const createStory = (name: keyof typeof Pages) => {
     },
     backgrounds: {},
   };
+  StoryComponent.decorators = [withMuiThemeProvider()];
   return StoryComponent;
 };
 export const ControlEdgeSidebar = createStory("ControlEdgeSidebar");
@@ -47,3 +50,4 @@ export const RightEdgeSidebar = createStory("RightEdgeSidebar");
 export const InsetSidebarPosition = createStory("InsetSidebarPosition");
 export const RightToLeft = createStory("RTL");
 export const MultipleHeaders = createStory("MultipleHeaders");
+export const GlobalTheme = createStory("GlobalTheme");
