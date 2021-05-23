@@ -61,3 +61,11 @@ jobs:
           BRANCH: gh-pages # The branch the action should deploy to.
           FOLDER: storybook-static # The folder that the build-storybook script generates files.
           CLEAN: true # Automatically remove deleted files from the deploy branch
+      - name: Publish storybook to Chromatic
+        uses: chromaui/action@v1
+        # Chromatic GitHub Action options
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # 👇 Chromatic projectToken, refer to the manage page to obtain it.
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          storybookBuildDir: storybook-static
