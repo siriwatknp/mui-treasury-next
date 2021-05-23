@@ -26,7 +26,7 @@ const InsetSidebarBody = experimentalStyled(
     slot: "Body",
     overridesResolver: (props, styles) => styles.body,
   }
-)();
+)({});
 
 type DivProps = JSX.IntrinsicElements["div"];
 export type InsetSidebarClassKey = "root" | "body";

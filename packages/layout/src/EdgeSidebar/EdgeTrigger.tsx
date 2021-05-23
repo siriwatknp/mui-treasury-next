@@ -7,7 +7,7 @@ const EdgeTriggerRoot = experimentalStyled(
   "div",
   {},
   { name: "EdgeTrigger" }
-)();
+)({});
 
 export type EdgeTriggerProps = Parameters<typeof EdgeTriggerRoot>[0] & {
   target: {

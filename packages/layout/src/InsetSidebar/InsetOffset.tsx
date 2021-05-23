@@ -11,7 +11,7 @@ const OffsetRoot = experimentalStyled(
   "div",
   {},
   { name: "InsetSidebarOffset", slot: "Root" }
-)();
+)({});
 
 export const InsetOffset = ({
   headerMagnetEnabled,
