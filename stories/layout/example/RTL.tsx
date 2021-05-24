@@ -80,9 +80,13 @@ const RTL = () => {
               autoCollapse: "sm",
             },
             rightInsetSidebar: {
-              position: "fixed",
-              headerMagnetEnabled: true,
-              width: 256,
+              config: {
+                xs: {
+                  position: "fixed",
+                  headerMagnetEnabled: true,
+                  width: 256,
+                },
+              },
             },
           }}
         >

@@ -1,11 +1,6 @@
 import React from "react";
 import { experimentalStyled } from "@material-ui/core/styles";
 import { useLayoutCtx } from "../Root/Root";
-import {
-  toResponsiveCssValue,
-  toValidCssValue,
-} from "../utils/toValidCssValue";
-import { Responsive } from "../utils/types";
 
 const InsetAvoidingViewRoot = experimentalStyled(
   "div",
@@ -21,32 +16,15 @@ export type InsetAvoidingViewProps = Parameters<
 
 export const InsetAvoidingView = (props: InsetAvoidingViewProps) => {
   const { builder } = useLayoutCtx();
-  const sxProps: Record<
-    string,
-    string | number | Responsive<string | number>
-  > = {
+  const sxProps: Record<string, any> = {
     marginLeft: "",
     marginRight: "",
   };
-  if (
-    builder.leftInsetSidebar &&
-    ["fixed", "absolute"].includes(builder.leftInsetSidebar.config.position)
-  ) {
-    const width = builder.leftInsetSidebar.config.width;
-    sxProps.marginLeft =
-      typeof width === "object"
-        ? toResponsiveCssValue(width)
-        : toValidCssValue(width);
+  if (builder.leftInsetSidebar) {
+    sxProps.marginLeft = builder.leftInsetSidebar.getSxRoot().width;
   }
-  if (
-    builder.rightInsetSidebar &&
-    ["fixed", "absolute"].includes(builder.rightInsetSidebar.config.position)
-  ) {
-    const width = builder.rightInsetSidebar.config.width;
-    sxProps.marginRight =
-      typeof width === "object"
-        ? toResponsiveCssValue(width)
-        : toValidCssValue(width);
+  if (builder.rightInsetSidebar) {
+    sxProps.marginRight = builder.rightInsetSidebar.getSxRoot().width;
   }
   return <InsetAvoidingViewRoot {...props} sx={{ ...props.sx, ...sxProps }} />;
 };

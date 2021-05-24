@@ -2,29 +2,31 @@ import { Breakpoint } from "@material-ui/core/styles/createBreakpoints";
 import { SxProps } from "@material-ui/system";
 import { HeaderBuilder } from "../Header/HeaderBuilder";
 import { subtractCalc } from "../utils/calc";
-import { BREAKPOINT_KEYS } from "../utils/muiBreakpoints";
 import { pickNearestBreakpoint } from "../utils/pickNearestBreakpoint";
 import { Responsive } from "../utils/types";
+import { ResponsiveBuilder } from "../shared/ResponsiveBuilder";
+import { flattenResponsive } from "../utils/flattenResponsive";
+import { toValidCssValue } from "../utils/toValidCssValue";
 
 export type DrawerAnchor = "left" | "right";
 
 export type FixedInsetSidebarConfig = {
   position: "fixed";
-  width: number | string | Responsive<string | number>;
-  top?: number | string | Responsive<string | number>;
+  width: number | string;
+  top?: number | string;
   headerMagnetEnabled?: boolean;
 };
 
 export type AbsoluteInsetSidebarConfig = {
   position: "absolute";
-  width: number | string | Responsive<string | number>;
-  top?: number | string | Responsive<string | number>;
+  width: number | string;
+  top?: number | string;
 };
 
 export type StickyInsetSidebarConfig = {
   position: "sticky";
-  width: number | string | Responsive<string | number>;
-  top?: number | string | Responsive<string | number>;
+  width: number | string;
+  top?: number | string;
 };
 
 export type InsetSidebarConfig =
@@ -33,91 +35,112 @@ export type InsetSidebarConfig =
   | StickyInsetSidebarConfig;
 
 export type InsetSetupParams = {
+  config: Responsive<InsetSidebarConfig>;
   hidden?: Breakpoint[] | boolean;
-} & InsetSidebarConfig;
+};
 
-export class InsetSidebarBuilder {
-  readonly config: InsetSidebarConfig;
-  readonly hidden: InsetSetupParams["hidden"];
+export class InsetSidebarBuilder extends ResponsiveBuilder<InsetSidebarConfig> {
   anchor?: DrawerAnchor;
   effectedBy: { header?: HeaderBuilder } = {};
 
-  constructor({ hidden, ...props }: InsetSetupParams) {
-    this.config = props;
-    this.hidden = hidden;
+  constructor(params: InsetSetupParams) {
+    super(params);
   }
 
   getSxBody() {
-    const { position, top = 0 } = this.config;
     const anchor = this.anchor;
-    let bodySx: SxProps = {};
-    if (position === "absolute") {
-      bodySx = {
-        position: "absolute" as const,
-        top: top,
-        width: "100%",
-        overflow: "auto",
-        height: this.effectedBy.header
-          ? this.effectedBy.header.generateSxWithHidden({
-              assignValue: (config) =>
-                subtractCalc("100vh", config.height ?? 0),
-              hiddenValue: "100vh",
-            })
-          : "100vh",
-      };
-    }
-    if (position === "fixed") {
-      bodySx = {
-        position: "fixed" as const,
-        top: top,
-        height: "100%",
-        overflowY: "auto",
-        ...(anchor === "left" && {
-          marginLeft: "-9999px",
-          paddingLeft: "9999px",
-          borderRight: "1px solid",
-          borderColor: "divider",
-        }),
-        ...(anchor === "right" && {
-          marginRight: "-9999px",
-          paddingRight: "9999px",
-          borderLeft: "1px solid",
-          borderColor: "divider",
-        }),
-      };
-    }
-    if (position === "sticky") {
-      bodySx = {
-        position: "sticky",
-        top: top,
-      };
-    }
-    return bodySx;
-  }
-
-  getSxRoot() {
-    let hiddenConfig: Responsive<string> = {};
-    if (this.hidden) {
-      if (typeof this.hidden === "boolean") {
-        hiddenConfig = { xs: "none" };
-      } else {
-        BREAKPOINT_KEYS.forEach((bp) => {
-          const lastResultVal = pickNearestBreakpoint(hiddenConfig, bp);
-          const isWithinHidden =
-            Array.isArray(this.hidden) && this.hidden.includes(bp);
-          if (isWithinHidden && lastResultVal !== "none") {
-            hiddenConfig[bp] = "none";
-          }
-
-          if (!isWithinHidden && lastResultVal === "none") {
-            hiddenConfig[bp] = "block";
-          }
-        });
+    const height: Responsive<number | string> = {};
+    const { header } = this.effectedBy;
+    if (header) {
+      const { height: responsiveHeight } = header.getSxHeight();
+      const breakpoints = this.mergeBreakpoints(responsiveHeight ?? []);
+      for (const bp of breakpoints) {
+        const insetConfig = pickNearestBreakpoint(this.config, bp);
+        if (insetConfig?.position === "absolute") {
+          const headerHeight = pickNearestBreakpoint(responsiveHeight, bp);
+          height[bp] =
+            headerHeight === 0 || headerHeight === "0px"
+              ? "100vh"
+              : subtractCalc("100vh", headerHeight);
+        }
+        if (insetConfig?.position === "fixed") height[bp] = "100%";
+        if (insetConfig?.position === "sticky") height[bp] = "initial";
       }
     }
     return {
-      ...(Object.keys(hiddenConfig).length && { display: hiddenConfig }),
-      width: this.config.width,
+      height: flattenResponsive(height, true),
+      width: flattenResponsive(
+        this.generateSx((config) =>
+          config.position === "fixed" ? "initial" : "100%"
+        ),
+        true
+      ),
+      position: flattenResponsive(
+        this.generateSx((config) => config.position),
+        true
+      ),
+      top: flattenResponsive(
+        this.generateSx((config) => config.top ?? 0),
+        true
+      ),
+      ...(anchor === "left" && {
+        marginLeft: flattenResponsive(
+          this.generateSx((config, bp) =>
+            // TODO make it concise
+            config.position === "fixed"
+              ? "-9999px"
+              : bp === "xs"
+              ? undefined
+              : "initial"
+          ),
+          true
+        ),
+        paddingLeft: flattenResponsive(
+          this.generateSx((config, bp) =>
+            // TODO make it concise
+            config.position === "fixed"
+              ? "9999px"
+              : bp === "xs"
+              ? undefined
+              : "initial"
+          ),
+          true
+        ),
+      }),
+      ...(anchor === "right" && {
+        marginRight: flattenResponsive(
+          this.generateSx((config, bp) =>
+            // TODO make it concise
+            config.position === "fixed"
+              ? "-9999px"
+              : bp === "xs"
+              ? undefined
+              : "initial"
+          ),
+          true
+        ),
+        paddingRight: flattenResponsive(
+          this.generateSx((config, bp) =>
+            // TODO make it concise
+            config.position === "fixed"
+              ? "9999px"
+              : bp === "xs"
+              ? undefined
+              : "initial"
+          ),
+          true
+        ),
+      }),
+    };
+  }
+
+  getSxRoot() {
+    return {
+      display: flattenResponsive(this.getSxDisplay("block")),
+      width: flattenResponsive(
+        this.generateSx((config) => toValidCssValue(config.width)),
+        true
+      ),
     };
   }
 }

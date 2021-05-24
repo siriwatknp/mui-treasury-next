@@ -26,11 +26,18 @@ const InsetSidebarBody = experimentalStyled(
     slot: "Body",
     overridesResolver: (props, styles) => styles.body,
   }
-)({
+)<{ styleProps: { anchor?: "left" | "right" } }>(({ theme, styleProps }) => ({
   display: "flex",
   flexDirection: "column",
   overflow: "auto",
-});
+  ...(styleProps.anchor === "left" && {
+    borderRight: "1px solid",
+  }),
+  ...(styleProps.anchor === "right" && {
+    borderLeft: "1px solid",
+  }),
+  borderColor: theme.palette.divider,
+}));
 
 type DivProps = JSX.IntrinsicElements["div"];
 export type InsetSidebarClassKey = "root" | "body";
@@ -68,16 +75,13 @@ export const InsetSidebar = ({
       <InsetSidebarBody
         {...BodyProps}
         className={cx(BodyProps?.className, classes?.paper)}
+        styleProps={{ anchor }}
         sx={{
           ...BodyProps?.sx,
           ...sidebar?.getSxBody(),
         }}
       >
-        {sidebar?.config.position === "fixed" && (
-          <InsetOffset
-            headerMagnetEnabled={sidebar.config.headerMagnetEnabled}
-          />
-        )}
+        <InsetOffset sidebar={sidebar} />
         {typeof children === "function" ? children(ctx) : children}
       </InsetSidebarBody>
     </InsetSidebarRoot>

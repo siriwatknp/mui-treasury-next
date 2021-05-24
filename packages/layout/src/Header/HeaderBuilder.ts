@@ -90,8 +90,8 @@ export class HeaderBuilder extends ResponsiveBuilder<HeaderConfig> {
     const { leftEdgeSidebar, rightEdgeSidebar } = this.effectedBy;
     if (leftEdgeSidebar) {
       const occupiedSpace = leftEdgeSidebar?.getOccupiedSpace();
-      const breakpoinst = this.mergeBreakpoints(occupiedSpace);
-      for (const bp of breakpoinst) {
+      const breakpoints = this.mergeBreakpoints(occupiedSpace);
+      for (const bp of breakpoints) {
         marginLeft[bp] = this.isClipped(LEFT_EDGE_SIDEBAR_ID, bp)
           ? "0px"
           : toValidCssValue(pickNearestBreakpoint(occupiedSpace, bp)!);
@@ -100,8 +100,8 @@ export class HeaderBuilder extends ResponsiveBuilder<HeaderConfig> {
     const marginRight: Responsive<number | string> = {};
     if (rightEdgeSidebar) {
       const occupiedSpace = rightEdgeSidebar?.getOccupiedSpace();
-      const breakpoinst = this.mergeBreakpoints(occupiedSpace);
-      for (const bp of breakpoinst) {
+      const breakpoints = this.mergeBreakpoints(occupiedSpace);
+      for (const bp of breakpoints) {
         marginRight[bp] = this.isClipped(RIGHT_EDGE_SIDEBAR_ID, bp)
           ? "0px"
           : toValidCssValue(pickNearestBreakpoint(occupiedSpace, bp)!);

@@ -39,9 +39,13 @@ const InsetSidebarPosition = () => {
             },
           },
           rightInsetSidebar: {
-            position,
-            top: position === "sticky" ? 64 : 0,
-            width: 256,
+            config: {
+              xs: {
+                position,
+                top: position === "sticky" ? 64 : 0,
+                width: 256,
+              },
+            },
           },
         }}
       >

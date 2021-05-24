@@ -34,14 +34,9 @@ const useStyles = makeStyles(({ breakpoints }) => ({
       minHeight: 60,
     },
   },
-  sidebarBody: {
-    backgroundColor: "rgb(247, 247, 247)",
-    marginRight: -999,
-    paddingRight: 999,
-    borderLeft: "1px solid rgb(236, 236, 236)",
-  },
   insetSidebar: {
     borderLeft: "1px solid #ececec",
+    backgroundColor: "rgb(247, 247, 247)",
   },
   footer: {
     border: "none",
@@ -155,12 +150,16 @@ const ReactJs = () => {
             },
           },
           rightInsetSidebar: {
-            position: "fixed",
-            width: {
-              sm: 200,
-              md: 256,
+            config: {
+              sm: {
+                position: "fixed",
+                width: 200,
+              },
+              md: {
+                position: "fixed",
+                width: 256,
+              },
             },
-            hidden: ["xs"],
           },
         }}
       >

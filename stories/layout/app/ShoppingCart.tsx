@@ -40,6 +40,7 @@ const useStyles = makeStyles(({ breakpoints }) => ({
   sidebarBody: {
     padding: "24px 0 40px 24px !important",
     background: "none",
+    border: "none",
   },
   sidebarPaper: {
     maxWidth: 400,
@@ -117,9 +118,12 @@ const ShoppingCart = () => {
               },
             },
             rightInsetSidebar: {
-              position: "absolute",
-              width: "33%",
-              hidden: ["xs", "sm"],
+              config: {
+                md: {
+                  position: "absolute",
+                  width: "max(33%, 256px)",
+                },
+              },
             },
             rightEdgeSidebar: {
               config: {

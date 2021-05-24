@@ -105,8 +105,12 @@ const Messenger = () => {
               autoCollapse: "sm",
             },
             rightInsetSidebar: {
-              position: "absolute",
-              width: "33%",
+              config: {
+                xs: {
+                  position: "absolute",
+                  width: "33%",
+                },
+              },
             },
           }}
         >

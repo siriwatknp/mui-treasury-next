@@ -76,9 +76,13 @@ const MultipleHeaders = () => {
           },
         },
         rightInsetSidebar: {
-          position: "fixed",
-          width: 256,
-          headerMagnetEnabled: headerMagnet,
+          config: {
+            xs: {
+              position: "fixed",
+              width: 256,
+              headerMagnetEnabled: headerMagnet,
+            },
+          },
         },
       }}
     >

@@ -181,9 +181,12 @@ const GlobalTheme = () => {
               },
             },
             rightInsetSidebar: {
-              position: "sticky",
-              width: "33%",
-              hidden: ["xs"],
+              config: {
+                sm: {
+                  position: "sticky",
+                  width: "max(33%, 256px)",
+                },
+              },
             },
           }}
         >
@@ -267,10 +270,7 @@ const GlobalTheme = () => {
               maxWidth={false}
               disableGutters
               rightSidebar={
-                <InsetSidebar
-                  sx={{ minWidth: "256px" }}
-                  BodyProps={{ sx: { p: 2 } }}
-                >
+                <InsetSidebar BodyProps={{ sx: { p: 2 } }}>
                   <Avatar sx={{ width: 100, height: 100, mx: "auto" }} />
                   <TextField label="First Name" margin="normal" fullWidth />
                   <TextField label="Last Name" margin="normal" fullWidth />
