@@ -59,12 +59,10 @@ const InsetSidebarPosition = () => {
               disableGutters
               rightSidebar={
                 <InsetSidebar
-                  BodyProps={{
-                    sx: {
-                      ...(position === "sticky" && {
-                        marginTop: "80px",
-                      }),
-                    },
+                  sx={{
+                    ...(position === "sticky" && {
+                      marginTop: "80px",
+                    }),
                   }}
                 >
                   {position === "fixed" && (

@@ -1,11 +1,10 @@
 import { Breakpoint } from "@material-ui/core/styles/createBreakpoints";
-import { SxProps } from "@material-ui/system";
 import { HeaderBuilder } from "../Header/HeaderBuilder";
 import { subtractCalc } from "../utils/calc";
 import { pickNearestBreakpoint } from "../utils/pickNearestBreakpoint";
 import { Responsive } from "../utils/types";
 import { ResponsiveBuilder } from "../shared/ResponsiveBuilder";
-import { flattenResponsive } from "../utils/flattenResponsive";
+import { flattenLoose, flattenStrict } from "../utils/flattenResponsive";
 import { toValidCssValue } from "../utils/toValidCssValue";
 
 export type DrawerAnchor = "left" | "right";
@@ -39,12 +38,26 @@ export type InsetSetupParams = {
   hidden?: Breakpoint[] | boolean;
 };
 
+type Result = string | number | undefined;
+
 export class InsetSidebarBuilder extends ResponsiveBuilder<InsetSidebarConfig> {
   anchor?: DrawerAnchor;
   effectedBy: { header?: HeaderBuilder } = {};
 
   constructor(params: InsetSetupParams) {
     super(params);
+  }
+
+  getFixedArea(modifier: number = 1) {
+    return flattenLoose(
+      this.generateSx((config, bp) =>
+        config.position === "fixed"
+          ? `${modifier * 9999}px`
+          : bp === "xs"
+          ? undefined
+          : "initial"
+      )
+    );
   }
 
   getSxBody() {
@@ -68,78 +81,30 @@ export class InsetSidebarBuilder extends ResponsiveBuilder<InsetSidebarConfig> {
       }
     }
     return {
-      height: flattenResponsive(height, true),
-      width: flattenResponsive(
+      height: flattenLoose(height),
+      width: flattenLoose(
         this.generateSx((config) =>
           config.position === "fixed" ? "initial" : "100%"
-        ),
-        true
+        )
       ),
-      position: flattenResponsive(
-        this.generateSx((config) => config.position),
-        true
-      ),
-      top: flattenResponsive(
-        this.generateSx((config) => config.top ?? 0),
-        true
-      ),
+      position: flattenLoose(this.generateSx((config) => config.position)),
+      top: flattenLoose(this.generateSx((config) => config.top ?? 0)),
       ...(anchor === "left" && {
-        marginLeft: flattenResponsive(
-          this.generateSx((config, bp) =>
-            // TODO make it concise
-            config.position === "fixed"
-              ? "-9999px"
-              : bp === "xs"
-              ? undefined
-              : "initial"
-          ),
-          true
-        ),
-        paddingLeft: flattenResponsive(
-          this.generateSx((config, bp) =>
-            // TODO make it concise
-            config.position === "fixed"
-              ? "9999px"
-              : bp === "xs"
-              ? undefined
-              : "initial"
-          ),
-          true
-        ),
+        marginLeft: this.getFixedArea(-1),
+        paddingLeft: this.getFixedArea(),
       }),
       ...(anchor === "right" && {
-        marginRight: flattenResponsive(
-          this.generateSx((config, bp) =>
-            // TODO make it concise
-            config.position === "fixed"
-              ? "-9999px"
-              : bp === "xs"
-              ? undefined
-              : "initial"
-          ),
-          true
-        ),
-        paddingRight: flattenResponsive(
-          this.generateSx((config, bp) =>
-            // TODO make it concise
-            config.position === "fixed"
-              ? "9999px"
-              : bp === "xs"
-              ? undefined
-              : "initial"
-          ),
-          true
-        ),
+        marginRight: this.getFixedArea(-1),
+        paddingRight: this.getFixedArea(),
       }),
     };
   }
 
   getSxRoot() {
     return {
-      display: flattenResponsive(this.getSxDisplay("block")),
-      width: flattenResponsive(
-        this.generateSx((config) => toValidCssValue(config.width)),
-        true
+      display: flattenStrict(this.getSxDisplay("block")),
+      width: flattenLoose(
+        this.generateSx((config) => toValidCssValue(config.width))
       ),
     };
   }

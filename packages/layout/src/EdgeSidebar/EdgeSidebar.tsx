@@ -149,17 +149,17 @@ export const EdgeSidebar = ({
     }
   }, [sidebarState?.collapsed]);
 
+  const sidebarValue = React.useMemo(
+    () => ({ id: sidebarId, anchor, expanded, setExpanded }),
+    [sidebarId, anchor, expanded, setExpanded]
+  );
+
   if (!screen) return null;
   if (!edgeSidebar || !edgeSidebar.id) return null;
 
   const responsiveVariant = edgeSidebar.getDrawerVariant();
   const variant = pickNearestBreakpoint(responsiveVariant, screen);
   if (!variant) return null;
-
-  const sidebarValue = React.useMemo(
-    () => ({ id: sidebarId, anchor, expanded, setExpanded }),
-    [sidebarId, anchor, expanded, setExpanded]
-  );
 
   const styleProps = { ...props, entered, variant };
 

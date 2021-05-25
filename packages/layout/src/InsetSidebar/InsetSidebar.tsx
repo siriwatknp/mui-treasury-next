@@ -43,7 +43,8 @@ type DivProps = JSX.IntrinsicElements["div"];
 export type InsetSidebarClassKey = "root" | "body";
 export interface InsetSidebarProps extends DivProps {
   anchor?: DrawerAnchor;
-  BodyProps?: DivProps & { sx?: SxProps<Theme> };
+  RootProps?: DivProps;
+  rootSx?: SxProps<Theme>;
   classes?: {
     root?: string;
     paper?: string;
@@ -55,7 +56,8 @@ export const InsetSidebar = ({
   anchor,
   children,
   classes,
-  BodyProps,
+  RootProps,
+  rootSx,
   ...props
 }: PropsWithFunctionChildren<InsetSidebarProps>) => {
   const ctx = useLayoutCtx();
@@ -65,20 +67,20 @@ export const InsetSidebar = ({
   const sidebar = builder[`${anchor!}InsetSidebar` as const];
   return (
     <InsetSidebarRoot
-      {...props}
-      className={cx(props?.className, classes?.root)}
+      {...RootProps}
+      className={cx(RootProps?.className, classes?.root)}
       sx={{
-        ...props?.sx,
         ...sidebar?.getSxRoot(),
+        ...rootSx,
       }}
     >
       <InsetSidebarBody
-        {...BodyProps}
-        className={cx(BodyProps?.className, classes?.paper)}
+        {...props}
+        className={cx(props?.className, classes?.paper)}
         styleProps={{ anchor }}
         sx={{
-          ...BodyProps?.sx,
           ...sidebar?.getSxBody(),
+          ...props?.sx,
         }}
       >
         <InsetOffset sidebar={sidebar} />

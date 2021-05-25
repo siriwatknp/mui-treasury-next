@@ -270,7 +270,7 @@ const GlobalTheme = () => {
               maxWidth={false}
               disableGutters
               rightSidebar={
-                <InsetSidebar BodyProps={{ sx: { p: 2 } }}>
+                <InsetSidebar sx={{ p: 2, height: "100%" }}>
                   <Avatar sx={{ width: 100, height: 100, mx: "auto" }} />
                   <TextField label="First Name" margin="normal" fullWidth />
                   <TextField label="Last Name" margin="normal" fullWidth />

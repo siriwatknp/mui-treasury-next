@@ -141,7 +141,7 @@ const MultipleHeaders = () => {
         <InsetContainer
           maxWidth={"md"}
           rightSidebar={
-            <InsetSidebar BodyProps={{ sx: { bgcolor: "background.paper" } }}>
+            <InsetSidebar sx={{ bgcolor: "background.paper" }}>
               <Box p={2}>Hello test</Box>
             </InsetSidebar>
           }
