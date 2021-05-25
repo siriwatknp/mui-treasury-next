@@ -25,30 +25,63 @@ export type EdgeSidebarConfig =
   | TemporarySidebarConfig;
 
 export interface CollapsibleSidebarConfig {
+  /**
+   * If `true`, this sidebar can be collapsed
+   */
   collapsible?: boolean;
+  /**
+   * If `collapsible: true`, when sidebar collapsed will have this width (support all CSS units)
+   */
   collapsedWidth?: number | string;
+  /**
+   * If `collapsible: true`, when hover on collapsed sidebar it will expand to specified `width` without affecting other components.
+   */
   uncollapsedOnHover?: boolean;
   /**
    * @deprecated autoExpanded will be remove in the next major version, use 'uncollapsedOnHover' instead
    */
   autoExpanded?: boolean;
+  /**
+   * sidebar's width (support all CSS units)
+   */
   width: number | string;
+  /**
+   * If header with `position: relative` clip this sidebar, when scroll the page will cause this sidebar to stick with header
+   */
   headerMagnetEnabled?: boolean;
 }
 
 export interface PermanentSidebarConfig extends CollapsibleSidebarConfig {
+  /**
+   * Material-UI Drawer : permanent
+   * https://material-ui.com/components/drawers/#permanent-drawer
+   */
   variant: "permanent";
 }
 
 export interface PersistentSidebarConfig extends CollapsibleSidebarConfig {
+  /**
+   * Effect to other components when this sidebar open. Possible values are 'fit' | 'flexible' | 'none'
+   */
   persistentBehavior:
     | PersistentBehavior
     | Partial<Record<HEADER_ID | CONTENT_ID | FOOTER_ID, PersistentBehavior>>;
+  /**
+   * Material-UI Drawer : persistent
+   * https://material-ui.com/components/drawers/#persistent-drawer
+   */
   variant: "persistent";
 }
 
 export interface TemporarySidebarConfig {
+  /**
+   * sidebar's width (support all CSS units)
+   */
   width: number | string;
+  /**
+   * Material-UI Drawer : persistent
+   * https://material-ui.com/components/drawers/#temporary-drawer
+   */
   variant: "temporary";
 }
 

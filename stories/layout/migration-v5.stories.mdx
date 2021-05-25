@@ -10,7 +10,7 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 # Migration to v5 (Breaking Changes)
 
-### `Components`
+### ~~`getComponents`~~
 
 `material-ui v5` change style engine from JSS to emotion, so there is no need to call `get{Component}`. just import the component directly.
 
@@ -251,16 +251,16 @@ scheme.configureInsetSidebar((builder) => {
 
 multiple sidebars is replaced with only `left` and/or `right` InsetSidebar.
 
-- does not support breakpoint config anymore (It is removed because I don't see any use case that has different inset sidebar between breakpoint. By removing this, a lot of code is reduced and more maintainable).
-- use `hidden` for the breakpoints that don't want to show inset sidebar.
-
 ```jsx
 <Root
   scheme={{
     rightInsetSidebar: {
-      position: "fixed",
-      width: 256,
-      hidden: ["xs"],
+      config: {
+        sm: {
+          position: "fixed",
+          width: 256,
+        },
+      },
     },
   }}
 ></Root>

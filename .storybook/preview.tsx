@@ -69,6 +69,8 @@ export const parameters = {
           "Migration to v5",
           "Tutorials",
           ["Dashboard", "Blog"],
+          "Configuration",
+          ["Overall", "Header", "EdgeSidebar", "InsetSidebar"],
           "Feature",
           "Preset",
           "Example",

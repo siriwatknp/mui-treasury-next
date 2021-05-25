@@ -10,21 +10,51 @@ import { toValidCssValue } from "../utils/toValidCssValue";
 export type DrawerAnchor = "left" | "right";
 
 export type FixedInsetSidebarConfig = {
+  /**
+   * css position of the root element
+   */
   position: "fixed";
+  /**
+   * width of the sidebar (support all CSS units)
+   */
   width: number | string;
+  /**
+   * css top of the body element
+   */
   top?: number | string;
+  /**
+   * If header has `position: relative`, when scroll the page will cause this sidebar to stick with header
+   */
   headerMagnetEnabled?: boolean;
 };
 
 export type AbsoluteInsetSidebarConfig = {
+  /**
+   * css position of the root element
+   */
   position: "absolute";
+  /**
+   * width of the sidebar (support all CSS units)
+   */
   width: number | string;
+  /**
+   * css top of the body element
+   */
   top?: number | string;
 };
 
 export type StickyInsetSidebarConfig = {
+  /**
+   * css position of the root element
+   */
   position: "sticky";
+  /**
+   * width of the sidebar (support all CSS units)
+   */
   width: number | string;
+  /**
+   * css top of the body element
+   */
   top?: number | string;
 };
 
