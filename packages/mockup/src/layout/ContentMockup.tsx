@@ -1,0 +1,67 @@
+import React from "react";
+import Divider from "@material-ui/core/Divider";
+import { BoxProps } from "@material-ui/core/Box";
+import Stack from "@material-ui/core/Stack";
+
+import { Square } from "../shape";
+
+export const Paragraph = ({
+  lineCount = 5,
+  sx,
+}: {
+  lineCount?: number;
+  sx?: BoxProps["sx"];
+}) => {
+  return (
+    <>
+      {[...Array(lineCount)].map((_, index) => (
+        <Square
+          key={index}
+          sx={{
+            height: 16,
+            width: `${Math.floor(Math.random() * 4) + 96}%`,
+            ...(index !== 0 && { mt: 1.5 }),
+            ...sx,
+          }}
+        />
+      ))}
+    </>
+  );
+};
+
+export const ContentMockup = () => {
+  return (
+    <div>
+      <Square sx={{ height: 32, width: 160 }} />
+      <Square sx={{ height: 18, width: 120, mt: 1.5 }} />
+      <br />
+      <br />
+      <Paragraph />
+      <br />
+      <Divider />
+      <br />
+      <Paragraph />
+      <br />
+      <br />
+      <Stack direction="row" spacing={1}>
+        <Square sx={{ height: 200, flexGrow: 1 }} />
+        <Square sx={{ height: 200, flexGrow: 1 }} />
+        <Square sx={{ height: 200, flexGrow: 1 }} />
+      </Stack>
+      <br />
+      <br />
+      <Square sx={{ height: 32, width: 240, mx: "auto" }} />
+      <Square sx={{ height: 18, width: 120, mt: 1.5, mx: "auto" }} />
+      <br />
+      <br />
+      <Paragraph sx={{ mx: "auto" }} />
+      <br />
+      <Stack direction="row" spacing={1}>
+        <Square sx={{ height: 100, flexGrow: 1 }} />
+        <Square sx={{ height: 100, flexGrow: 1 }} />
+        <Square sx={{ height: 100, flexGrow: 1 }} />
+        <Square sx={{ height: 100, flexGrow: 1 }} />
+      </Stack>
+    </div>
+  );
+};

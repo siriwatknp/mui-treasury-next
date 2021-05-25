@@ -58,7 +58,8 @@
 
       "@mui-treasury/use-number-input": ["packages/use-number-input/src/"],
       // hygen-hook-target
-      "@mui-treasury/layout": ["packages/layout/src"]
+      "@mui-treasury/layout": ["packages/layout/src"],
+      "@mui-treasury/mockup/*": ["packages/mockup/src/*"]
     }
   }
 }

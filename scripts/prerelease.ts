@@ -27,7 +27,7 @@ async function run() {
       set(file, "bin.mui-treasury", "index.js")
     ).then((result) => fsp.writeFile(`${PUBLISH_DIR}/package.json`, result));
   }
-  if (["component", "style", "theme", "hook"].includes(packageType)) {
+  if (["component", "style", "theme", "hook", "mockup"].includes(packageType)) {
     await Promise.resolve(set(file, "main", "index.js"))
       .then((newFile) => set(newFile, "types", "index.d.ts"))
       .then((newFile) => del(newFile, "dependencies"))
