@@ -1,4 +1,5 @@
 import { StyleRules } from "@material-ui/core/styles";
+import { ContainerClassKey, ContainerProps } from "@material-ui/core/Container";
 import {
   HeaderProps,
   HeaderClassKey,
@@ -47,6 +48,10 @@ declare module "@material-ui/core/styles/components" {
     AppInsetSidebar?: {
       defaultProps?: Partial<InsetSidebarProps>;
       styleOverrides?: Partial<StyleRules<InsetSidebarClassKey>>;
+    };
+    AppInsetContainer?: {
+      defaultProps?: Partial<ContainerProps>;
+      styleOverrides?: Partial<StyleRules<ContainerClassKey>>;
     };
     AppFooter?: {
       defaultProps?: Partial<FooterProps>;

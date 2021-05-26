@@ -1,12 +1,30 @@
 import React from "react";
+import cx from "clsx";
 import Container, { ContainerProps } from "@material-ui/core/Container";
-import { experimentalStyled, Theme } from "@material-ui/core/styles";
-import { SxProps } from "@material-ui/system";
-import { useFullscreenCtx } from "../Fullscreen/FullscreenContext";
+import {
+  experimentalStyled as styled,
+  Theme,
+  unstable_useThemeProps as useThemeProps,
+} from "@material-ui/core/styles";
 
-const FullscreenWrapperRoot = experimentalStyled("div")({
-  overflow: "auto",
+const contentClassName = "AppInsetContainer-content";
+
+const InsetContainerRoot = styled(
+  Container,
+  {},
+  {
+    name: "AppInsetContainer",
+    slot: "Root",
+    overridesResolver: (props, styles) => styles.root,
+  }
+)({
+  display: "flex",
+  flexFlow: "row nowrap",
   flexGrow: 1,
+  [`& .${contentClassName}`]: {
+    flexGrow: 1,
+    overflow: "auto",
+  },
 });
 
 export type DivProps = JSX.IntrinsicElements["div"];
@@ -14,38 +32,26 @@ export type DivProps = JSX.IntrinsicElements["div"];
 export type InsetContainerProps = {
   leftSidebar?: React.ReactElement;
   rightSidebar?: React.ReactElement;
-  FullscreenWrapper?: React.ElementType;
-  FullscreenWrapperProps?: DivProps & { sx?: SxProps<Theme> };
-} & ContainerProps;
+  children: React.ReactElement;
+} & Omit<ContainerProps, "children">;
 
 export const InsetContainer = ({
   children,
   leftSidebar,
   rightSidebar,
-  FullscreenWrapper = FullscreenWrapperRoot,
-  FullscreenWrapperProps,
-  ...props
+  ...inProps
 }: InsetContainerProps) => {
-  const isFullscreen = useFullscreenCtx();
+  const props = useThemeProps<Theme, ContainerProps, "AppInsetContainer">({
+    props: inProps,
+    name: "AppInsetContainer",
+  });
   return (
-    <Container
-      {...props}
-      sx={{
-        display: "flex",
-        flexFlow: "row nowrap",
-        flexGrow: 1,
-        ...props.sx,
-      }}
-    >
+    <InsetContainerRoot {...props}>
       {leftSidebar && React.cloneElement(leftSidebar, { anchor: "left" })}
-      {isFullscreen ? (
-        <FullscreenWrapper {...FullscreenWrapperProps}>
-          {children}
-        </FullscreenWrapper>
-      ) : (
-        children
-      )}
+      {React.cloneElement(children, {
+        className: cx(children.props.className, contentClassName),
+      })}
       {rightSidebar && React.cloneElement(rightSidebar, { anchor: "right" })}
-    </Container>
+    </InsetContainerRoot>
   );
 };
