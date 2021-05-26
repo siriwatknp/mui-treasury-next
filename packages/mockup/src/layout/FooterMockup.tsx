@@ -29,7 +29,10 @@ export const LinkGroup = ({
   );
 };
 
-export const FooterMockup = ({ ...props }: BoxProps) => {
+export const FooterMockup = ({
+  disableGutters = false,
+  ...props
+}: BoxProps & { disableGutters?: boolean }) => {
   return (
     <Box
       {...props}
@@ -42,7 +45,7 @@ export const FooterMockup = ({ ...props }: BoxProps) => {
         ...props.sx,
       }}
     >
-      <Container sx={{ py: 5, minHeight: 300 }}>
+      <Container sx={{ py: 5, minHeight: 300 }} disableGutters={disableGutters}>
         <Grid container spacing={2}>
           <Grid
             item

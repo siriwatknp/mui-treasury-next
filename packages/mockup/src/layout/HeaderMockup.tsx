@@ -16,7 +16,6 @@ export const HeaderMockup = ({
         justifyContent: { xs: "space-between", sm: "flex-start" },
         gap: 2,
         px: 2,
-        py: 1,
         flex: 1,
         ...props.sx,
       }}
