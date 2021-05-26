@@ -18,11 +18,16 @@ Let’s use create-react-app to kickstart the project
 npx create-react-app my-layout
 ```
 
-when the process is done, install packages
+when the process is done, open root directory
 
 ```bash
 cd my-layout
-yarn add @material-ui/core @material-ui/icons @emotion/styled @emotion/react @mui-treasury/layout @mui-treasury/mockup
+```
+
+and install necessary packages
+
+```bash
+yarn add @material-ui/core@next @material-ui/icons@next @emotion/styled @emotion/react @mui-treasury/layout@next @mui-treasury/mockup@next
 ```
 
 > note: this tutorial is based on @mui-treasury/layout v5 (alpha),
@@ -33,9 +38,10 @@ Now, when you run `yarn start`, you will see react logo in the browser.
 ![image](https://user-images.githubusercontent.com/18292247/72663709-0f6b1400-3a28-11ea-828e-85355b16524a.png)
 
 Let's think about Header for a sec. In this tutorial, we want to have Header that stick to
-the top of the page when user scroll. Open file `/src/App.js` and add the code below
+the top of the page when user scroll. Open file `/src/App.(js|tsx)` and replace with the code below
 
 ```jsx
+import React from "react";
 import { Root } from "@mui-treasury/layout";
 
 function App() {
@@ -54,6 +60,8 @@ function App() {
     ></Root>
   );
 }
+
+export default App;
 ```
 
 Let me translate it to human language. By doing this, we can say that we want to create a `Header`
@@ -74,6 +82,7 @@ range         |   xs   |   sm   |   md   |   lg   |   xl
 This is an example where you don't want Header to stick at the top when scroll the page on laptop screen
 
 ```jsx
+import React from "react";
 import { Root } from "@mui-treasury/layout";
 
 function App() {
@@ -96,6 +105,8 @@ function App() {
     ></Root>
   );
 }
+
+export default App;
 ```
 
 Next, let's move on to EdgeSidebar configuration.
@@ -125,8 +136,9 @@ At this point, let's render these components on the page so that you don't get s
 ```jsx
 import React from "react";
 
-import Layout, { Root, Header, EdgeSidebar } from "@mui-treasury/layout";
 import CssBaseline from "@material-ui/core/CssBaseline";
+
+import { Root, Header, EdgeSidebar } from "@mui-treasury/layout";
 
 const App = () => {
   return (
@@ -176,14 +188,17 @@ let's update the code to be like this.
 
 ```jsx
 // ...other import
+import Box from "@material-ui/core/Box";
+import IconButton from "@material-ui/core/IconButton";
+
 import {
   // ...previous import
   EdgeTrigger,
 } from "@mui-treasury/layout";
 
 import Menu from "@material-ui/icons/Menu";
-import ArrowLeft from "@material-ui/icons/ArrowLeft";
-import ArrowRight from "@material-ui/icons/ArrowRight";
+import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
+import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 
 const App = () => {
   return (
@@ -196,19 +211,20 @@ const App = () => {
     >
       <CssBaseline />
       <Header>
-        <EdgeTrigger target={{ anchor: "left", field: "open" }}>
-          {(open, setOpen) => (
-            <IconButton onClick={() => setOpen(!open)}>
-              {open ? <ArrowLeft /> : <Menu />}
-            </IconButton>
-          )}
-        </EdgeTrigger>
-        Header
+        <Box
+          sx={{ flex: 1, display: "flex", alignItems: "center", px: 2, gap: 1 }}
+        >
+          <EdgeTrigger target={{ anchor: "left", field: "open" }}>
+            {(open, setOpen) => (
+              <IconButton onClick={() => setOpen(!open)}>
+                {open ? <KeyboardArrowLeft /> : <Menu />}
+              </IconButton>
+            )}
+          </EdgeTrigger>
+          Header
+        </Box>
       </Header>
-      <DrawerSidebar sidebarId="unique_id">
-        {" "}
-        // sidebar id is required sidebar content
-      </DrawerSidebar>
+      <EdgeSidebar anchor="left">Sidebar content</EdgeSidebar>
     </Root>
   );
 };
@@ -245,10 +261,14 @@ Next, let's permanently display our EdgeSidebar in laptop screen up by adding th
 </Root>
 ```
 
+> 💡 You might notice that the Menu in header disappears. This is an expected behavior, not a 🐞, because `permanent` EdgeSidebar will always open. Try changing from `variant: "permanent"` to `variant: "persistent"`.
+
 To achieve collapsible mode, we need to add `CollapseBtn` at the bottom of the sidebar.
 
 ```jsx
 // ...imports
+import ButtonBase from "@material-ui/core/ButtonBase";
+
 import {
   // ..imports
   SidebarContent,
@@ -271,9 +291,15 @@ const App = () => {
           {(collapsed, setCollapsed) => (
             <ButtonBase
               onClick={() => setCollapsed(!collapsed)}
-              sx={{ minHeight: 40, width: "100%" }}
+              sx={{
+                minHeight: 40,
+                width: "100%",
+                bgcolor: "grey.100",
+                borderTop: "1px solid",
+                borderColor: "grey.200",
+              }}
             >
-              {collapsed ? <ArrowRight /> : <ArrowLeft />}
+              {collapsed ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
             </ButtonBase>
           )}
         </EdgeTrigger>
@@ -289,6 +315,30 @@ and push `ButtonBase` to the bottom (see it in devtool).
 ![image](https://user-images.githubusercontent.com/18292247/80664273-851f5b00-8ac0-11ea-9a45-4d8739927116.png)
 
 Play around with collapse button.
+
+In some application, the header takes all the space at the top. We can achieve it by adding field `clipped: true` to header config
+
+```jsx
+<Root
+  scheme={{
+    header: {
+      config: {
+        xs: {
+          position: "sticky",
+          height: 56,
+        },
+        md: {
+          position: "relative",
+          height: 64,
+          clipped: true,
+        },
+      },
+    },
+  }}
+></Root>
+```
+
+> 💡 the cool thing is a block added automatically to make sure that sidebar content appear to user. (try changing Header's height, it's awesome 👍)
 
 Last step, let's add `Content` and `Footer` to the page. Both of the components does not have functionality,
 so you don't need to configure explicitly (actually it is already configured with default for you)
@@ -330,12 +380,14 @@ import {
   Content,
   Footer,
 } from "@mui-treasury/layout";
+import Box from "@material-ui/core/Box";
+import ButtonBase from "@material-ui/core/ButtonBase";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import IconButton from "@material-ui/core/IconButton";
 
 import Menu from "@material-ui/icons/Menu";
-import ArrowLeft from "@material-ui/icons/ArrowLeft";
-import ArrowRight from "@material-ui/icons/ArrowRight";
+import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
+import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 
 const App = () => {
   return (
@@ -371,14 +423,18 @@ const App = () => {
     >
       <CssBaseline />
       <Header>
-        <EdgeTrigger target={{ anchor: "left", field: "open" }}>
-          {(open, setOpen) => (
-            <IconButton onClick={() => setOpen(!open)}>
-              {open ? <ArrowLeft /> : <Menu />}
-            </IconButton>
-          )}
-        </EdgeTrigger>
-        Header
+        <Box
+          sx={{ flex: 1, display: "flex", alignItems: "center", px: 2, gap: 1 }}
+        >
+          <EdgeTrigger target={{ anchor: "left", field: "open" }}>
+            {(open, setOpen) => (
+              <IconButton onClick={() => setOpen(!open)}>
+                {open ? <KeyboardArrowLeft /> : <Menu />}
+              </IconButton>
+            )}
+          </EdgeTrigger>
+          Header
+        </Box>
       </Header>
       <EdgeSidebar anchor="left">
         <SidebarContent>Sidebar content</SidebarContent>
@@ -386,9 +442,15 @@ const App = () => {
           {(collapsed, setCollapsed) => (
             <ButtonBase
               onClick={() => setCollapsed(!collapsed)}
-              sx={{ minHeight: 40, width: "100%" }}
+              sx={{
+                minHeight: 40,
+                width: "100%",
+                bgcolor: "grey.100",
+                borderTop: "1px solid",
+                borderColor: "grey.200",
+              }}
             >
-              {collapsed ? <ArrowRight /> : <ArrowLeft />}
+              {collapsed ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
             </ButtonBase>
           )}
         </EdgeTrigger>
