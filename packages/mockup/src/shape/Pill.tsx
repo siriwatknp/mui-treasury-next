@@ -7,7 +7,7 @@ export const Pill = (props: BoxProps) => (
     sx={{
       width: 56,
       height: 24,
-      backgroundColor: "grey.200",
+      backgroundColor: "grey.300",
       borderRadius: 5,
       ...props.sx,
     }}

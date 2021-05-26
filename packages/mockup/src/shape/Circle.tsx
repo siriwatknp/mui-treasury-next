@@ -8,7 +8,7 @@ export const Circle = (props: BoxProps) => (
       width: "1em",
       height: "1em",
       fontSize: "40px",
-      backgroundColor: "grey.200",
+      backgroundColor: "grey.300",
       borderRadius: 10,
       flexShrink: 0,
       ...props.sx,
