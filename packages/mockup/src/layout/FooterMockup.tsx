@@ -29,10 +29,7 @@ export const LinkGroup = ({
   );
 };
 
-export const FooterMockup = ({
-  trigger,
-  ...props
-}: { trigger?: React.ReactNode } & BoxProps) => {
+export const FooterMockup = ({ ...props }: BoxProps) => {
   return (
     <Box
       {...props}
