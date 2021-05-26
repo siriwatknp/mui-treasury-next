@@ -13,6 +13,7 @@ import { toValidCssValue } from "../utils/toValidCssValue";
 import { ResponsiveBuilder } from "../shared/ResponsiveBuilder";
 
 export type ClippableElement = LEFT_EDGE_SIDEBAR_ID | RIGHT_EDGE_SIDEBAR_ID;
+
 export type HeaderConfig = {
   /**
    * css position. For calculating offset in other components.
