@@ -21,10 +21,10 @@ export const InsetAvoidingView = (props: InsetAvoidingViewProps) => {
     marginRight: "",
   };
   if (builder.leftInsetSidebar) {
-    sxProps.marginLeft = builder.leftInsetSidebar.getSxRoot().width;
+    sxProps.marginLeft = builder.leftInsetSidebar.getOccupiedSpace();
   }
   if (builder.rightInsetSidebar) {
-    sxProps.marginRight = builder.rightInsetSidebar.getSxRoot().width;
+    sxProps.marginRight = builder.rightInsetSidebar.getOccupiedSpace();
   }
   return <InsetAvoidingViewRoot {...props} sx={{ ...props.sx, ...sxProps }} />;
 };

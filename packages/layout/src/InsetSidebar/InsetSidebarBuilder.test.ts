@@ -56,6 +56,22 @@ describe("InsetSidebarBuilder", () => {
         },
       });
     });
+
+    it("has correct occupied space", () => {
+      expect(
+        new InsetSidebarBuilder({
+          config: {
+            md: {
+              position: "fixed",
+              width: 256,
+            },
+          },
+        }).getOccupiedSpace()
+      ).toEqual({
+        xs: "0px",
+        md: "256px",
+      });
+    });
   });
 
   describe("Body", () => {

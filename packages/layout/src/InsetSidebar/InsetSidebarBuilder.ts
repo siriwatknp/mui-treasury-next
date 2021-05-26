@@ -138,4 +138,14 @@ export class InsetSidebarBuilder extends ResponsiveBuilder<InsetSidebarConfig> {
       ),
     };
   }
+
+  getOccupiedSpace() {
+    return flattenStrict(
+      this.generateSxWithHidden({
+        assignValue: (config) => toValidCssValue(config.width),
+        hiddenValue: "0px",
+        strict: true,
+      })
+    );
+  }
 }
