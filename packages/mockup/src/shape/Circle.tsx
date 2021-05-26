@@ -1,5 +1,6 @@
 import React from "react";
 import Box, { BoxProps } from "@material-ui/core/Box";
+import { getBaseGrey } from "../utils";
 
 export const Circle = (props: BoxProps) => (
   <Box
@@ -8,7 +9,7 @@ export const Circle = (props: BoxProps) => (
       width: "1em",
       height: "1em",
       fontSize: "40px",
-      backgroundColor: "grey.300",
+      backgroundColor: getBaseGrey,
       borderRadius: 10,
       flexShrink: 0,
       ...props.sx,

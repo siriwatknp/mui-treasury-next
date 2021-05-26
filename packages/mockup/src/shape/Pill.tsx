@@ -1,5 +1,6 @@
 import React from "react";
 import Box, { BoxProps } from "@material-ui/core/Box";
+import { getBaseGrey } from "../utils";
 
 export const Pill = (props: BoxProps) => (
   <Box
@@ -7,7 +8,7 @@ export const Pill = (props: BoxProps) => (
     sx={{
       width: 56,
       height: 24,
-      backgroundColor: "grey.300",
+      backgroundColor: getBaseGrey,
       borderRadius: 5,
       ...props.sx,
     }}

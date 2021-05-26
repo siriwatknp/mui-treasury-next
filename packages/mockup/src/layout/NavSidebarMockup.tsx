@@ -5,6 +5,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import { Pill, Circle } from "../shape";
+import { randomBetween } from "../utils";
 
 export const IconList = ({ count = 4 }: { count?: number }) => (
   <>
@@ -18,7 +19,7 @@ export const IconList = ({ count = 4 }: { count?: number }) => (
             <Pill
               sx={{
                 height: 16,
-                width: Math.floor(Math.random() * 80) + 56,
+                width: randomBetween(56, 136),
                 borderRadius: 1,
               }}
             />
@@ -39,7 +40,7 @@ export const InsetList = ({ count = 4 }: { count?: number }) => (
             <Pill
               sx={{
                 height: 16,
-                width: Math.floor(Math.random() * 80) + 56,
+                width: randomBetween(56, 136),
                 borderRadius: 1,
               }}
             />

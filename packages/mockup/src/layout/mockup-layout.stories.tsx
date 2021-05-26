@@ -5,6 +5,7 @@ import {
   HeaderMockup,
   NavSidebarMockup,
   ContentMockup,
+  FooterMockup,
 } from "@mui-treasury/mockup/layout";
 
 export default {
@@ -24,3 +25,5 @@ export const Content = () => (
     <ContentMockup />
   </Container>
 );
+
+export const Footer = () => <FooterMockup />;

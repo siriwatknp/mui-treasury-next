@@ -4,6 +4,7 @@ import { BoxProps } from "@material-ui/core/Box";
 import Stack from "@material-ui/core/Stack";
 
 import { Square } from "../shape";
+import { randomBetween } from "../utils";
 
 export const Paragraph = ({
   lineCount = 5,
@@ -19,7 +20,7 @@ export const Paragraph = ({
           key={index}
           sx={{
             height: 16,
-            width: `${Math.floor(Math.random() * 4) + 96}%`,
+            width: randomBetween(96, 100, "%"),
             ...(index !== 0 && { mt: 1.5 }),
             ...sx,
           }}
