@@ -7,8 +7,6 @@ import {
   unstable_useThemeProps as useThemeProps,
 } from "@material-ui/core/styles";
 
-const contentClassName = "AppInsetContainer-content";
-
 const InsetContainerRoot = styled(
   Container,
   {},
@@ -21,7 +19,7 @@ const InsetContainerRoot = styled(
   display: "flex",
   flexFlow: "row nowrap",
   flexGrow: 1,
-  [`& .${contentClassName}`]: {
+  '& > *:not([class*="AppInsetSidebar"])': {
     flexGrow: 1,
     overflow: "auto",
   },
@@ -48,9 +46,7 @@ export const InsetContainer = ({
   return (
     <InsetContainerRoot {...props}>
       {leftSidebar && React.cloneElement(leftSidebar, { anchor: "left" })}
-      {React.cloneElement(children, {
-        className: cx(children.props.className, contentClassName),
-      })}
+      {children}
       {rightSidebar && React.cloneElement(rightSidebar, { anchor: "right" })}
     </InsetContainerRoot>
   );
