@@ -1,6 +1,7 @@
 import React from "react";
 import { ThemeProvider, createTheme } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Container from "@material-ui/core/Container";
 import IconButton from "@material-ui/core/IconButton";
 
 import {
@@ -14,56 +15,49 @@ import {
   getContentBasedScheme,
 } from "@mui-treasury/layout";
 import {
-  HeaderMockUp,
-  NavHeaderMockUp,
-  NavContentMockUp,
-  ContentMockUp,
-  FooterMockUp,
-} from "../mockup";
+  HeaderMockup,
+  ContentMockup,
+  FooterMockup,
+  NavSidebarMockup,
+} from "@mui-treasury/mockup/layout";
 
 import Menu from "@material-ui/icons/Menu";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 
 const theme = createTheme();
-const standardScheme = getContentBasedScheme();
+const scheme = getContentBasedScheme();
 
 const ContentBased = () => {
   return (
     <ThemeProvider theme={theme}>
-      <Root scheme={standardScheme}>
-        {({ state }) => (
-          <>
-            <Header>
-              <Box flex={1} display="flex" alignItems="center" px={2}>
-                <EdgeTrigger
-                  target={{ anchor: "left", field: "open" }}
-                  sx={{ ml: -0.5, mr: 1 }}
-                >
-                  {(open, setOpen) => (
-                    <IconButton onClick={() => setOpen(!open)}>
-                      {open ? <KeyboardArrowLeft /> : <Menu />}
-                    </IconButton>
-                  )}
-                </EdgeTrigger>
-                <HeaderMockUp />
-              </Box>
-            </Header>
-            <EdgeSidebar anchor="left">
-              <SidebarContent>
-                <NavHeaderMockUp
-                  collapsed={state.leftEdgeSidebar?.collapsed ?? false}
-                />
-                <NavContentMockUp onClickItem={() => {}} />
-              </SidebarContent>
-            </EdgeSidebar>
-            <Content>
-              <ContentMockUp />
-            </Content>
-            <Footer>
-              <FooterMockUp />
-            </Footer>
-          </>
-        )}
+      <Root scheme={scheme}>
+        <CssBaseline />
+        <Header>
+          <HeaderMockup
+            trigger={
+              <EdgeTrigger target={{ anchor: "left", field: "open" }}>
+                {(open, setOpen) => (
+                  <IconButton onClick={() => setOpen(!open)} edge="end">
+                    {open ? <KeyboardArrowLeft /> : <Menu />}
+                  </IconButton>
+                )}
+              </EdgeTrigger>
+            }
+          />
+        </Header>
+        <EdgeSidebar anchor="left">
+          <SidebarContent>
+            <NavSidebarMockup />
+          </SidebarContent>
+        </EdgeSidebar>
+        <Content>
+          <Container maxWidth="md" sx={{ py: 5 }}>
+            <ContentMockup />
+          </Container>
+        </Content>
+        <Footer>
+          <FooterMockup />
+        </Footer>
       </Root>
     </ThemeProvider>
   );
