@@ -17,9 +17,18 @@ library from [React](https://reactjs.org/) to let you turn your idea into produc
 From dashboard, to blog, to social webapp until mailbox layout. This library has proved to be compatible
 with these convoluted layout.
 
-### What's new in v5
+### What's new in v5 (alpha)
+
+> 💡 only compatible with `@material-ui/core@v5` NOT `v4`
 
 - leverage `@material-ui v5` built-in styling engine, emotion (default) or styled-components (the choice is your).
+- bundle size reduction by ~30%. [Bundle phobia](https://bundlephobia.com/result?p=@mui-treasury/layout)
+  ![mui-treasury:layout](https://user-images.githubusercontent.com/18292247/119865137-9053ed00-bf45-11eb-9543-94cac9458c0d.png)
+
+  > Compare with v4 by using create-react-app production build. Bundle size reduce from `49.73KB in v5` to `32.91KB in v5`.
+
+- Support global theme through `material-ui` theme API. Take a look at [this example](/?path=/story/layout-example--global-theme)
+
 - restructure the codebase which makes the setup simpler (no more builders, just plain object as scheme)
 
   ```jsx
