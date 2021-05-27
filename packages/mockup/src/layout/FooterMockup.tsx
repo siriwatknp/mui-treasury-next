@@ -77,8 +77,8 @@ export const FooterMockup = ({
               spacing={1}
               sx={{ justifyContent: { xs: "center", sm: "flex-start" } }}
             >
-              <Square sx={{ height: 36, width: 160 }} />
-              <Square sx={{ height: 36, width: 56 }} />
+              <Square sx={{ height: 36, flexBasis: 160, flexShrink: 1 }} />
+              <Square sx={{ height: 36, flexBasis: 56, flexShrink: 1 }} />
             </Stack>
             <br />
             <Stack
