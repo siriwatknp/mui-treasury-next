@@ -1,5 +1,4 @@
 import React from "react";
-import { ThemeProvider, createTheme } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import IconButton from "@material-ui/core/IconButton";
@@ -24,42 +23,39 @@ import {
 import Menu from "@material-ui/icons/Menu";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 
-const theme = createTheme();
 const scheme = getContentBasedScheme();
 
 const ContentBased = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <Root scheme={scheme}>
-        <CssBaseline />
-        <Header>
-          <HeaderMockup
-            trigger={
-              <EdgeTrigger target={{ anchor: "left", field: "open" }}>
-                {(open, setOpen) => (
-                  <IconButton onClick={() => setOpen(!open)} edge="end">
-                    {open ? <KeyboardArrowLeft /> : <Menu />}
-                  </IconButton>
-                )}
-              </EdgeTrigger>
-            }
-          />
-        </Header>
-        <EdgeSidebar anchor="left">
-          <SidebarContent>
-            <NavSidebarMockup />
-          </SidebarContent>
-        </EdgeSidebar>
-        <Content>
-          <Container maxWidth="md" sx={{ py: 5 }}>
-            <ContentMockup />
-          </Container>
-        </Content>
-        <Footer>
-          <FooterMockup />
-        </Footer>
-      </Root>
-    </ThemeProvider>
+    <Root scheme={scheme}>
+      <CssBaseline />
+      <Header>
+        <HeaderMockup
+          trigger={
+            <EdgeTrigger target={{ anchor: "left", field: "open" }}>
+              {(open, setOpen) => (
+                <IconButton onClick={() => setOpen(!open)} edge="end">
+                  {open ? <KeyboardArrowLeft /> : <Menu />}
+                </IconButton>
+              )}
+            </EdgeTrigger>
+          }
+        />
+      </Header>
+      <EdgeSidebar anchor="left">
+        <SidebarContent>
+          <NavSidebarMockup />
+        </SidebarContent>
+      </EdgeSidebar>
+      <Content>
+        <Container maxWidth="md" sx={{ py: 5 }}>
+          <ContentMockup />
+        </Container>
+      </Content>
+      <Footer>
+        <FooterMockup />
+      </Footer>
+    </Root>
   );
 };
 
