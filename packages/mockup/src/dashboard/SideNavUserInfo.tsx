@@ -3,6 +3,7 @@ import React from "react";
 import Box, { BoxProps } from "@material-ui/core/Box";
 import { Circle } from "../shape";
 import { Text, Word } from "../typography";
+import { getLightestGrey } from "../utils";
 
 export const SideNavUserInfo = ({
   collapsed,
@@ -13,7 +14,7 @@ export const SideNavUserInfo = ({
       {...props}
       sx={{
         borderRadius: 1,
-        bgcolor: "grey.50",
+        bgcolor: getLightestGrey,
         p: 1.5,
         display: "flex",
         alignItems: "center",
