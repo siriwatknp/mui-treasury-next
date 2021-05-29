@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import cx from "clsx";
 import {
   experimentalStyled,
   unstable_useThemeProps as useThemeProps,
@@ -6,7 +7,11 @@ import {
 } from "@material-ui/core/styles";
 import Drawer, { DrawerProps, drawerClasses } from "@material-ui/core/Drawer";
 import { ModalProps } from "@material-ui/core/Modal";
-import { useLayoutCtx, PropsWithFunctionChildren } from "../Root/Root";
+import {
+  useLayoutCtx,
+  PropsWithFunctionChildren,
+  ContextValue,
+} from "../Root/Root";
 import { useScreen } from "../hooks/useScreen";
 import { pickNearestBreakpoint } from "../utils/pickNearestBreakpoint";
 import { useSidebarAutoCollapse } from "../hooks/useSidebarAutoCollapse";
@@ -23,7 +28,7 @@ import {
 import { EdgeOffset } from "./EdgeOffset";
 import { useWindowCtx } from "../WindowContext";
 
-export type EdgeSidebarClassKey = "root";
+export type EdgeSidebarClassKey = "root" | "paperExpanded";
 export interface EdgeSidebarProps
   extends Omit<DrawerProps, "anchor" | "variant"> {
   anchor: "left" | "right";
@@ -87,7 +92,14 @@ const EdgeSidebarRoot = experimentalStyled(
 export const EdgeSidebar = ({
   children,
   ...inProps
-}: PropsWithFunctionChildren<EdgeSidebarProps>) => {
+}: PropsWithFunctionChildren<
+  EdgeSidebarProps,
+  ContextValue & {
+    expanded: boolean;
+    entered: boolean;
+    isMouseOverSidebar: boolean;
+  }
+>) => {
   const { theme, ...props } = useThemeProps<
     Theme,
     EdgeSidebarProps,
@@ -186,9 +198,13 @@ export const EdgeSidebar = ({
         }}
         PaperProps={{
           ...props.PaperProps,
+          className: cx(
+            expanded && "AppEdgeSidebar-paperExpanded",
+            props.PaperProps?.className
+          ),
           style: {
             ...props.PaperProps?.style,
-            ...(expanded && { width: config?.width }),
+            ...(expanded && { width: config?.width, overflow: "visible" }),
           },
           onMouseEnter,
           onMouseLeave,
@@ -201,7 +217,14 @@ export const EdgeSidebar = ({
         {variant && variant !== "temporary" && (
           <EdgeOffset sidebarId={sidebarId} />
         )}
-        {typeof children === "function" ? children(ctx) : children}
+        {typeof children === "function"
+          ? children({
+              ...ctx,
+              expanded,
+              entered,
+              isMouseOverSidebar: isMouseOverSidebar.current,
+            })
+          : children}
       </EdgeSidebarRoot>
     </SidebarContext.Provider>
   );
