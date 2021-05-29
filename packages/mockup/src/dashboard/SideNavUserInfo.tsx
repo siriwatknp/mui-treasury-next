@@ -2,10 +2,10 @@ import React from "react";
 
 import Box, { BoxProps } from "@material-ui/core/Box";
 import { Circle } from "../shape";
-import { Text, Word } from "../typography";
-import { getLightestGrey } from "../utils";
+import { Word } from "../typography";
+import { getLightestGrey, getLightGrey } from "../utils";
 
-export const SideNavUserInfo = ({
+export const SideNavUserInfoMockup = ({
   collapsed,
   ...props
 }: { collapsed?: boolean } & BoxProps) => {
@@ -23,9 +23,16 @@ export const SideNavUserInfo = ({
     >
       <Circle sx={{ fontSize: collapsed ? 36 : 48, transition: "0.2s" }} />
       {!collapsed && (
-        <Box sx={{ ml: 1.5 }}>
+        <Box sx={{ ml: 1.5, minWidth: "0px" }}>
           <Word />
-          <Word sx={{ height: 12, borderRadius: 2 }} />
+          <Word
+            sx={{
+              height: 10,
+              borderRadius: 2,
+              mt: 0.75,
+              bgcolor: getLightGrey,
+            }}
+          />
         </Box>
       )}
     </Box>

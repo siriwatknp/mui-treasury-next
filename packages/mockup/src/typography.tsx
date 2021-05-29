@@ -3,9 +3,11 @@ import React from "react";
 import Box, { BoxProps } from "@material-ui/core/Box";
 import { getBaseGrey, randomBetween } from "./utils";
 
-const createTypography = (generateSx: () => BoxProps["sx"]) => (
-  props: BoxProps
-) => {
+const createTypography = (generateSx: () => BoxProps["sx"]) => ({
+  cached,
+  ...props
+}: { cached?: boolean } & BoxProps) => {
+  const ref = React.useRef(generateSx());
   return (
     <Box
       {...props}
@@ -13,7 +15,7 @@ const createTypography = (generateSx: () => BoxProps["sx"]) => (
         height: 16,
         bgcolor: getBaseGrey,
         borderRadius: 1,
-        ...generateSx(),
+        ...(cached ? ref.current : generateSx()),
         ...props.sx,
       }}
     />
@@ -33,11 +35,11 @@ export const Text = createTypography(() => ({
   mt: 1.5,
   mb: 1.5,
   width: "100%",
+  maxWidth: "100%",
 }));
 
 export const Word = createTypography(() => ({
   height: 16,
-  mt: 1.5,
-  mb: 1.5,
   width: randomBetween(8, 14, "ch"),
+  maxWidth: "100%",
 }));
