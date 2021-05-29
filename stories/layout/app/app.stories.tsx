@@ -3,6 +3,7 @@ import { Meta } from "@storybook/react/types-6-0";
 import { Source } from "@storybook/addon-docs/blocks";
 
 const Pages = {
+  Analytics: React.lazy(() => import("./Analytics")),
   ShoppingCart: React.lazy(() => import("./ShoppingCart")),
   ReactJS: React.lazy(() => import("./ReactJS")),
   Messenger: React.lazy(() => import("./Messenger")),
@@ -45,3 +46,4 @@ export const Gmail = createStory("Gmail");
 export const Messenger = createStory("Messenger");
 export const ReactJS = createStory("ReactJS");
 export const ShoppingCart = createStory("ShoppingCart");
+export const Analytics = createStory("Analytics");

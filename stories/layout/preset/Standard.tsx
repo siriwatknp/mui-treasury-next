@@ -20,7 +20,7 @@ import {
   FooterMockup,
   NavSidebarMockup,
 } from "@mui-treasury/mockup/layout";
-import { SideNavUserInfo } from "@mui-treasury/mockup/dashboard";
+import { SideNavUserInfoMockup } from "@mui-treasury/mockup/dashboard";
 
 import Menu from "@material-ui/icons/Menu";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
@@ -51,7 +51,9 @@ const Standard = () => {
             <SidebarContent>
               <NavSidebarMockup />
             </SidebarContent>
-            <SideNavUserInfo collapsed={state.leftEdgeSidebar?.collapsed} />
+            <SideNavUserInfoMockup
+              collapsed={state.leftEdgeSidebar?.collapsed}
+            />
             <EdgeTrigger target={{ anchor: "left", field: "collapsed" }}>
               {(collapsed, setCollapsed) => (
                 <ButtonBase
